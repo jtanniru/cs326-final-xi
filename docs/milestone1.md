@@ -17,15 +17,15 @@
 # Wireframes
 
 
-![login](../../images/login_page.png)
+![login](../images/login_page.png)
 
-![courses](../../images/courses_page.png)
+![courses](../images/courses_page.png)
 
-![groups](../../images/groups_page.png)
+![groups](../images/groups_page.png)
 
-![search](../../images/search_page.png)
+![search](../images/search_page.png)
 
-![settings](../../images/settings_page.png)
+![settings](../images/settings_page.png)
 
 # HTML and CSS
 
