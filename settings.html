@@ -12,7 +12,7 @@
   </head>
     <body class="text-center">
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow text-light bg-dark"> 
-        <h3 class="my-0 mr-md-auto font-weight-normal">RENDEZVOUS</h3>
+        <img class="img-responsive rounded float-left my-0 mr-md-auto" src="RendezvousLogo.jpg" alt="Rendezvous Logo" style="width: 10%;">
         <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-light" href="#"> My Groups </a>
         <a class="p-2 text-light" href="#"> Search </a>
@@ -23,11 +23,9 @@
         <div class="nav flex-column nav-pills ml-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <h3>Settings</h3>
             <a class="nav-link active" id="v-pills-availability-tab" data-toggle="pill" href="#v-pills-availability" role="tab" aria-controls="v-pills-availability" aria-selected="true">Availability</a>
-            <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">Notifications</a>
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
             <a class="nav-link" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">Account</a>
         </div>
-
         <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-availability" role="tabpanel" aria-labelledby="v-pills-availability-tab">
                 <h1>Availability</h1>
@@ -289,12 +287,19 @@
                           </tr>
                         </tbody>
                       </table>
+                      <div class="ml-5"><label for="timezone">Timezone</label><input type="text" class ="ml-3" id ="timezone" placeholder="Timezone" required/></div>
                     </div>
-            <div></div>
+                    <div class='mt-5 mb-5'><input type="button" value = "Submit"/></div>
+                </div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div class="ml-5"><label for="username">Username</label><input type="text" class ="ml-3" id ="username" placeholder="Username" required/></div>
+                <div class="ml-5"><label for="phone">Phone</label><input type="text" class ="ml-3" id ="phone" placeholder="Phone" required/></div>
+                <div class="ml-5"><label for="email">Email</label><input type="text" class ="ml-3" id ="email" placeholder="Email" required/></div>
+                <div class="ml-5"><label for="password">Password</label><input type="text" class ="ml-3" id ="password" placeholder="password" required/></div>
             </div>
-            <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">ping</div>
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">profile</div>
-            <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">Account</div>
+            <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
+                <div class="ml-5"><label for="username">Username</label><input type="text" class ="ml-3" id ="username" placeholder="Username" required/></div>
+            </div>
         </div>
     </body>
 </html>
