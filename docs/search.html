@@ -20,8 +20,24 @@
       <a class="p-2 text-light" href="#"> My Courses </a>
       <a class="p-2 text-light" href="#"> Settings </a>
     </div>
-    <div class="pl-5 ml-5 pr-5 mr-5 pt-5 mt-5 pb-5 mb-5 text-center bg-dark text-light">
-    </div>
-    </div>
+    <div class="row mt-5 mb-5 mr-5">
+      <div class="col-2 border-right">
+        <div class="nav flex-column nav-pills ml-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <h3 class="mb-3">Filter Options</h3>
+          <!-- this is the side list of "Filter Options" from the Wireframe image -->
+          <!-- it may be better to do VERTICAL tabs (not pills) and give each the ability to have a drop down menu of check boxes for what the user wants to filter by, like with shopping websites do -->
+          <a class="nav-link active" id="v-pills-availability-tab" data-toggle="pill" href="#v-pills-availability" role="tab" aria-controls="v-pills-availability" aria-selected="true">Course</a>
+          <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">Professor</a>
+          <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Course Session</a>
+          <a class="nav-link" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">Timezone</a>
+        </div>
+      </div>
+      <div class="col">
+        <!-- this is where the "Find Study Groups" part goes in the grayed out box in Wireframe image -->
+        <!-- don't create a new outer div, just use this column div -->
+        <h3 class="mb-3">Find Study Groups!</h3>
+        <!-- <small>This is an example of what a person div matching the filters looks like</small> -->
+        <!-- then add a person div with the circle for a profile pic and then the "Person Name" -->
+      </div>
   </body>
 </html>
