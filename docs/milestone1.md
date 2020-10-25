@@ -42,9 +42,9 @@
 
 ![settings](../images/settings_html_screenshot_account.png)
 
-![settings](../images/settings_html_screenshot_availability1.png)
-
 ![settings](../images/settings_html_screenshot_availability2.png)
+
+![settings](../images/settings_html_screenshot_availability1.png)
 
 # Breakdown of the Division of Labor
 
