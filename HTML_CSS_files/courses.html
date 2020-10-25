@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -17,10 +17,11 @@
       <img class="img-responsive rounded float-left my-0 mr-md-auto shadow shadow-lg--hover" src="../images/RendezvousLogo.jpg" alt="Rendezvous Logo">
       <!-- <h5 class="my-0 mr-md-auto font-weight-normal">LOGO</h5> -->
       <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-light" href="#"> My Groups </a>
-      <a class="p-2 text-light" href="#"> Search </a>
-      <a class="p-2 text-light" href="#"> My Courses </a>
-      <a class="p-2 text-light" href="#"> Settings </a>
+        <a class="p-2 text-light" href="#"> My Groups </a>
+        <a class="p-2 text-light" href="#"> Search </a>
+        <a class="p-2 text-light" href="#"> My Courses </a>
+        <a class="p-2 text-light" href="#"> Settings </a>
+      </nav>  
     </div>
     <div class="pl-5 ml-5 pr-5 mr-5 pt-5 mt-5 pb-5 mb-5 text-center bg-dark text-light">
       <nav>
@@ -44,7 +45,7 @@
                 <label for="inputCourseNumber">Course Number</label>
               </div>
               <div class="col">
-                <input type="courseNumber" id="inputCourseNumber" class="form-control" placeholder="Course Number" required>
+                <input type="text" id="inputCourseNumber" class="form-control" placeholder="Course Number" required>
               </div>
             </div>
             <div class="row mb-2">
@@ -52,7 +53,7 @@
                 <label for="inputProfessor">Professor</label>
               </div>
               <div class="col">
-                <input type="professor" id="inputProfessor" class="form-control" placeholder="Professor" required>
+                <input type="text" id="inputProfessor" class="form-control" placeholder="Professor" required>
               </div>
             </div>
             <div class="row mb-2">
@@ -60,7 +61,7 @@
                 <label for="inputSessionNumber">Session Number</label>
               </div>
               <div class="col">
-                <input type="sessionNumber" id="inputSessionNumber" class="form-control" placeholder="Session Number" required>
+                <input type="text" id="inputSessionNumber" class="form-control" placeholder="Session Number" required>
               </div>
             </div>
             <div class="row mb-2">
@@ -68,7 +69,7 @@
                 <label for="inputCourseDays">Course Days</label>
               </div>
               <div class="col">
-                <input type="courseDays" id="inputCourseDays" class="form-control" placeholder="Course Days" required>
+                <input type="text" id="inputCourseDays" class="form-control" placeholder="Course Days" required>
               </div>
             </div>
             <div class="row mb-2">
@@ -76,12 +77,12 @@
                 <label for="inputCourseTimes">Course Times</label>
               </div>
               <div class="col">
-                <input type="courseTimes" id="inputCourseTimes" class="form-control" placeholder="Course Times" required>
+                <input type="text" id="inputCourseTimes" class="form-control" placeholder="Course Times" required>
               </div>
             </div>
           </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block mt-5 mx-auto" style="width: 10rem;" type="submit">Create Course</button>
+        <button id="coursesSubmit" class="btn btn-lg btn-primary btn-block mt-5 mx-auto" type="submit">Create Course</button>
       </div>
     </div>
   </body>

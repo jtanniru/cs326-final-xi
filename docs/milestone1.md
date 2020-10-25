@@ -29,3 +29,13 @@
 
 # HTML and CSS
 
+
+![login](../images/homepage_html_screenshot.png)
+
+![courses](../images/courses_html_screenshot.png)
+
+![groups](../images/groups_html_screenshot.png)
+
+![search](../images/search_html_screenshot.png)
+
+![settings](../images/settings_html_screenshot.png)
