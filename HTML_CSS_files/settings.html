@@ -14,12 +14,13 @@
   </head>
     <body class="text-center">
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow text-light bg-dark"> 
-        <img class="img-responsive rounded float-left my-0 mr-md-auto shadow shadow-lg--hover" src="RendezvousLogo.jpg" alt="Rendezvous Logo" style="width: 20%;">
+        <img class="img-responsive rounded float-left my-0 mr-md-auto shadow shadow-lg--hover" src="../images/RendezvousLogo.jpg" alt="Rendezvous Logo">
         <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-light" href="#"> My Groups </a>
         <a class="p-2 text-light" href="#"> Search </a>
         <a class="p-2 text-light" href="#"> My Courses </a>
         <a class="p-2 text-light" href="#"> Settings </a>
+        </nav>
     </div>
     <div class="row mr-5">
       <div class="col-3 border-right">
@@ -37,7 +38,7 @@
               <h2>Availability</h2>
               <small class="text-muted">Click on the boxes to indicate time availability by the hour.</small>
                   <div class="row mt-2">
-                  <table class="table table-bordered ml-5">
+                  <table class="table table-bordered ml-5 mr-5">
                       <thead class="thead-dark">
                         <tr>
                           <th scope="col">Times</th>
@@ -328,7 +329,7 @@
                 <div class="form-group row">
                     <label for="phone" class="col-sm-2 col-form-label">Phone</label>
                     <div class="col-sm-10">
-                      <input type="phone" class="form-control" id="phone" placeholder="Phone" required>
+                      <input type="text" class="form-control" id="phone" placeholder="Phone" required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -337,9 +338,11 @@
                     <input type="password" class="form-control" id="password" placeholder="Password" required>
                   </div>
                 </div>
+                <div class='mt-5 mb-5'><input type="button" value = "update"/></div>
               </form>
             </div>
       </div>
     </div>
+  </div>
     </body>
 </html>
