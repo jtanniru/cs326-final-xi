@@ -29,3 +29,41 @@
 
 # HTML and CSS
 
+
+![login](../images/homepage_html_screenshot.png)
+
+![courses](../images/courses_html_screenshot.png)
+
+![groups](../images/groups_html_screenshot1.png)
+
+![groups](../images/groups_html_screenshot2.png)
+
+![search](../images/search_html_screenshot.png)
+
+![settings](../images/settings_html_screenshot_account.png)
+
+![settings](../images/settings_html_screenshot_availability2.png)
+
+![settings](../images/settings_html_screenshot_availability1.png)
+
+# Breakdown of the Division of Labor
+
+
+### Janvi
+- pages assigned: search.html, settings.html
+- milestone1.md: Wireframes, HTML and CSS
+- designed logo
+
+### Olivia
+- pages assigned: groups.html
+- milestone1.md: (conducted each review of the Wireframes), HTML and CSS
+- conducted final review of files after each person did their own validations
+
+### JengYu
+- pages assigned: homepage.html, courses.html
+- milestone1.md: Data Interactions, Wireframes, HTML and CSS
+
+### All
+- each person attended the brainstorming how to build the wireframes and what the HTML pages should look like
+- each person attended the working meeting hours
+- each person contributed to the main.css file to add styling to the HTML files
