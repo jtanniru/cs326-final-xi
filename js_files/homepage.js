@@ -1,16 +1,21 @@
 'use strict';
-
-// get inputEmail value
-const emailValue = document.getElementById('inputEmail').value // or is it innerHTML?
-
-// get inputPassword value
-const passwordValue = document.getElementById('inputPassword').value // or is it innerHTML?
+console.log("homepage.js running");
 
 // action for signIn button
 const signInButton = document.getElementById('signIn');
 signInButton.addEventListener('click', () => {
+  // get inputEmail value
+  const emailValue = document.getElementById('inputEmail').value // or is it innerHTML?
+  console.log(emailValue);
+
+  // get inputPassword value
+  const passwordValue = document.getElementById('inputPassword').value // or is it innerHTML?
+  console.log(passwordValue);
   if(emailValue === '' || passwordValue === ''){
     alert('Requried sign in information is missing.');
+  }
+  else {
+    window.location.href = "courses.html";
   }
   /*
     look through the login table stored with either PostgreSQL or MongoDB
@@ -27,7 +32,3 @@ signInButton.addEventListener('click', () => {
           - then link to courses.html
   */
 });
-
-// action for goToRegister button
-const goToRegisterButton = document.getElementById('goToRegister');
-// link them to register.html
