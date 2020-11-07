@@ -5,18 +5,15 @@ console.log("homepage.js running");
 const signInButton = document.getElementById('signIn');
 signInButton.addEventListener('click', () => {
   // get inputEmail value
-  const emailValue = document.getElementById('inputEmail').value // or is it innerHTML?
-  console.log(emailValue);
+  const emailValue = document.getElementById('inputEmail').value
 
   // get inputPassword value
-  const passwordValue = document.getElementById('inputPassword').value // or is it innerHTML?
-  console.log(passwordValue);
+  const passwordValue = document.getElementById('inputPassword').value 
+
   if(emailValue === '' || passwordValue === ''){
     alert('Requried sign in information is missing.');
   }
   else {
-    window.location.href = "courses.html";
-  }
   /*
     look through the login table stored with either PostgreSQL or MongoDB
     1)  if the email does not match anything in loginTable[email] (assuming we store it like {email: "email", password: "password", name: "name"}),
@@ -31,4 +28,6 @@ signInButton.addEventListener('click', () => {
     3)  if the email exists in the loginTable and the password matches --> valid sign in!
           - then link to courses.html
   */
+    window.location.href = "courses.html";
+  }
 });
