@@ -9,3 +9,11 @@ img {
   width: 4%;
   border-radius: 50%;
 }
+
+.cell {
+  background-color: #3d3a3a ;
+}
+
+.cell_selected {
+  background-color: white ;
+}
