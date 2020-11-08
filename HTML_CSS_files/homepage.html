@@ -9,22 +9,21 @@
   </head>
   <body class="text-center">
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow text-light bg-dark">
-      <!-- <h3 class="my-0 mr-md-auto font-weight-normal">LOGO</h3> -->
       <img class="img-responsive rounded float-left my-0 mr-md-auto shadow shadow-lg--hover" src="../images/RendezvousLogo.jpg" alt="Rendezvous Logo">
     </div>
     <div class="row pt-5 mt-5">
       <form class="form-signin pt-5 mt-5 mx-auto">
-        <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-        <h1 class="mb-4">LOGO</h1>
         <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
         <label for="inputEmail" class="sr-only">Email Address</label>
         <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign In</button>
-        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Register</button>
+        <a href="#" class="btn btn-lg btn-primary btn-block mt-3" role="button" id="signIn">Sign In</a>
+        <a href="register.html" class="btn btn-lg btn-primary btn-block mt-3" role="button" id="goToRegister">Register</a>
         <small>Don't have an account? Create one now!</small>
       </form>
     </div>
+
+    <script src="../js_files/homepage.js"></script> 
   </body>
 </html>

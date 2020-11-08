@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="apple-touch-icon" sizes="76x76" href="Logo.jpg">
-    <link rel="shortcut icon" href="Logo.jpg">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/Logo.jpg">
+    <link rel="shortcut icon" href="../images/Logo.jpg">
+    <link rel="stylesheet" href="main.css">
     <title>Groups</title>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -21,25 +22,25 @@
 <body class="text-center">
     <div
         class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow text-light bg-dark">
-        <img class="img-responsive rounded float-left my-0 mr-md-auto shadow shadow-lg--hover" src="RendezvousLogo.jpg"
-            alt="Rendezvous Logo" style="width: 20%;">
+        <img class="img-responsive rounded float-left my-0 mr-md-auto shadow shadow-lg--hover"
+            src="../images/RendezvousLogo.jpg" alt="Rendezvous Logo">
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-light" href="#"> My Groups </a>
             <a class="p-2 text-light" href="#"> Search </a>
             <a class="p-2 text-light" href="#"> My Courses </a>
             <a class="p-2 text-light" href="#"> Settings </a>
+        </nav>
     </div>
-    <div class="row mt-5 mb-5 mr-5">
+
+    <div class="row mr-5">
         <div class="col-3 border-right">
-            <h3 class="mb-3">Groups</h3>
-            <h5 class="mb-0">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-group1-tab" data-toggle="pill" href="#v-pills-group1"
-                        role="tab" aria-controls="v-pills-group1" aria-selected="true ">Group 1</a>
-                    <a class="nav-link" id="v-pills-group2-tab" data-toggle="pill" href="#v-pills-group2" role="tab"
-                        aria-controls="v-pills-group2" aria-selected="false">Group 2</a>
-                </div>
-            </h5>
+            <div class="nav flex-column nav-pills ml-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <h3 class="mb-3">Groups</h3>
+                <a class="nav-link active" id="v-pills-group1-tab" data-toggle="pill" href="#v-pills-group1" role="tab"
+                    aria-controls="v-pills-group1" aria-selected="true">Group 1</a>
+                <a class="nav-link" id="v-pills-group2-tab" data-toggle="pill" href="#v-pills-group2" role="tab"
+                    aria-controls="v-pills-group2" aria-selected="false">Group 2</a>
+            </div>
         </div>
 
         <div class="col">
@@ -49,9 +50,8 @@
                         <div class="tab-pane fade show active" id="v-pills-group1" role="tabpanel"
                             aria-labelledby="v-pills-group1-tab">
                             <div class="row">
-                                <img src="img_avatar2.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                    class="avatar rounded-circle">
-                                <div class="col-sm-3">
+                                <img src="../images/img_avatar2.png" class="avatar" alt="avatar">
+                                <div>
                                     <div class="card text-left">
                                         This is a sample text message.
                                     </div>
@@ -60,19 +60,17 @@
 
                             <div class="row">
                                 <div class="col"></div>
-                                <div class="col-sm-3">
-                                    <div class="card text-right" style="width: 14rem;">
+                                <div>
+                                    <div class="card text-right">
                                         This is a sample text message.
                                     </div>
                                 </div>
-                                <img src="img_avatar.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                    class="avatar rounded-circle">
+                                <img src="../images/img_avatar.png" class="avatar" alt="avatar">
                             </div>
 
                             <div class="row">
-                                <img src="img_avatar2.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                    class="avatar rounded-circle">
-                                <div class="col-sm-3">
+                                <img src="../images/img_avatar2.png" class="avatar" alt="avatar">
+                                <div>
                                     <div class="card text-left">
                                         This is a sample text message.
                                     </div>
@@ -81,102 +79,92 @@
 
                             <div class="row">
                                 <div class="col"></div>
-                                <div class="col-sm-3">
-                                    <div class="card text-right" style="width: 14rem;">
+                                <div>
+                                    <div class="card text-right">
                                         This is a sample text message.
                                     </div>
                                 </div>
-                                <img src="img_avatar.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                    class="avatar rounded-circle">
+                                <img src="../images/img_avatar.png" class="avatar" alt="avatar">
                             </div>
 
 
-                            <li class="white">
+                            <div class="white">
                                 <div class="form-group basic-textarea">
-                                    <textarea class="form-control pl-2 my-0" id="exampleFormControlTextarea2" rows="3"
+                                    <textarea class="form-control pl-2 my-0" rows="3"
                                         placeholder="Type your message here..."></textarea>
                                 </div>
-                            </li>
+                            </div>
                             <button type="button"
                                 class="btn btn-info btn-rounded btn-sm waves-effect waves-light float-right">Send</button>
                         </div>
 
                         <div class="tab-pane fade" id="v-pills-group2" role="tabpanel"
                             aria-labelledby="v-pills-group2-tab">
-                            <div class="tab-pane fade show active" id="v-pills-group2" role="tabpanel"
-                                aria-labelledby="v-pills-group2-tab">
-                                <div class="row">
-                                    <img src="img_avatar4.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                        class="avatar rounded-circle">
-                                    <div class="col-sm-3">
-                                        <div class="card text-left">
-                                            This is a sample text message.
-                                        </div>
+                            <div class="row">
+                                <img src="../images/img_avatar4.png" class="avatar" alt="avatar">
+                                <div>
+                                    <div class="card text-left">
+                                        This is a sample text message.
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col"></div>
-                                    <div class="col-sm-3">
-                                        <div class="card text-right" style="width: 14rem;">
-                                            This is a sample text message.
-                                        </div>
-                                    </div>
-                                    <img src="img_avatar3.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                        class="avatar rounded-circle">
-                                </div>
-
-                                <div class="row">
-                                    <img src="img_avatar4.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                        class="avatar rounded-circle">
-                                    <div class="col-sm-3">
-                                        <div class="card text-left">
-                                            This is a sample text message.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col"></div>
-                                    <div class="col-sm-3">
-                                        <div class="card text-right" style="width: 14rem;">
-                                            This is a sample text message.
-                                        </div>
-                                    </div>
-                                    <img src="img_avatar3.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                        class="avatar rounded-circle">
-                                </div>
-
-                                <div class="row">
-                                    <img src="img_avatar4.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                        class="avatar rounded-circle">
-                                    <div class="col-sm-3">
-                                        <div class="card text-left">
-                                            This is a sample text message.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col"></div>
-                                    <div class="col-sm-3">
-                                        <div class="card text-right" style="width: 14rem;">
-                                            This is a sample text message.
-                                        </div>
-                                    </div>
-                                    <img src="img_avatar3.png" width="45" height="45" alt="Avatar" alt="avatar"
-                                        class="avatar rounded-circle">
-                                </div>
-
-                                <li class="white">
-                                    <div class="form-group basic-textarea">
-                                        <textarea class="form-control pl-2 my-0" id="exampleFormControlTextarea2"
-                                            rows="3" placeholder="Type your message here..."></textarea>
-                                    </div>
-                                </li>
-                                <button type="button"
-                                    class="btn btn-info btn-rounded btn-sm waves-effect waves-light float-right">Send</button>
                             </div>
+
+                            <div class="row">
+                                <div class="col"></div>
+                                <div>
+                                    <div class="card text-right">
+                                        This is a sample text message.
+                                    </div>
+                                </div>
+                                <img src="../images/img_avatar3.png" class="avatar" alt="avatar">
+                            </div>
+
+                            <div class="row">
+                                <img src="../images/img_avatar4.png" class="avatar" alt="avatar">
+                                <div>
+                                    <div class="card text-left">
+                                        This is a sample text message.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col"></div>
+                                <div>
+                                    <div class="card text-right">
+                                        This is a sample text message.
+                                    </div>
+                                </div>
+                                <img src="../images/img_avatar3.png" class="avatar" alt="avatar">
+                            </div>
+
+                            <div class="row">
+                                <img src="../images/img_avatar4.png" class="avatar" alt="avatar">
+                                <div>
+                                    <div class="card text-left">
+                                        This is a sample text message.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col"></div>
+                                <div>
+                                    <div class="card text-right">
+                                        This is a sample text message.
+                                    </div>
+                                </div>
+                                <img src="../images/img_avatar3.png" class="avatar" alt="avatar">
+                            </div>
+
+                            <div class="white">
+                                <div class="form-group basic-textarea">
+                                    <textarea class="form-control pl-2 my-0" rows="3"
+                                        placeholder="Type your message here..."></textarea>
+                                </div>
+                            </div>
+                            <button type="button"
+                                class="btn btn-info btn-rounded btn-sm waves-effect waves-light float-right">Send</button>
                         </div>
                     </div>
                 </div>
