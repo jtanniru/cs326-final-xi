@@ -44,7 +44,7 @@ if (availability != {}) {
     }
     if (availability["Mon12pm"] > 0) {
         table.rows[13].cells[1].className = "cell";
-    } 
+    }
     if (availability["Mon1pm"] > 0) {
         table.rows[14].cells[1].className = "cell";
     }
@@ -80,7 +80,7 @@ if (availability != {}) {
     }
     if (availability["Tues12am"] > 0) {
         table.rows[1].cells[2].className = "cell";
-    } 
+    }
     if (availability["Tues1am"] > 0) {
         table.rows[2].cells[2].className = "cell";
     }
@@ -116,7 +116,7 @@ if (availability != {}) {
     }
     if (availability["Tues12pm"] > 0) {
         table.rows[13].cells[2].className = "cell";
-    } 
+    }
     if (availability["Tues1pm"] > 0) {
         table.rows[14].cells[2].className = "cell";
     }
@@ -152,7 +152,7 @@ if (availability != {}) {
     }
     if (availability["Wed12am"] > 0) {
         table.rows[1].cells[3].className = "cell";
-    } 
+    }
     if (availability["Wed1am"] > 0) {
         table.rows[2].cells[3].className = "cell";
     }
@@ -188,7 +188,7 @@ if (availability != {}) {
     }
     if (availability["Wed12pm"] > 0) {
         table.rows[13].cells[3].className = "cell";
-    } 
+    }
     if (availability["Wed1pm"] > 0) {
         table.rows[14].cells[3].className = "cell";
     }
@@ -224,7 +224,7 @@ if (availability != {}) {
     }
     if (availability["Thurs12am"] > 0) {
         table.rows[1].cells[4].className = "cell";
-    } 
+    }
     if (availability["Thurs1am"] > 0) {
         table.rows[2].cells[4].className = "cell";
     }
@@ -260,7 +260,7 @@ if (availability != {}) {
     }
     if (availability["Thurs12pm"] > 0) {
         table.rows[13].cells[4].className = "cell";
-    } 
+    }
     if (availability["Thurs1pm"] > 0) {
         table.rows[14].cells[4].className = "cell";
     }
@@ -294,10 +294,10 @@ if (availability != {}) {
     if (availability["Thurs11pm"] > 0) {
         table.rows[24].cells[4].className = "cell";
     }
-    
+
     if (availability["Fri12am"] > 0) {
         table.rows[1].cells[5].className = "cell";
-    } 
+    }
     if (availability["Fri1am"] > 0) {
         table.rows[2].cells[5].className = "cell";
     }
@@ -333,7 +333,7 @@ if (availability != {}) {
     }
     if (availability["Fri12pm"] > 0) {
         table.rows[13].cells[5].className = "cell";
-    } 
+    }
     if (availability["Fri1pm"] > 0) {
         table.rows[14].cells[5].className = "cell";
     }
@@ -367,10 +367,10 @@ if (availability != {}) {
     if (availability["Fri11pm"] > 0) {
         table.rows[24].cells[5].className = "cell";
     }
-    
+
     if (availability["Sat12am"] > 0) {
         table.rows[1].cells[6].className = "cell";
-    } 
+    }
     if (availability["Sat1am"] > 0) {
         table.rows[2].cells[6].className = "cell";
     }
@@ -406,7 +406,7 @@ if (availability != {}) {
     }
     if (availability["Sat12pm"] > 0) {
         table.rows[13].cells[6].className = "cell";
-    } 
+    }
     if (availability["Sat1pm"] > 0) {
         table.rows[14].cells[6].className = "cell";
     }
@@ -440,10 +440,10 @@ if (availability != {}) {
     if (availability["Sat11pm"] > 0) {
         table.rows[24].cells[6].className = "cell";
     }
-    
+
     if (availability["Sun12am"] > 0) {
         table.rows[1].cells[7].className = "cell";
-    } 
+    }
     if (availability["Sun1am"] > 0) {
         table.rows[2].cells[7].className = "cell";
     }
@@ -479,7 +479,7 @@ if (availability != {}) {
     }
     if (availability["Sun12pm"] > 0) {
         table.rows[13].cells[7].className = "cell";
-    } 
+    }
     if (availability["Sun1pm"] > 0) {
         table.rows[14].cells[7].className = "cell";
     }
@@ -1247,12 +1247,17 @@ document.getElementById('submit').addEventListener('click', () => {
 });
 
 document.getElementById('updateAcc').addEventListener('click', () => {
-    utils.saveAccountInfo();
+    // alert('try to sign');
+    if (document.getElementById('name').value === '' || document.getElementById('email').value === '' || document.getElementById('password').value === '') {
+        alert('Required sign in information is missing.');
+    } else {
+        utils.saveAccountInfo();
+    }
 });
 
 document.getElementById('clear').addEventListener('click', () => {
     availability = utils.clearState();
-    for (let i = 1; i < table.rows.length-1; i++) {
+    for (let i = 1; i < table.rows.length - 1; i++) {
         for (let j = 1; j < table.rows[i].cells.length; j++) {
             table.rows[i].cells[j].classList.add("cell-selected");
             table.rows[i].cells[j].classList.remove("cell");

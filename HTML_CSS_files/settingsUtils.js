@@ -9,10 +9,8 @@ export function saveAvailability(availability) {
 
 export function saveAccountInfo() {
     let saveData = {
-        firstName: document.getElementById('firstname').value,
-        lastName: document.getElementById('lastname').value,
+        name: document.getElementById('name').value,
         emailAddress: document.getElementById('email').value,
-        saveUsername: document.getElementById('username').value,
         phoneNum: document.getElementById('phone').value,
         savePassword: document.getElementById('password').value
     };
@@ -25,10 +23,8 @@ export function restoreAccountInfo() {
     let restoredData = JSON.parse(window.localStorage.getItem("accountState"));
 
     if (restoredData) {
-        document.getElementById('firstname').value = restoredData['firstName'];
-        document.getElementById('lastname').value = restoredData['lastName'];
+        document.getElementById('name').value = restoredData['name'];
         document.getElementById('email').value = restoredData['emailAddress'];
-        document.getElementById('username').value = restoredData['saveUsername'];
         document.getElementById('phone').value = restoredData['phoneNum'];
         document.getElementById('password').value = restoredData['savePassword'];
     }
