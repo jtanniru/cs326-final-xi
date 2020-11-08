@@ -1,3 +1,4 @@
+  
 img {
   width: 10%;
 }
@@ -5,7 +6,16 @@ img {
 #coursesSubmit {
   width: 10rem;
 }
+
 .avatar {
   width: 4%;
   border-radius: 50%;
+}
+
+.cell {
+  background-color: #3d3a3a ;
+}
+
+.cell_selected {
+  background-color: white ;
 }
