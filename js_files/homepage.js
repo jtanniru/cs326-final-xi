@@ -11,7 +11,7 @@ signInButton.addEventListener('click', () => {
   const passwordValue = document.getElementById('inputPassword').value 
 
   if(emailValue === '' || passwordValue === ''){
-    alert('Requried sign in information is missing.');
+    alert('Required sign in information is missing.');
   }
   else {
   /*

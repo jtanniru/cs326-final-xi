@@ -12,7 +12,7 @@ createAccountButton.addEventListener('click', () => {
   const nameValue = document.getElementById('createName').value; 
 
   if(emailValue === '' || passwordValue === '' || nameValue === ''){
-    alert('Requried sign in information is missing.');
+    alert('Required sign in information is missing.');
   }
 
   else {
