@@ -10,7 +10,7 @@ monday.addEventListener('click', () => {
 
 const tuesday = document.getElementById('tuesday');
 tuesday.addEventListener('click', () => {
-  if (tuesady.hasAttribute('checked')) {
+  if (tuesday.hasAttribute('checked')) {
     tuesday.removeAttribute('checked');
   }
 });
@@ -54,20 +54,24 @@ sunday.addEventListener('click', () => {
 const coursesSubmitButton = document.getElementById('coursesSubmit');
 coursesSubmitButton.addEventListener('click', () => {
   console.log("clicked button");
-  const courseNameValue = document.getElementById('courseName');
-  const professorValue = document.getElementById('professor');
-  const weekDaysDiv = document.getElementById('courseDaysList');
+  const courseNameValue = document.getElementById('inputCourseName').value;
+  const professorValue = document.getElementById('inputProfessor').value;
+  // const weekDaysDiv = document.getElementById('courseDaysList').value;
   let weekdayArray = [];
+
+  if (courseNameValue === '' || professorValue === '') {
+    alert('Required sign in information is missing.');
+  }
   
   // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
-  let weekDaysCheckboxes = weekDaysDiv.getElementsByTagName('input');
+  let weekDaysCheckboxes = document.getElementsByClassName('weekday');
   for (let i = 0; i < weekDaysCheckboxes.length; i++) {
-    if (weekDaysCheckboxes[i].hasAttribute('id')) {
-      console.log(weekDaysCheckboxes[i].id);
+    if (weekDaysCheckboxes[i].checked === true) {
+      // console.log(weekDaysCheckboxes[i].id);
       weekdayArray.push(weekDaysCheckboxes[i].id);
     }
   }
-  console.log(weekdayArray);  
+  console.log("weekdays: ", weekdayArray);  
   
   // database: insert an object with the information {email: 'unique email of user / or name?', courseName: 'course name', professor: 'professor', courseDays: [course days]}
 });
