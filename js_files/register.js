@@ -10,9 +10,6 @@ createAccountButton.addEventListener('click', () => {
   const emailValue = document.getElementById('createEmail').value; 
   const passwordValue = document.getElementById('createPassword').value; 
   const nameValue = document.getElementById('createName').value; 
-  console.log(emailValue);
-  console.log(passwordValue);
-  console.log(nameValue);
 
   if(emailValue === '' || passwordValue === '' || nameValue === ''){
     alert('Requried sign in information is missing.');
