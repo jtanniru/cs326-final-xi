@@ -2,6 +2,7 @@ import * as utils from "./settingsUtils.js";
 
 let table = document.getElementById("tableID");
 let availability = {};
+//get saved ability from database of user information, load if available
 availability = utils.restoreAvailability();
 utils.restoreAccountInfo();
 
@@ -1242,12 +1243,13 @@ function tableText(cell, i, j) {
     }
 }
 
+//database: insert an object with the user availability to save
 document.getElementById('submit').addEventListener('click', () => {
     utils.saveAvailability(availability);
 });
 
+//database: insert an object with the user account information ({name: name, emailAddress: email, phoneNum: phone, savePassword: password})
 document.getElementById('updateAcc').addEventListener('click', () => {
-    // alert('try to sign');
     if (document.getElementById('name').value === '' || document.getElementById('email').value === '' || document.getElementById('password').value === '') {
         alert('Required sign in information is missing.');
     } else {
@@ -1255,6 +1257,7 @@ document.getElementById('updateAcc').addEventListener('click', () => {
     }
 });
 
+//database: remove saved availability information
 document.getElementById('clear').addEventListener('click', () => {
     availability = utils.clearState();
     for (let i = 1; i < table.rows.length - 1; i++) {
