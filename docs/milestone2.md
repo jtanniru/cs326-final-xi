@@ -23,5 +23,5 @@ courseDays, courseTimes
 
 /user/id/courses/update?courseName='temp course'&professor='temp prof'&(other info to be updated) which updates a given course(i.e. when the user changes class timings)
 
-/user/id/courses/delete?courseName= ''which deletes a given course(i.e. when the user drops the class or moves on to a new semester)
+/user/id/courses/delete?cid= ''which deletes a given course(i.e. when the user drops the class or moves on to a new semester)
 

@@ -46,7 +46,11 @@ async function createCoursesTable() {
 
 
 async function createUsersTable() {
-	return await connectAndRun(db => db.none('CREATE TABLE Users (email VARCHAR(100) PRIMARY KEY, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100) NOT NULL, Timezone password VARCHAR(100));')); //have to add availability and list of courses 
+	return await connectAndRun(db => db.none('CREATE TABLE Users (email VARCHAR(100) PRIMARY KEY, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100) NOT NULL, Timezone password VARCHAR(100), availability [], cids TEXT [] );')); //have to add availability and list of classes 
+}
+
+async function createClassesTable() {
+	return await connectAndRun(db => db.none('CREATE TABLE Classes (email VARCHAR(100), cid VARCHAR(100);')); 
 }
 
 async function addUser(email, password) {
@@ -57,7 +61,6 @@ async function getUser(email) {
     return await connectAndRun(db => db.one('SELECT password FROM Users Where email = $1;', [email]));
 }
 
-
 async function addCourse(cid, course_title, course_subject, professor_name, course_number, course_days, course_time) {
     return await connectAndRun(db => db.none('INSERT INTO Courses (cid, course_title, course_subject, professor_name, course_number, course_days, course_time) VALUES ($1, $2, $3, $4, $5, $6, $7);', [ cid, course_title, course_subject, professor_name, course_number, course_days, course_time]));   
 }
@@ -66,7 +69,17 @@ async function getCourses() {
     return await connectAndRun(db => db.any('SELECT * FROM Courses;'));
 }
 
+async function addClass(cid, email) {
+    return await connectAndRun(db => db.none('INSERT INTO Classes (cid, email) VALUES ($1, $2, $3);', [cid, email]));   
+}
 
+async function getClasses() {
+    return await connectAndRun(db => db.any('SELECT * FROM Courses;'));
+}
+
+async function deleteClasses(email, cid) {
+    return await connectAndRun(db => db.none('DELETE FROM Classes WHERE email = $1 and cid = $2;', [email,cid]));
+}
 
 
 
@@ -80,7 +93,8 @@ app.use(express.static('../HTML_CSS_files'));
 
 app.get('/', async (req, res) => {
 	await createCoursesTable();
-	await createUsersTable();
+    await createUsersTable();
+    await createClassesTable();
     res.send("OK");
 });
 
@@ -102,23 +116,25 @@ app.get('/course/new', async (req, res) => {
 app.get('/course/CID', async (req, res) => {
     const courses = await getCourses();
     res.send(JSON.stringify(courses));
-    res.send("OK");
 });
 
 app.get('/user/id/classes/new', async (req, res) => {
+    await addClass(req.query.sid, req.query.cid, req.query.email);
     res.send("OK");
 });
 
-app.post('/user/id/classes/view', function (req, res) {
-	res.send('Got a POST request');
+app.post('/user/id/classes/view', async function (req, res) {
+	const classes = await getClasses();
+    res.send(JSON.stringify(classes));
   });
 
 app.get("/user/id/classes/delete", async (req, res) => {
-    res.send("");
+    await deleteClasses(req.query.email, req.query.cid);
+    res.send("OK");
 });
 
-app.get('*', (req, res) => {
-    res.send('NO FOOL');
-});
+// app.get('*', (req, res) => {
+//     res.send('NO FOOL');
+// });
 
 app.listen(process.env.PORT || 8080);
