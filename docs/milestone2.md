@@ -26,3 +26,8 @@ courseDays, courseTimes
 /user/id/courses/delete?cid= ''which deletes a given course(i.e. when the user drops the class or moves on to a new semester)
 
  https://cs326-xi.herokuapp.com
+ 
+ # Breakdown of Division of Labor
+ Janvi: server functionality (server.js)
+ Olivia: settings.html, search.html, settings,js, search.js (front end with js)
+ JengYu: register.html, homepage.html, courses.html, register.js, homepage.js, courses.js (front end with js)
