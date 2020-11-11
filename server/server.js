@@ -58,7 +58,7 @@ async function addUser(email, password) {
 }
 
 async function getUser(email) {
-    return await connectAndRun(db => db.one('SELECT password FROM Users Where email = $1;', [email]));
+    return await connectAndRun(db => db.one('SELECT * FROM Users Where email = $1;', [email]));
 }
 
 async function addCourse(cid, course_title, course_subject, professor_name, course_number, course_days, course_time) {
@@ -81,8 +81,6 @@ async function deleteClasses(email, cid) {
     return await connectAndRun(db => db.none('DELETE FROM Classes WHERE email = $1 and cid = $2;', [email,cid]));
 }
 
-
-
 // EXPRESS SETUP
 
 const app = express();
@@ -104,8 +102,8 @@ app.get('/register', async (req, res) => {
 });
 
 app.get('/login', async (req, res) => {
-    const password = await getUser();
-    res.send(JSON.stringify(password));
+    const userInfo = await getUser(req.query.email);
+    res.send(JSON.stringify(userInfo));
 });
 
 app.get('/course/new', async (req, res) => {

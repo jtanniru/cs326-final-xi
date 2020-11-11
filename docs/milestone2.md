@@ -25,3 +25,4 @@ courseDays, courseTimes
 
 /user/id/courses/delete?cid= ''which deletes a given course(i.e. when the user drops the class or moves on to a new semester)
 
+ https://cs326-xi.herokuapp.com

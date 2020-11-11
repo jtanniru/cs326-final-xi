@@ -5,16 +5,19 @@ console.log("homepage.js running");
 const signInButton = document.getElementById('signIn');
 signInButton.addEventListener('click', () => {
   // get inputEmail value
-  const emailValue = document.getElementById('inputEmail').value;
+  const emailValue = document.getElementById('inputEmail').value
 
   // get inputPassword value
-  const passwordValue = document.getElementById('inputPassword').value; 
+  const passwordValue = document.getElementById('inputPassword').value 
 
   if(emailValue === '' || passwordValue === ''){
     alert('Required sign in information is missing.');
   }
-
   else {
+
+    const loginReq = await fetch('./login');
+    //const loginInfo = loginReq.ok ? await loginReq.json() : [];
+
   /*
     look through the login table stored with either PostgreSQL or MongoDB
     1)  if the email does not match anything in loginTable[email] (assuming we store it like {email: "email", password: "password", name: "name"}),
@@ -32,6 +35,3 @@ signInButton.addEventListener('click', () => {
     window.location.href = "courses.html";
   }
 });
-
-/*homepage.js will only contain get statements from the sql tables */
-
