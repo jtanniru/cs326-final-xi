@@ -15,12 +15,13 @@ createAccountButton.addEventListener('click', async () => {
     alert('Required sign in information is missing.');
   }
   else {
+
+
     const response = await fetch('/register', {
       method: 'POST',
       body: JSON.stringify({
           email: emailValue ,
           password: passwordValue,
-          name: nameValue
       })
     });
 
