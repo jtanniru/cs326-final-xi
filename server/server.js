@@ -41,16 +41,16 @@ async function connectAndRun(task) {
 //Database functions
 
 async function createCoursesTable() {
-    return await connectAndRun(db => db.none('CREATE TABLE Courses (cid INT PRIMARY KEY, course_title VARCHAR(100), course_subject VARCHAR(100), professor_name  VARCHAR(100), course_number  VARCHAR(100), course_days VARCHAR(100), course_time  VARCHAR(100));'));
+    return await connectAndRun(db => db.none('CREATE TABLE [IF NOT EXISTS] Courses (cid INT PRIMARY KEY, course_title VARCHAR(100), course_subject VARCHAR(100), professor_name  VARCHAR(100), course_number  VARCHAR(100), course_days VARCHAR(100), course_time  VARCHAR(100));'));
 }
 
 
 async function createUsersTable() {
-	return await connectAndRun(db => db.none('CREATE TABLE Users (email VARCHAR(100) PRIMARY KEY, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100) NOT NULL, Timezone password VARCHAR(100), availability [], cids TEXT [] );')); //have to add availability and list of classes 
+	return await connectAndRun(db => db.none('CREATE TABLE [IF NOT EXISTS] Users (email VARCHAR(100) PRIMARY KEY, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100) NOT NULL, Timezone password VARCHAR(100), availability [], cids TEXT [] );')); //have to add availability and list of classes 
 }
 
 async function createClassesTable() {
-	return await connectAndRun(db => db.none('CREATE TABLE Classes (email VARCHAR(100), cid VARCHAR(100);')); 
+	return await connectAndRun(db => db.none('CREATE TABLE [IF NOT EXISTS] Classes (email VARCHAR(100), cid VARCHAR(100);')); 
 }
 
 async function addUser(email, password) {
