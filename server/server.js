@@ -37,24 +37,38 @@ async function connectAndRun(task) {
     }
 }
 
+// Two tables Users and Courses 
 //Database functions
 
 async function createCoursesTable() {
-    return await connectAndRun(db => db.none('CREATE TABLE Courses (cid INT PRIMARY KEY, course_title VARCHAR(100), course_subject VARCHAR(100), professor_name  VARCHAR(100), course_number  VARCHAR(100), course_days  VARCHAR(100), course_time  VARCHAR(100));'));
+    return await connectAndRun(db => db.none('CREATE TABLE Courses (cid INT PRIMARY KEY, course_title VARCHAR(100), course_subject VARCHAR(100), professor_name  VARCHAR(100), course_number  VARCHAR(100), course_days VARCHAR(100), course_time  VARCHAR(100));'));
 }
 
 
 async function createUsersTable() {
-	return await connectAndRun(db => db.none('CREATE TABLE Users (email VARCHAR(100) PRIMARY KEY, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100) NOT NULL, Timezone password VARCHAR(100));')); //have to add availability
+	return await connectAndRun(db => db.none('CREATE TABLE Users (email VARCHAR(100) PRIMARY KEY, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100) NOT NULL, Timezone password VARCHAR(100));')); //have to add availability and list of courses 
 }
 
- async function addUser(email, password) {
-    return await connectAndRun(db => db.none("INSERT INTO Users (email, password) VALUES ($1, $2);", [email, password]));   
+async function addUser(email, password) {
+    return await connectAndRun(db => db.none('INSERT INTO Users (email, password) VALUES ($1, $2);', [email, password]));   
 }
 
 async function getUser(email) {
-    return await connectAndRun(db => db.any("SELECT password FROM Users Where email = $1;", [email]));
+    return await connectAndRun(db => db.one('SELECT password FROM Users Where email = $1;', [email]));
 }
+
+
+async function addCourse(cid, course_title, course_subject, professor_name, course_number, course_days, course_time) {
+    return await connectAndRun(db => db.none('INSERT INTO Courses (cid, course_title, course_subject, professor_name, course_number, course_days, course_time) VALUES ($1, $2, $3, $4, $5, $6, $7);', [ cid, course_title, course_subject, professor_name, course_number, course_days, course_time]));   
+}
+
+async function getCourses() {
+    return await connectAndRun(db => db.any('SELECT * FROM Courses;'));
+}
+
+
+
+
 
 // EXPRESS SETUP
 
@@ -80,12 +94,14 @@ app.get('/login', async (req, res) => {
     res.send(JSON.stringify(password));
 });
 
-
 app.get('/course/new', async (req, res) => {
+    await addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });
 
 app.get('/course/CID', async (req, res) => {
+    const courses = await getCourses();
+    res.send(JSON.stringify(courses));
     res.send("OK");
 });
 

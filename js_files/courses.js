@@ -76,6 +76,21 @@ coursesSubmitButton.addEventListener('click', () => {
   // database: insert an object with the information {email: 'unique email of user / or name?', courseName: 'course name', professor: 'professor', courseDays: [course days]}
 });
 
+// const response = await fetch('/new/courses', {
+//   method: 'POST',
+//   body: JSON.stringify({
+//       email: emailValue ,
+//       password: passwordValue,
+//   })
+// });
+
+// if (!response.ok) {
+//   console.error("Could not save the user to the server.");
+// }
+// else{
+//   console.log("user added.");
+// }
+
 // event listener on load that encompasses all of these other listeners
 
 // add in a way to create a new tab or div or something to store the text/info of the new course once it's created (think about when to delete them? or if they should be in a table, not tabs)

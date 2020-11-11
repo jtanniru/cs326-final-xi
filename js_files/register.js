@@ -1,4 +1,5 @@
 'use strict';
+//import faker from 'faker';
 
 console.log("register.js running");
 
@@ -15,7 +16,6 @@ createAccountButton.addEventListener('click', async () => {
     alert('Required sign in information is missing.');
   }
   else {
-
 
     const response = await fetch('/register', {
       method: 'POST',
@@ -37,17 +37,10 @@ createAccountButton.addEventListener('click', async () => {
 });
 
 
+ 
+//     var randomName = faker.name.findName(); // Rowan Nikolaus
+//     var randomEmail = faker.internet.email(); // Kassandra.Haley@erich.biz
 
-
-// async function () {
-//   const response = await fetch("dictionary.json");
-//   if (!response.ok) {
-//       console.log(response.error);
-//       return;
-//   }
-
-//   // We make dictionary a global.
-//   window.dictionary = await response.json();
 
 
 
