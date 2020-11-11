@@ -121,6 +121,11 @@ app.get('/user/id/classes/new', async (req, res) => {
     res.send("OK");
 });
 
+// app.get('/user/id/search/new', async (req, res) => {
+//     await addClass(req.query.sid, req.query.cid, req.query.email);
+//     res.send("OK");
+// });
+
 app.post('/user/id/classes/view', async function (req, res) {
 	const classes = await getClasses();
     res.send(JSON.stringify(classes));
