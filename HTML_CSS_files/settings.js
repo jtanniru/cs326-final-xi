@@ -5,7 +5,7 @@ let availability = {};
 availability = utils.restoreAvailability();
 utils.restoreAccountInfo();
 
-if (availability != {}) {
+if (availability !== {}) {
     if (availability["Mon12am"] > 0) {
         table.rows[1].cells[1].className = "cell";
     }
@@ -517,7 +517,7 @@ if (availability != {}) {
 
 
 // table.classList.add("cell");
-if (table != null) {
+if (table !== null) {
     for (let i = 1; i < table.rows.length; i++) {
         for (let j = 1; j < table.rows[i].cells.length; j++) {
             // alert (table.rows.length);
@@ -532,7 +532,7 @@ if (table != null) {
 }
 
 function tableText(cell, i, j) {
-    if (cell.className == "cell") {
+    if (cell.className === "cell") {
         cell.className = "cell-selected";
         if (j === 1) {
             if (i === 1) {
@@ -885,7 +885,7 @@ function tableText(cell, i, j) {
                 availability["Sun11pm"] = 0;
             }
         }
-    } else if (cell.className == "cell-selected") {
+    } else if (cell.className === "cell-selected") {
         cell.className = "cell";
         //alert("wasnt selected, but now is!");
         if (j === 1) {
