@@ -29,5 +29,7 @@ courseDays, courseTimes
  
  # Breakdown of Division of Labor
  Janvi: server functionality (server.js)
+ 
  Olivia: settings.html, search.html, settings,js, search.js (front end with js)
+ 
  JengYu: register.html, homepage.html, courses.html, register.js, homepage.js, courses.js (front end with js)
