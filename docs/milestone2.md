@@ -25,5 +25,3 @@ courseDays, courseTimes
 
 /user/id/courses/delete?courseName= ''which deletes a given course(i.e. when the user drops the class or moves on to a new semester)
 
-Flow Chart Screenshot:
-![flowchart](../images/flowchart.png)

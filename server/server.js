@@ -133,17 +133,20 @@
 //     console.log(`Example app listening at http://localhost:${port}`);
 // });
 
+import pgPromise from "pg-promise";
+const pgp = pgPromise({});
+import * as _express from "express";
+const express = _express["default"];
+// const express = require("express");
+// const pgp = require("pg-promise")({
+//     connect(client) {
+//         console.log('Connected to database:', client.connectionParameters.database);
+//     },
 
-const express = require("express");
-const pgp = require("pg-promise")({
-    connect(client) {
-        console.log('Connected to database:', client.connectionParameters.database);
-    },
-
-    disconnect(client) {
-        console.log('Disconnected from database:', client.connectionParameters.database);
-    }
-});
+//     disconnect(client) {
+//         console.log('Disconnected from database:', client.connectionParameters.database);
+//     }
+// });
 
 // Local PostgreSQL credentials
 const username = "postgres";
@@ -151,6 +154,9 @@ const password = "admin";
 
 const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
 const db = pgp(url);
+
+app.use('/', express.static('./js_files'));
+app.use('/', express.static('./HTML_CSS_filesfiles'));
 
 async function connectAndRun(task) {
     let connection = null;
@@ -175,18 +181,17 @@ async function connectAndRun(task) {
 //Database functions
 
 async function createCoursesTable() {
-    return await connectAndRun(db => db.none("CREATE TABLE Courses (cid INT PRIMARY KEY, course_title VARCHAR(100), course_subject VARCHAR(100), professor_name  VARCHAR(100), course_number  VARCHAR(100), course_days  VARCHAR(100), course_time  VARCHAR(100) );"));
+    return await connectAndRun(db => db.none('CREATE TABLE Courses (cid INT PRIMARY KEY, course_title VARCHAR(100), course_subject VARCHAR(100), professor_name  VARCHAR(100), course_number  VARCHAR(100), course_days  VARCHAR(100), course_time  VARCHAR(100));'));
 }
 
 
 async function createUsersTable() {
-	return await connectAndRun(db => db.none("CREATE TABLE Users (user_id SERIAL PRIMARY KEY ,email VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100));"));
+	return await connectAndRun(db => db.none('CREATE TABLE Users (email VARCHAR(100) PRIMARY KEY, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), password VARCHAR(100) NOT NULL, Timezone password VARCHAR(100));')); //have to add availability
 }
 
-// async function addCourses() {
-// 	return await connectAndRun(db => db.none("INSERT INTO Books VALUES ($1, $2, $3);", [isbn, author, title]));
-   
-// }
+ async function addUser(email, password) {
+    return await connectAndRun(db => db.none("INSERT INTO Users (email, password) VALUES ($1, $2);", [email, password]));   
+}
 
 // async function getCourses() {
 //     return await connectAndRun(db => db.any("SELECT * FROM courses;"));
@@ -196,7 +201,9 @@ async function createUsersTable() {
 
 const app = express();
 
-//app.use('/', express.static('./html'));
+//serving static files
+app.use(express.static('../js_files'));
+app.use(express.static('../HTML_CSS_files'));
 
 app.get('/', async (req, res) => {
 	await createCoursesTable();
@@ -213,10 +220,12 @@ app.get('/course/CID', async (req, res) => {
 });
 
 app.get('/register', async (req, res) => {
+    await addUser(req.query.email, req.query.password);
     res.send("OK");
 });
 
 app.get('/login', async (req, res) => {
+    
     res.send("OK");
 });
 

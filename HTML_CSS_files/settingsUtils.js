@@ -34,7 +34,7 @@ export function restoreAvailability() {
     let restoredData = JSON.parse(window.localStorage.getItem("availabilityState"));
     if (restoredData) {
         document.getElementById('timezone').value = restoredData['zone'];
-        if (restoredData['avail'] != {}) {
+        if (restoredData['avail'] !== {}) {
             return restoredData['avail'];
         } else {
             let availability = {};
