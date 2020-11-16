@@ -76,23 +76,27 @@ coursesSubmitButton.addEventListener('click', () => {
   // database: insert an object with the information {email: 'unique email of user / or name?', courseName: 'course name', professor: 'professor', courseDays: [course days]}
 });
 
-// const response = await fetch('/new/courses', {
-//   method: 'POST',
-//   body: JSON.stringify({
-//       email: emailValue ,
-//       password: passwordValue,
-//   })
-// });
-
-// if (!response.ok) {
-//   console.error("Could not save the user to the server.");
-// }
-// else{
-//   console.log("user added.");
-// }
-
 // event listener on load that encompasses all of these other listeners
 
 // add in a way to create a new tab or div or something to store the text/info of the new course once it's created (think about when to delete them? or if they should be in a table, not tabs)
 // so get rid of the Add tab and make that a header instead. keep the rest of the gray div. make an empty table with just headers, then when a new course is added, add the course info to each
 // appropriate header/column and insert the data into the database (pg-promise if we use Heroku PostgreSQL)
+
+// TODO: FILL TABLE OF EXISTING USER COURSES
+// Follow this code but call different endpoints and table data
+// const wordScoresRequest = await fetch('./highestWordScores');
+// const wordScoresData = wordScoresRequest.ok ? await wordScoresRequest.json() : [];
+
+// for (const wordScore of wordScoresData) {
+//     const tr = document.createElement('tr');
+//     const name  = document.createElement('td');
+//     const word  = document.createElement('td');
+//     const score  = document.createElement('td');
+//     name.innerText = wordScore.name;
+//     word.innerText = wordScore.word;
+//     score.innerText = wordScore.score;
+//     tr.appendChild(name);
+//     tr.appendChild(word);
+//     tr.appendChild(score);
+//     document.getElementById('word-scores-table').appendChild(tr);
+// }
