@@ -22,6 +22,7 @@ createAccountButton.addEventListener('click', async () => {
       body: JSON.stringify({
           email: emailValue ,
           password: passwordValue,
+          name: nameValue
       })
     });
 
