@@ -1,4 +1,3 @@
-  
 img {
   width: 10%;
 }
@@ -18,4 +17,17 @@ img {
 
 .cell_selected {
   background-color: white ;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  /* border: 1px solid black; */
+  padding: 10px;
 }
