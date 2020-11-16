@@ -1,6 +1,5 @@
-
 'use strict';
-
+//import * as utils from "./database.js";
 import pgp from "pg-promise";
 //const pgp = pgPromise({});
 import * as _express from "express";
@@ -13,8 +12,7 @@ const password = "admin";
 const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
 const db = pgp()(url);
 
-app.use('/', express.static('./js_files'));
-app.use('/', express.static('./HTML_CSS_filesfiles'));
+app.use('/', express.static('./client'));
 
 async function connectAndRun(task) {
     let connection = null;
@@ -107,38 +105,33 @@ app.get('/login', async (req, res) => {
     res.send(JSON.stringify(userInfo));
 });
 
-app.get('/course/new', async (req, res) => {
+app.get('/course/id/new', async (req, res) => {
     await addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });
 
-app.get('/course/CID', async (req, res) => {
-    const courses = await getCourses();
-    res.send(JSON.stringify(courses));
-});
-
-app.get('/user/id/classes/new', async (req, res) => {
-    await addClass(req.query.sid, req.query.cid, req.query.email);
+app.get('/course/id/delete', async (req, res) => {
+    await addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });
 
-// app.get('/user/id/search/new', async (req, res) => {
-//     await addClass(req.query.sid, req.query.cid, req.query.email);
-//     res.send("OK");
-// });
-
-app.post('/user/id/classes/view', async function (req, res) {
+app.post('/user/id/settings/add', async function (req, res) {
 	const classes = await getClasses();
     res.send(JSON.stringify(classes));
   });
 
-app.get("/user/id/classes/delete", async (req, res) => {
+app.get("/user/id/settings/delete", async (req, res) => {
     await deleteClasses(req.query.email, req.query.cid);
     res.send("OK");
 });
 
-// app.get('*', (req, res) => {
-//     res.send('NO FOOL');
-// });
+app.get('/user/id/search', async (req, res) => {
+    await addClass(req.query.sid, req.query.cid, req.query.email);
+    res.send("OK");
+});
+
+app.get('*', (req, res) => {
+    res.send('NO FOOL');
+});
 
 app.listen(process.env.PORT || 8080);
