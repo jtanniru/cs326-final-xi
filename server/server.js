@@ -194,7 +194,7 @@ app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
 
-//import * as utils from "./database.js";
+import * as utils from "./database.js";
 import pgp from "pg-promise";
 //const pgp = pgPromise({});
 import * as _express from "express";
@@ -231,34 +231,6 @@ async function connectAndRun(task) {
 }
 
 // Three tables Users, Courses, Attend
-//Database functions
-async function addUser(email, password) {
-    return await connectAndRun(db => db.none('INSERT INTO Users (email, password) VALUES ($1, $2);', [email, password]));   
-}
-
-async function getUser(email) {
-    return await connectAndRun(db => db.one('SELECT * FROM Users Where email = $1;', [email]));
-}
-
-async function addCourse(cid, course_title, course_subject, professor_name, course_number, course_days, course_time) {
-    return await connectAndRun(db => db.none('INSERT INTO Courses (cid, course_title, course_subject, professor_name, course_number, course_days, course_time) VALUES ($1, $2, $3, $4, $5, $6, $7);', [ cid, course_title, course_subject, professor_name, course_number, course_days, course_time]));   
-}
-
-async function getCourses() {
-    return await connectAndRun(db => db.any('SELECT * FROM Courses;'));
-}
-
-async function addClass(cid, email) {
-    return await connectAndRun(db => db.none('INSERT INTO Classes (cid, email) VALUES ($1, $2, $3);', [cid, email]));   
-}
-
-async function getClasses() {
-    return await connectAndRun(db => db.any('SELECT * FROM Courses;'));
-}
-
-async function deleteClasses(email, cid) {
-    return await connectAndRun(db => db.none('DELETE FROM Classes WHERE email = $1 and cid = $2;', [email,cid]));
-}
 
 // EXPRESS SETUP
 
@@ -277,37 +249,37 @@ app.get('/', async (req, res) => {
 
 app.post('/register', async (req, res) => {
 
-    await addUser(req.query.email, req.query.password);
+    await utils.addUser(req.query.email, req.query.password);
     res.send("OK");
 });
 
 app.get('/login', async (req, res) => {
-    const userInfo = await getUser(req.query.email);
+    const userInfo = await utils.getUser(req.query.email);
     res.send(JSON.stringify(userInfo));
 });
 
 app.get('/course/id/new', async (req, res) => {
-    await addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+    await utils.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });
 
 app.get('/course/id/delete', async (req, res) => {
-    await addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+    await utils.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });
 
 app.post('/user/id/settings/add', async function (req, res) {
-	const classes = await getClasses();
+	const classes = await utils.getClasses();
     res.send(JSON.stringify(classes));
   });
 
 app.get("/user/id/settings/delete", async (req, res) => {
-    await deleteClasses(req.query.email, req.query.cid);
+    await utils.deleteClasses(req.query.email, req.query.cid);
     res.send("OK");
 });
 
 app.get('/user/id/search', async (req, res) => {
-    await addClass(req.query.sid, req.query.cid, req.query.email);
+    await utils.addClass(req.query.sid, req.query.cid, req.query.email);
     res.send("OK");
 });
 
