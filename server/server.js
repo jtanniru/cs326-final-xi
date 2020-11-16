@@ -1,8 +1,8 @@
 
 'use strict';
 
-import pgPromise from "pg-promise";
-const pgp = pgPromise({});
+import pgp from "pg-promise";
+//const pgp = pgPromise({});
 import * as _express from "express";
 const express = _express["default"];
 
@@ -11,7 +11,7 @@ const username = "postgres";
 const password = "admin";
 
 const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
-const db = pgp(url);
+const db = pgp()(url);
 
 app.use('/', express.static('./js_files'));
 app.use('/', express.static('./HTML_CSS_filesfiles'));
@@ -96,7 +96,8 @@ app.get('/', async (req, res) => {
     res.send("OK");
 });
 
-app.get('/register', async (req, res) => {
+app.post('/register', async (req, res) => {
+
     await addUser(req.query.email, req.query.password);
     res.send("OK");
 });
