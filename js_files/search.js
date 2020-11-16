@@ -13,3 +13,6 @@ const userDaysList = document.getElementById('listOfDays');
 
 // for Timezones
 const userTimezoneList = document.getElementById('listOfTimezones');
+
+// all GET requests, no POSTS
+// once you do GET requests for each section, you can do SQL command to SELECT from table(s)
