@@ -35,7 +35,7 @@ async function connectAndRun(task) {
     }
 }
 
-// Two tables Users and Courses 
+// Three tables Users, Courses, Attend
 //Database functions
 
 async function createCoursesTable() {
