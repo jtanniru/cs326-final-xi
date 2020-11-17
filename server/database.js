@@ -11,6 +11,7 @@
 // (1 row)
 
 
+
 //Database functions
 export async function addUser(email, password) {
     return await connectAndRun(db => db.none('INSERT INTO Users (email, password) VALUES ($1, $2);', [email, password]));   
