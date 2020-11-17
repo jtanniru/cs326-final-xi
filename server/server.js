@@ -1,16 +1,50 @@
 'use strict';
-// For loading environment variables.
-//require('dotenv').config();
 
-import config from 'dotenv';
-import express, { json, urlencoded, static } from 'express';                 // express routing
-import expressSession from 'express-session';  // for managing session state
-import { use, initialize, session as _session, serializeUser, deserializeUser, authenticate } from 'passport';               // handles authentication
-import { Strategy as LocalStrategy } from 'passport-local'; // username/password strategy
+// For loading environment variables.
+require('dotenv').config();
+
+import * as utils from "./database.js";
+import pgp from "pg-promise";
+const express = require('express');                 // express routing
+const expressSession = require('express-session');  // for managing session state
+const passport = require('passport');               // handles authentication
+const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 const app = express();
 const port = process.env.PORT || 3000;
+const minicrypt = require('./miniCrypt');
+// Local PostgreSQL credentials
+const username = "postgres";
+const password = "admin";
 
-config();
+const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
+const db = pgp()(url);
+
+
+
+async function connectAndRun(task) {
+    let connection = null;
+
+    try {
+        connection = await db.connect();
+        return await task(connection);
+	} 
+	// eslint-disable-next-line no-useless-catch
+	catch (e) {
+        throw e;
+	} 
+	finally {
+        try {
+            connection.done();
+		} 
+		// eslint-disable-next-line no-empty
+		catch(ignored) {
+        }
+    }
+}
+
+
+const mc = new minicrypt();
+
 // Session configuration
 
 const session = {
@@ -43,26 +77,35 @@ const strategy = new LocalStrategy(
 // App configuration
 
 app.use(expressSession(session));
-use(strategy);
-app.use(initialize());
-app.use(_session());
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Convert user object to a unique identifier.
-serializeUser((user, done) => {
+passport.serializeUser((user, done) => {
     done(null, user);
 });
 // Convert a unique identifier to a user object.
-deserializeUser((uid, done) => {
+passport.deserializeUser((uid, done) => {
     done(null, uid);
 });
 
-app.use(json()); // allow JSON inputs
-app.use(urlencoded({'extended' : true})); // allow URLencoded data
+app.use(express.json()); // allow JSON inputs
+app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
 
 /////
 
 // we use an in-memory "database"; this isn't persistent but is easy
-let users = { 'emery' : 'compsci326' } // default user
+
+console.log(mc.hash('compsci326'));
+
+// let users = { 'emery' : 'compsci326' } // default user
+let users = { 'emery' : [
+  '2401f90940e037305f71ffa15275fb0d',
+  '61236629f33285cbc73dc563cfc49e96a00396dc9e3a220d7cd5aad0fa2f3827d03d41d55cb2834042119e5f495fc3dc8ba3073429dd5a5a1430888e0d115250'
+] };
+
+let userMap = {};
 
 // Returns true iff the user exists.
 function findUser(username) {
@@ -73,27 +116,26 @@ function findUser(username) {
     }
 }
 
+// TODO
 // Returns true iff the password is the one we have stored (in plaintext = bad but easy).
 function validatePassword(name, pwd) {
     if (!findUser(name)) {
 	return false;
-    }
-    if (users[name] !== pwd) {
-	return false;
-    }
-    return true;
+	}
+	const key = users[name];
+	const res = mc.check(pwd, key[0], key[1]);
+    return res;
 }
 
 // Add a user to the "database".
-// Return true if added, false otherwise (because it was already there).
 // TODO
 function addUser(name, pwd) {
-	// TODO
-	if(findUser(name)){
-		return false;
+    if (findUser(name)) {
+	return false;
 	}
 	else{
-		users[name] = pwd;
+		const [salt, hash] = mc.hash(pwd);
+		users[name] = [salt, hash];
 		return true;
 	}
 }
@@ -118,7 +160,7 @@ app.get('/',
 
 // Handle post data from the login.html form.
 app.post('/login',
-	 authenticate('local' , {     // use username/password authentication
+	 passport.authenticate('local' , {     // use username/password authentication
 	     'successRedirect' : '/private',   // when we login, go to /private 
 	     'failureRedirect' : '/login'      // otherwise, back to login
 	 }));
@@ -135,25 +177,19 @@ app.get('/logout', (req, res) => {
 });
 
 
-// Add a new user and password IFF one doesn't exist already.
+// Like login, but add a new user and password IFF one doesn't exist already.
 // If we successfully add a new user, go to /login, else, back to /register.
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
-// TODO
 app.post('/register',
 	 (req, res) => {
 	     const username = req.body['username'];
 	     const password = req.body['password'];
-		 // Check if we successfully added the user.
-	     // If so, redirect to '/login'
-	     // If not, redirect to '/register'.
-		 if(addUser(username, password)){
-			res.redirect('/login');
-		 }
-		 else{
-			res.redirect('/register');
-		 }
-	     
+	     if (addUser(username, password)) {
+		 res.redirect('/login');
+	     } else {
+		 res.redirect('/register');
+	     }
 	 });
 
 // Register URL
@@ -183,7 +219,8 @@ app.get('/private/:userID/',
 	    }
 	});
 
-app.use(static('html'));
+app.use(express.static('client'));
+//app.use(express.static('html'));
 
 app.get('*', (req, res) => {
   res.send('Error');
@@ -193,51 +230,10 @@ app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
 
-import * as utils from "./database.js";
-import pgp from "pg-promise";
-//const pgp = pgPromise({});
-import * as _express from "express";
-const express = _express["default"];
 
-// Local PostgreSQL credentials
-const username = "postgres";
-const password = "admin";
 
-const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
-const db = pgp()(url);
-
-app.use('/', express.static('./client'));
-
-async function connectAndRun(task) {
-    let connection = null;
-
-    try {
-        connection = await db.connect();
-        return await task(connection);
-	} 
-	// eslint-disable-next-line no-useless-catch
-	catch (e) {
-        throw e;
-	} 
-	finally {
-        try {
-            connection.done();
-		} 
-		// eslint-disable-next-line no-empty
-		catch(ignored) {
-        }
-    }
-}
 
 // Three tables Users, Courses, Attend
-
-// EXPRESS SETUP
-
-const app = express();
-
-//serving static files
-app.use(express.static('../js_files'));
-app.use(express.static('../HTML_CSS_files'));
 
 app.get('/', async (req, res) => {
 	await createCoursesTable();
@@ -286,4 +282,3 @@ app.get('*', (req, res) => {
     res.send('NO FOOL');
 });
 
-app.listen(process.env.PORT || 8080);
