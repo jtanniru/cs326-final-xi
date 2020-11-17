@@ -9,8 +9,38 @@
 // --------------------+---------------+------------+--------------+----------+--------------
 //  jtanniru@umass.edu | Janvi Tanniru | Study123$$ | +19084326475 | EST      | {"mon": "0"}
 // (1 row)
+const pgp = require("pg-promise")({
+    connect(client) {
+        console.log('Connected to database:', client.connectionParameters.database);
+    },
 
+    disconnect(client) {
+        console.log('Disconnected from database:', client.connectionParameters.database);
+    }
+});
 
+const db = pgp(url);
+
+async function connectAndRun(task) {
+    let connection = null;
+
+    try {
+        connection = await db.connect();
+        return await task(connection);
+	} 
+	// eslint-disable-next-line no-useless-catch
+	catch (e) {
+        throw e;
+	} 
+	finally {
+        try {
+            connection.done();
+		} 
+		// eslint-disable-next-line no-empty
+		catch(ignored) {
+        }
+    }
+}
 
 //Database functions
 export async function addUser(email, password) {

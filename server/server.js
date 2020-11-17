@@ -6,15 +6,15 @@ import * as datafunc from "./database.js";
 require('dotenv').config();
 
 //import pgp from "pg-promise";
-const pgp = require("pg-promise")({
-    connect(client) {
-        console.log('Connected to database:', client.connectionParameters.database);
-    },
+// const pgp = require("pg-promise")({
+//     connect(client) {
+//         console.log('Connected to database:', client.connectionParameters.database);
+//     },
 
-    disconnect(client) {
-        console.log('Disconnected from database:', client.connectionParameters.database);
-    }
-});
+//     disconnect(client) {
+//         console.log('Disconnected from database:', client.connectionParameters.database);
+//     }
+// });
 
 const express = require('express');                 // express routing
 const expressSession = require('express-session');  // for managing session state
@@ -32,28 +32,28 @@ const password = "admin";
 
 const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
 //const db = pgp()(url);
-const db = pgp(url);
+//const db = pgp(url);
 
-async function connectAndRun(task) {
-    let connection = null;
+// async function connectAndRun(task) {
+//     let connection = null;
 
-    try {
-        connection = await db.connect();
-        return await task(connection);
-	} 
-	// eslint-disable-next-line no-useless-catch
-	catch (e) {
-        throw e;
-	} 
-	finally {
-        try {
-            connection.done();
-		} 
-		// eslint-disable-next-line no-empty
-		catch(ignored) {
-        }
-    }
-}
+//     try {
+//         connection = await db.connect();
+//         return await task(connection);
+// 	} 
+// 	// eslint-disable-next-line no-useless-catch
+// 	catch (e) {
+//         throw e;
+// 	} 
+// 	finally {
+//         try {
+//             connection.done();
+// 		} 
+// 		// eslint-disable-next-line no-empty
+// 		catch(ignored) {
+//         }
+//     }
+// }
 
 
 const mc = new minicrypt();
@@ -69,12 +69,12 @@ const session = {
 // Passport configuration
 
 const strategy = new LocalStrategy(
-    async (username, password, done) => {
-	if (!findUser(username)) {
+    async (email, password, done) => {
+	if (!findUser(email)) {
 	    // no such user
-	    return done(null, false, { 'message' : 'Wrong username' });
+	    return done(null, false, { 'message' : 'Wrong email' });
 	}
-	if (!validatePassword(username, password)) {
+	if (!validatePassword(email, password)) {
 	    // invalid password
 	    // should disable logins after N messages
 	    // delay return to rate-limit brute-force attacks
@@ -83,7 +83,7 @@ const strategy = new LocalStrategy(
 	}
 	// success!
 	// should create a user object here, associated with a unique identifier
-	return done(null, username);
+	return done(null, email);
     });
 
 
@@ -113,23 +113,20 @@ app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
 console.log(mc.hash('compsci326'));
 
 // let users = { 'emery' : 'compsci326' } // default user
-let users = { 'emery' : [
+let users = { 'eberger@umass.edu' : [
   '2401f90940e037305f71ffa15275fb0d',
   '61236629f33285cbc73dc563cfc49e96a00396dc9e3a220d7cd5aad0fa2f3827d03d41d55cb2834042119e5f495fc3dc8ba3073429dd5a5a1430888e0d115250'
 ] };
 
-let userMap = {};
-
 // Returns true iff the user exists.
-function findUser(username) {
-    if (!users[username]) {
+function findUser(email) {
+    if (!users[email]) {
 	return false;
     } else {
 	return true;
     }
 }
 
-// TODO
 // Returns true iff the password is the one we have stored (in plaintext = bad but easy).
 function validatePassword(name, pwd) {
     if (!findUser(name)) {
@@ -141,7 +138,6 @@ function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
-// TODO
 function addUser(name, pwd) {
     if (findUser(name)) {
 	return false;
@@ -180,7 +176,7 @@ app.post('/login',
 
 // Handle the URL /login (just output the login.html file).
 app.get('/login',
-	(req, res) => res.sendFile('html/login.html',
+	(req, res) => res.sendFile('client/homepage.html',
 				   { 'root' : __dirname }));
 
 // Handle logging out (takes us back to the login page).
@@ -188,7 +184,6 @@ app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
     res.redirect('/login'); // back to login
 });
-
 
 // Like login, but add a new user and password IFF one doesn't exist already.
 // If we successfully add a new user, go to /login, else, back to /register.
@@ -207,7 +202,7 @@ app.post('/register',
 
 // Register URL
 app.get('/register',
-	(req, res) => res.sendFile('html/register.html',
+	(req, res) => res.sendFile('client/register.html',
 				   { 'root' : __dirname }));
 
 // Private data
@@ -233,7 +228,7 @@ app.get('/private/:userID/',
 	});
 
 app.use(express.static('client'));
-app.use(express.static('html'));
+//app.use(express.static('html'));
 
 app.get('*', (req, res) => {
   res.send('Error');
@@ -248,39 +243,39 @@ app.listen(port, () => {
 
 // Three tables Users, Courses, Attend
 
-app.post('/register', async (req, res) => {
+// app.post('/register', async (req, res) => {
 
-    await datafunc.addUser(req.query.email, req.query.password);
-    res.send("OK");
-});
+//     await datafunc.addUser(req.query.email, req.query.password);
+//     res.send("OK");
+// });
 
-app.get('/login', async (req, res) => {
-	const userInfo = await datafunc.getUser(req.query.email);
-    res.send(JSON.stringify(userInfo));
-});
+// app.get('/login', async (req, res) => {
+// 	const userInfo = await datafunc.getUser(req.query.email);
+//     res.send(JSON.stringify(userInfo));
+// });
 
-app.get('/course/id/new', async (req, res) => {
-    await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
-    res.send("OK");
-});
+// app.get('/course/id/new', async (req, res) => {
+//     await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+//     res.send("OK");
+// });
 
-app.get('/course/id/delete', async (req, res) => {
-    await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
-    res.send("OK");
-});
+// app.get('/course/id/delete', async (req, res) => {
+//     await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+//     res.send("OK");
+// });
 
-app.post('/user/id/settings/add', async function (req, res) {
-	const classes = await datafunc.getClasses();
-    res.send(JSON.stringify(classes));
-  });
+// app.post('/user/id/settings/add', async function (req, res) {
+// 	const classes = await datafunc.getClasses();
+//     res.send(JSON.stringify(classes));
+//   });
 
-app.get("/user/id/settings/delete", async (req, res) => {
-    await datafunc.deleteClasses(req.query.email, req.query.cid);
-    res.send("OK");
-});
+// app.get("/user/id/settings/delete", async (req, res) => {
+//     await datafunc.deleteClasses(req.query.email, req.query.cid);
+//     res.send("OK");
+// });
 
-app.get('/user/id/search', async (req, res) => {
-    await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
-    res.send("OK");
-});
+// app.get('/user/id/search', async (req, res) => {
+//     await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
+//     res.send("OK");
+// });
 
