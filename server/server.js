@@ -1,25 +1,38 @@
 'use strict';
 
+import * as datafunc from "./database.js";
+
 // For loading environment variables.
 require('dotenv').config();
 
-import * as utils from "./database.js";
-import pgp from "pg-promise";
+//import pgp from "pg-promise";
+const pgp = require("pg-promise")({
+    connect(client) {
+        console.log('Connected to database:', client.connectionParameters.database);
+    },
+
+    disconnect(client) {
+        console.log('Disconnected from database:', client.connectionParameters.database);
+    }
+});
+
 const express = require('express');                 // express routing
 const expressSession = require('express-session');  // for managing session state
 const passport = require('passport');               // handles authentication
 const LocalStrategy = require('passport-local').Strategy; // username/password strategy
+
 const app = express();
 const port = process.env.PORT || 3000;
 const minicrypt = require('./miniCrypt');
+
+
 // Local PostgreSQL credentials
 const username = "postgres";
 const password = "admin";
 
 const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
-const db = pgp()(url);
-
-
+//const db = pgp()(url);
+const db = pgp(url);
 
 async function connectAndRun(task) {
     let connection = null;
@@ -220,7 +233,7 @@ app.get('/private/:userID/',
 	});
 
 app.use(express.static('client'));
-//app.use(express.static('html'));
+app.use(express.static('html'));
 
 app.get('*', (req, res) => {
   res.send('Error');
@@ -235,50 +248,39 @@ app.listen(port, () => {
 
 // Three tables Users, Courses, Attend
 
-app.get('/', async (req, res) => {
-	await createCoursesTable();
-    await createUsersTable();
-    await createClassesTable();
-    res.send("OK");
-});
-
 app.post('/register', async (req, res) => {
 
-    await utils.addUser(req.query.email, req.query.password);
+    await datafunc.addUser(req.query.email, req.query.password);
     res.send("OK");
 });
 
 app.get('/login', async (req, res) => {
-    const userInfo = await utils.getUser(req.query.email);
+	const userInfo = await datafunc.getUser(req.query.email);
     res.send(JSON.stringify(userInfo));
 });
 
 app.get('/course/id/new', async (req, res) => {
-    await utils.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+    await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });
 
 app.get('/course/id/delete', async (req, res) => {
-    await utils.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+    await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });
 
 app.post('/user/id/settings/add', async function (req, res) {
-	const classes = await utils.getClasses();
+	const classes = await datafunc.getClasses();
     res.send(JSON.stringify(classes));
   });
 
 app.get("/user/id/settings/delete", async (req, res) => {
-    await utils.deleteClasses(req.query.email, req.query.cid);
+    await datafunc.deleteClasses(req.query.email, req.query.cid);
     res.send("OK");
 });
 
 app.get('/user/id/search', async (req, res) => {
-    await utils.addClass(req.query.sid, req.query.cid, req.query.email);
+    await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
     res.send("OK");
-});
-
-app.get('*', (req, res) => {
-    res.send('NO FOOL');
 });
 
