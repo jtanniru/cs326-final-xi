@@ -63,7 +63,6 @@ app.use(urlencoded({'extended' : true})); // allow URLencoded data
 
 // we use an in-memory "database"; this isn't persistent but is easy
 let users = { 'emery' : 'compsci326' } // default user
-let userMap = {};
 
 // Returns true iff the user exists.
 function findUser(username) {
