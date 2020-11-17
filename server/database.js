@@ -1,4 +1,4 @@
-//
+//create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225),  timezone varchar(225), availability json);
 //create table courseInfo (course_name varchar(225), professor varchar(225), course-days boolean[], email varchar(225));
 
 // course_name | professor | course_days | email 
