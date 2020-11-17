@@ -258,7 +258,7 @@ app.get('/login', async (req, res) => {
     res.send(JSON.stringify(userInfo));
 });
 
-app.get('/course/id/new', async (req, res) => {
+app.post('/course/id/new', async (req, res) => {
     await utils.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
     res.send("OK");
 });

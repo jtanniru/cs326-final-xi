@@ -1,4 +1,4 @@
-
+//
 
 //Database functions
 export async function addUser(email, password) {
