@@ -1,4 +1,15 @@
 //
+//create table courseInfo (course_name varchar(225), professor varchar(225), course-days boolean[], email varchar(225));
+
+// course_name | professor | course_days | email 
+// -------------+-----------+-------------+-------
+// (0 rows)
+
+// email        |     name      |  password  |    phone     | timezone | availability 
+// --------------------+---------------+------------+--------------+----------+--------------
+//  jtanniru@umass.edu | Janvi Tanniru | Study123$$ | +19084326475 | EST      | {"mon": "0"}
+// (1 row)
+
 
 //Database functions
 export async function addUser(email, password) {
