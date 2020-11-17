@@ -2,7 +2,7 @@ img {
   width: 10%;
 }
 
-#coursesSubmit {
+#coursesSubmit, #coursesDelete {
   width: 10rem;
 }
 
@@ -30,8 +30,4 @@ table {
 th, td {
   /* border: 1px solid black; */
   padding: 10px;
-<<<<<<< HEAD:HTML_CSS_files/main.css
 }
-=======
-}
->>>>>>> 1118b8f227dbe619fb38ded6fceead77418436f8:client/main.css

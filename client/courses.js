@@ -76,6 +76,24 @@ coursesSubmitButton.addEventListener('click', () => {
   // database: insert an object with the information {email: 'unique email of user / or name?', courseName: 'course name', professor: 'professor', courseDays: [course days]}
 });
 
+const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
+coursesDeleteSelection.addEventListener('load', () => {
+  // creates an options tag for each course in the user's course list and adds the course to the selection for deletion
+  // similarly to how courses are obtained from database table and added to the HTML courses table at the bottom of courses.html, 
+  // for each course in the user's course list, add the course name to the delete drop down menu (select tag) as a new options tag
+  /*
+    Inside this for loop that traverses all user's courses, do :
+      const newOption = document.createElement('option');
+      newOption.value = "insert the course name here";
+    move on to next course name
+  */
+});
+
+const coursesDeleteButton = document.getElementById('coursesDelete');
+coursesDeleteButton.addEventListener('click', () => {
+  // go into the database, remove this course from the user's course listings
+});
+
 // event listener on load that encompasses all of these other listeners
 
 // add in a way to create a new tab or div or something to store the text/info of the new course once it's created (think about when to delete them? or if they should be in a table, not tabs)

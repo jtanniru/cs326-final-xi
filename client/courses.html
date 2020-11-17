@@ -25,7 +25,8 @@
     <div class="pl-5 ml-5 pr-5 mr-5 pt-5 mt-5 pb-5 mb-5 text-center bg-dark text-light">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Add A Course</a>
+          <a class="nav-item nav-link active text-secondary" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Add A Course</a>
+          <a class="nav-item nav-link text-secondary" id="nav-delete-tab" data-toggle="tab" href="#nav-delete" role="tab" aria-controls="nav-delete" aria-selected="false">Delete A Course</a>
         </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
@@ -61,10 +62,25 @@
                 <label class="checkbox-inline mr-3"><input class="mr-1 weekday" type="checkbox" id="sunday">Sunday</label>
               </div>
             </div>
+            <button id="coursesSubmit" class="btn btn-lg btn-primary btn-block mt-5 mx-auto" type="submit">Create Course</button>
+          </div>
+        </div>
+        <div class="tab-pane fade show" id="nav-delete" role="tabpanel" aria-labelledby="nav-delete-tab">
+          <div class = "container mt-4">
+            <div class="row mb-2 justify-content-center">
+              <select class="selectpicker" id="coursesDeleteSelection">
+                <option>test course / place holder</option>
+              </select>        
+            </div>
+            <div class="row mb-2 justify-content-center">
+              <button id="coursesDelete" class="btn btn-lg btn-primary btn-block mt-5 mx-auto" type="submit">Delete Course</button>
+            </div>
+            <div class="row mb-2 justify-content-center">
+              <small>Double check the selected course before deleting.</small>
+            </div>
           </div>
         </div>
       </div>
-      <button id="coursesSubmit" class="btn btn-lg btn-primary btn-block mt-5 mx-auto" type="submit">Create Course</button>
     </div>
     <div>
       <table id="coursesTable" class="m-auto center">
