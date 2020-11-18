@@ -1,9 +1,7 @@
 'use strict';
 
 const datafunc = require('./database.js');
-
-
-'use strict';
+const path = require('path');
 
 // For loading environment variables.
 require('dotenv').config();
@@ -17,37 +15,6 @@ const port = process.env.PORT || 3000;
 const minicrypt = require('./miniCrypt.js');
 
 
-
-// Local PostgreSQL credentials
-// const username = "postgres";
-// const password = "admin";
-
-// //const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
-//const db = pgp()(url);
-//const db = pgp(url);
-
-// async function connectAndRun(task) {
-//     let connection = null;
-
-//     try {
-//         connection = await db.connect();
-//         return await task(connection);
-// 	} 
-// 	// eslint-disable-next-line no-useless-catch
-// 	catch (e) {
-//         throw e;
-// 	} 
-// 	finally {
-//         try {
-//             connection.done();
-// 		} 
-// 		// eslint-disable-next-line no-empty
-// 		catch(ignored) {
-//         }
-//     }
-// }
-
-
 const mc = new minicrypt();
 
 // Session configuration
@@ -59,14 +26,14 @@ const session = {
 };
 
 // Passport configuration
-console.log(LocalStrategy.Strategy);
-const strategy = new LocalStrategy.Strategy(
-    async (email, password, done) => {
-	if (!findUser(email)) {
+
+const strategy = new LocalStrategy(
+    async (username, password, done) => {
+	if (!findUser(username)) {
 	    // no such user
-	    return done(null, false, { 'message' : 'Wrong email' });
+	    return done(null, false, { 'message' : 'Wrong username' });
 	}
-	if (!validatePassword(email, password)) {
+	if (!validatePassword(username, password)) {
 	    // invalid password
 	    // should disable logins after N messages
 	    // delay return to rate-limit brute-force attacks
@@ -75,7 +42,7 @@ const strategy = new LocalStrategy.Strategy(
 	}
 	// success!
 	// should create a user object here, associated with a unique identifier
-	return done(null, email);
+	return done(null, username);
     });
 
 
@@ -110,15 +77,17 @@ let users = { 'eberger@umass.edu' : [
   '61236629f33285cbc73dc563cfc49e96a00396dc9e3a220d7cd5aad0fa2f3827d03d41d55cb2834042119e5f495fc3dc8ba3073429dd5a5a1430888e0d115250'
 ] };
 
+
 // Returns true iff the user exists.
-function findUser(email) {
-    if (!users[email]) {
+function findUser(username) {
+    if (!users[username]) {
 	return false;
     } else {
 	return true;
     }
 }
 
+// TODO
 // Returns true iff the password is the one we have stored (in plaintext = bad but easy).
 function validatePassword(name, pwd) {
     if (!findUser(name)) {
@@ -130,6 +99,7 @@ function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
+// TODO
 function addUser(name, pwd) {
     if (findUser(name)) {
 	return false;
@@ -168,14 +138,14 @@ app.post('/login',
 
 // Handle the URL /login (just output the login.html file).
 app.get('/login',
-	(req, res) => res.send('OK'));//res.sendFile('../client/homepage.html',
-				   //{ 'root' : __dirname }));
+	(req, res) => res.sendFile(path.resolve('./client/homepage.html')));
 
 // Handle logging out (takes us back to the login page).
 app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
     res.redirect('/login'); // back to login
 });
+
 
 // Like login, but add a new user and password IFF one doesn't exist already.
 // If we successfully add a new user, go to /login, else, back to /register.
@@ -194,8 +164,9 @@ app.post('/register',
 
 // Register URL
 app.get('/register',
-	(req, res) => res.sendFile('../client/register.html',
-				   { 'root' : __dirname }));
+	(req, res) => res.sendFile(path.resolve('./client/register.html')));
+	//res.sendFile('client/register.html',
+				   //{ 'root' : __dirname }));
 
 // Private data
 app.get('/private',
@@ -220,7 +191,6 @@ app.get('/private/:userID/',
 	});
 
 app.use(express.static('client'));
-//app.use(express.static('html'));
 
 app.get('*', (req, res) => {
   res.send('Error');
@@ -229,8 +199,6 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
-
-
 
 
 // Three tables Users, Courses, Attend
