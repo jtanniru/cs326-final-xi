@@ -10,7 +10,8 @@
 //  jtanniru@umass.edu | Janvi Tanniru | Study123$$ | +19084326475 | EST      | {"mon": "0"}
 // (1 row)
 
-const pgp = require("pg-promise")({
+
+const pgp = require('pg-promise')({
     connect(client) {
         console.log('Connected to database:', client.connectionParameters.database);
     },
@@ -77,3 +78,4 @@ async function deleteClasses(email, cid) {
     return await connectAndRun(db => db.none('DELETE FROM Classes WHERE email = $1 and cid = $2;', [email,cid]));
 }
 
+module.exports =  {}

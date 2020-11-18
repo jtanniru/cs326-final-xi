@@ -1,32 +1,21 @@
 'use strict';
 
-//import * as datafunc from "./database.js";
-import datafunc from './database.js';
+const datafunc = require('./database.js');
+
+
+'use strict';
+
 // For loading environment variables.
-//require('dotenv').config();
+require('dotenv').config();
 
-import config from 'dotenv';
-config();
-
-//import pgp from "pg-promise";
-// const pgp = require("pg-promise")({
-//     connect(client) {
-//         console.log('Connected to database:', client.connectionParameters.database);
-//     },
-
-//     disconnect(client) {
-//         console.log('Disconnected from database:', client.connectionParameters.database);
-//     }
-// });
-
-import express, { json, urlencoded, static } from 'express';                 // express routing
-import expressSession from 'express-session';  // for managing session state
-import { use, initialize, session as _session, serializeUser, deserializeUser, authenticate } from 'passport';               // handles authentication
-import { Strategy as LocalStrategy } from 'passport-local'; // username/password strategy
-
+const express = require('express');                 // express routing
+const expressSession = require('express-session');  // for managing session state
+const passport = require('passport');               // handles authentication
+const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 const app = express();
 const port = process.env.PORT || 3000;
-import minicrypt from './miniCrypt';
+const minicrypt = require('./miniCrypt.js');
+
 
 
 // Local PostgreSQL credentials
@@ -70,8 +59,8 @@ const session = {
 };
 
 // Passport configuration
-
-const strategy = new LocalStrategy(
+console.log(LocalStrategy.Strategy);
+const strategy = new LocalStrategy.Strategy(
     async (email, password, done) => {
 	if (!findUser(email)) {
 	    // no such user
@@ -93,21 +82,21 @@ const strategy = new LocalStrategy(
 // App configuration
 
 app.use(expressSession(session));
-use(strategy);
-app.use(initialize());
-app.use(_session());
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Convert user object to a unique identifier.
-serializeUser((user, done) => {
+passport.serializeUser((user, done) => {
     done(null, user);
 });
 // Convert a unique identifier to a user object.
-deserializeUser((uid, done) => {
+passport.deserializeUser((uid, done) => {
     done(null, uid);
 });
 
-app.use(json()); // allow JSON inputs
-app.use(urlencoded({'extended' : true})); // allow URLencoded data
+app.use(express.json()); // allow JSON inputs
+app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
 
 /////
 
@@ -172,15 +161,15 @@ app.get('/',
 
 // Handle post data from the login.html form.
 app.post('/login',
-	 authenticate('local' , {     // use username/password authentication
+	 passport.authenticate('local' , {     // use username/password authentication
 	     'successRedirect' : '/private',   // when we login, go to /private 
 	     'failureRedirect' : '/login'      // otherwise, back to login
 	 }));
 
 // Handle the URL /login (just output the login.html file).
 app.get('/login',
-	(req, res) => res.sendFile('client/homepage.html',
-				   { 'root' : __dirname }));
+	(req, res) => res.send('OK'));//res.sendFile('../client/homepage.html',
+				   //{ 'root' : __dirname }));
 
 // Handle logging out (takes us back to the login page).
 app.get('/logout', (req, res) => {
@@ -205,7 +194,7 @@ app.post('/register',
 
 // Register URL
 app.get('/register',
-	(req, res) => res.sendFile('client/register.html',
+	(req, res) => res.sendFile('../client/register.html',
 				   { 'root' : __dirname }));
 
 // Private data
@@ -230,7 +219,7 @@ app.get('/private/:userID/',
 	    }
 	});
 
-app.use(static('client'));
+app.use(express.static('client'));
 //app.use(express.static('html'));
 
 app.get('*', (req, res) => {
