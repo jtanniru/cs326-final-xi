@@ -14,8 +14,8 @@
 - The application will use the time availabilities set by each user to compile a list of meeting dates/times where every group member has overlapping time availability.
   - If there is no one time that every group member's availabilities overlap, the application will return a list of dates/times for a meeting that a majority of the group are available to attend.
 
-# Wireframes
 
+# Wireframes
 
 ![login](../images/login_page.png)
 
