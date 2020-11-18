@@ -1,5 +1,6 @@
 {
   "name": "server",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -20,6 +21,9 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "pg-promise": "^10.7.5"
+  },
+  "engines": {
+    "node": "14.8.0"
   }
 }
 
