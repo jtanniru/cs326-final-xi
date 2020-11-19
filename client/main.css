@@ -2,7 +2,7 @@ img {
   width: 10%;
 }
 
-#coursesSubmit, #coursesDelete {
+#coursesSubmit, #coursesDelete, #filterApply {
   width: 10rem;
 }
 
