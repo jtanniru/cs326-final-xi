@@ -1,9 +1,22 @@
 'use strict';
 
+window.addEventListener("load", async function () {
+
+// populate Courses list
+const response = await fetch('/course/view');
+const responseData = response.ok ? await response.json() : [];
+
+for (const course of responseData) {
+  // add a new checkbox for each course name
+  const newCheckbox = document.createElement('')
+}
+
+// populate Professors list
+  
+});
+
 // action: access checkboxes for each of the filter categories
 
-// for Courses
-const userCourseList = document.getElementById('listOfCourses');
 
 // for Professors
 const userProfessorList = document.getElementById('listOfProfessors');
