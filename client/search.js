@@ -14,7 +14,7 @@ window.addEventListener("load", async function () {
     // populate Courses list
     const courseCheckboxInput = document.createElement('input');
     const courseCheckboxLabel = document.createElement('label');
-    courseCheckboxInput.classList.add('form-check-input');
+    courseCheckboxInput.classList.add('form-check-input', 'courseCheckbox');
     courseCheckboxInput.setAttribute('type', 'checkbox');
     courseCheckboxInput.setAttribute('id', course.course_name);
     courseCheckboxLabel.classList.add('form-check-label');
@@ -26,7 +26,7 @@ window.addEventListener("load", async function () {
     // populate Professors list
     const professorCheckboxInput = document.createElement('input');
     const professorCheckboxLabel = document.createElement('label');
-    professorCheckboxInput.classList.add('form-check-input');
+    professorCheckboxInput.classList.add('form-check-input', 'professorCheckbox');
     professorCheckboxInput.setAttribute('type', 'checkbox');
     professorCheckboxInput.setAttribute('id', course.professor);
     professorCheckboxLabel.classList.add('form-check-label');
@@ -35,5 +35,114 @@ window.addEventListener("load", async function () {
     userProfessorList.appendChild(professorCheckboxInput);
     userProfessorList.appendChild(professorCheckboxLabel);
   }
+
+  // apply event listener for adding "checked" attribute to all the filter checkboxes
+  const coursesClass = document.getElementsByClassName('courseCheckbox');
+  const professorsClass = document.getElementsByClassName('professorCheckbox');
+  const daysClass = document.getElementsByClassName('weekday');
+  const timezonesClass = document.getElementsByClassName('timezone');
+
+  for (const course in coursesClass) {
+    if (typeof(course) === 'object') {
+      course.addEventListener('click', () => {
+        if (course.hasAttribute('checked')) {
+          course.removeAttribute('checked');
+        }
+        else {
+          course.setAttribute('checked', '');
+        }
+      });
+    }
+  }
+
+  for (const professor in professorsClass) {
+    if (typeof(professor) === 'object') {
+      professor.addEventListener('click', () => {
+        if (professor.hasAttribute('checked')) {
+          professor.removeAttribute('checked');
+        }
+        else {
+          professor.setAttribute('checked', '');
+        }
+      });
+    }
+  }
+
+  for (const day in daysClass) {
+    if (typeof(day) === 'object') {
+      day.addEventListener('click', () => {
+        if (day.hasAttribute('checked')) {
+          day.removeAttribute('checked');
+        }
+        else {
+          day.setAttribute('checked', '');
+        }
+      });
+    }
+  }
+
+  for (const timezone in timezonesClass) {
+    if (typeof(timezone) === 'object') {
+      timezone.addEventListener('click', () => {
+        if (timezone.hasAttribute('checked')) {
+          timezone.removeAttribute('checked');
+        }
+        else {
+          timezone.setAttribute('checked', '');
+        }
+      });
+    }
+  }
+
+  const applyFilterButton = document.getElementById('filterApply');
+  applyFilterButton.addEventListener('click', async () => {
+
+    let courseData = [];
+    let professorData = [];
+    let dayData = [];
+    let timezoneData = [];
+
+    // we know: the courses that are checked off
+    for (const course in coursesClass) {
+      if (course.hasAttribute('checked')) {
+        courseData.push(course.id);
+      }      
+    }
+
+    for (const professor in professorsClass) {
+      if (professor.hasAttribute('checked')) {
+        professorData.push(professor.id);
+      }
+    }
+
+    for (const day in daysClass) {
+      if (day.hasAttribute('checked')) {
+        dayData.push(day.id);
+      }
+    }
+
+    for (const timezone in timezonesClass) {
+      if (timezone.hasAttribute('checked')) {
+        timezoneData.push(timezone.id);
+      }
+    }
+
+    // TODO: add header
+    // POST to courseInfo table
+    const response = await fetch('/course/view', {
+      method: 'POST',
+      body: JSON.stringify({
+          course_name_list: courseData, // courseData is courseData[] of sql table courseInfo course_name values
+          professor_list: professorData,  // professorData is professorData[] of sql table courseInfo professor values
+          course_days_list: dayData,  // dayData is dayData[] of sql table courseInfo course_days values
+          timezone_list: timezoneData // timezoneData is timezoneData[] of sql table userInfo timezone values
+      })
+    });
+
+    if (!response.ok) {
+      console.error("Could not save the turn score to the server.");  // TODO: go through and redo the console.error strings
+    }
+
+  });
 
 });
