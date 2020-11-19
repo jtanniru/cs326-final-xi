@@ -7,12 +7,18 @@ window.addEventListener("load", async function () {
     if (monday.hasAttribute('checked')) {
       monday.removeAttribute('checked');
     }
+    else {
+      monday.setAttribute('checked', '');
+    }
   });
 
   const tuesday = document.getElementById('tuesday');
   tuesday.addEventListener('click', () => {
     if (tuesday.hasAttribute('checked')) {
       tuesday.removeAttribute('checked');
+    }
+    else {
+      tuesday.setAttribute('checked', '');
     }
   });
 
@@ -21,12 +27,18 @@ window.addEventListener("load", async function () {
     if (wednesday.hasAttribute('checked')) {
       wednesday.removeAttribute('checked');
     }
+    else {
+      wednesday.setAttribute('checked', '');
+    }
   });
 
   const thursday = document.getElementById('thursday');
   thursday.addEventListener('click', () => {
     if (thursday.hasAttribute('checked')) {
       thursday.removeAttribute('checked');
+    }
+    else {
+      thursday.setAttribute('checked', '');
     }
   });
 
@@ -35,6 +47,9 @@ window.addEventListener("load", async function () {
     if (friday.hasAttribute('checked')) {
       friday.removeAttribute('checked');
     }
+    else {
+      friday.setAttribute('checked', '');
+    }
   });
 
   const saturday = document.getElementById('saturday');
@@ -42,12 +57,18 @@ window.addEventListener("load", async function () {
     if (saturday.hasAttribute('checked')) {
       saturday.removeAttribute('checked');
     }
+    else {
+      saturday.setAttribute('checked', '');
+    }
   });
 
   const sunday = document.getElementById('sunday');
   sunday.addEventListener('click', () => {
     if (sunday.hasAttribute('checked')) {
       sunday.removeAttribute('checked');
+    }
+    else {
+      sunday.setAttribute('checked', '');
     }
   });
 
