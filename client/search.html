@@ -40,10 +40,7 @@
                         </div>
                         <div id="courseNameCollapse" class="collapse" aria-labelledby="courseNameFilter" data-parent="#accordion">
                             <div class="card-body">
-                                <div class="form-group form-check text-left" id="listOfCourses">
-                                    <input type="checkbox" class="form-check-input" id="course1">
-                                    <label class="form-check-label" for="course1">course 1</label>
-                                </div>
+                                <div class="form-group form-check text-left" id="listOfCourses"></div>
                             </div>
                         </div>
                     </div>
@@ -59,10 +56,7 @@
                         </div>
                         <div id="professorCollapse" class="collapse" aria-labelledby="professorFilter" data-parent="#accordion">
                             <div class="card-body">
-                                <div class="form-group form-check text-left" id="listOfProfessors">
-                                    <input type="checkbox" class="form-check-input" id="professor1">
-                                    <label class="form-check-label" for="professor1">Professor 1</label>
-                                </div>
+                                <div class="form-group form-check text-left" id="listOfProfessors"></div>
                             </div>
                         </div>
                     </div>
@@ -78,13 +72,13 @@
                         <div id="courseDaysCollapse" class="collapse" aria-labelledby="courseDaysFilter" data-parent="#accordion">
                             <div class="card-body">
                                 <div class="form-group form-check text-left" id="listOfDays">
-                                    <input type="checkbox" class="form-check-input" id="monday"><label class="form-check-label" for="monday">Monday</label><br>
-                                    <input type="checkbox" class="form-check-input" id="tuesday"><label class="form-check-label" for="tuesday">Tuesday</label><br>
-                                    <input type="checkbox" class="form-check-input" id="wednesday"><label class="form-check-label" for="wednesday">Wednesday</label><br>
-                                    <input type="checkbox" class="form-check-input" id="thursday"><label class="form-check-label" for="thursday">Thursday</label><br>
-                                    <input type="checkbox" class="form-check-input" id="friday"><label class="form-check-label" for="friday">Friday</label><br>
-                                    <input type="checkbox" class="form-check-input" id="saturday"><label class="form-check-label" for="saturday">Saturday</label><br>
-                                    <input type="checkbox" class="form-check-input" id="sunday"><label class="form-check-label" for="sunday">Sunday</label><br>
+                                    <input type="checkbox" class="form-check-input" id="monday"><label class="form-check-label weekday" for="monday">Monday</label><br>
+                                    <input type="checkbox" class="form-check-input" id="tuesday"><label class="form-check-label weekday" for="tuesday">Tuesday</label><br>
+                                    <input type="checkbox" class="form-check-input" id="wednesday"><label class="form-check-label weekday" for="wednesday">Wednesday</label><br>
+                                    <input type="checkbox" class="form-check-input" id="thursday"><label class="form-check-label weekday" for="thursday">Thursday</label><br>
+                                    <input type="checkbox" class="form-check-input" id="friday"><label class="form-check-label weekday" for="friday">Friday</label><br>
+                                    <input type="checkbox" class="form-check-input" id="saturday"><label class="form-check-label weekday" for="saturday">Saturday</label><br>
+                                    <input type="checkbox" class="form-check-input" id="sunday"><label class="form-check-label weekday" for="sunday">Sunday</label><br>
                                 </div>
                             </div>
                         </div>
@@ -102,39 +96,39 @@
                         <div id="timezoneCollapse" class="collapse" aria-labelledby="timezoneFilter" data-parent="#accordion">
                             <div class="card-body text-left">
                                 <div class="form-group form-check" id="listOfTimezones">
-                                    <input type="checkbox" class="form-check-input" id="HST">
+                                    <input type="checkbox" class="form-check-input timezone" id="HST">
                                     <label class="form-check-label" for="HST">Honolulu Standard Time (HST)</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="AKDT">
+                                    <input type="checkbox" class="form-check-input timezone" id="AKDT">
                                     <label class="form-check-label" for="AKDT">Alaska Daylight Time (AKDT)</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="PDT">
+                                    <input type="checkbox" class="form-check-input timezone" id="PDT">
                                     <label class="form-check-label" for="PDT">Pacific Daylight Time (PDT)</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="MDT">
+                                    <input type="checkbox" class="form-check-input timezone" id="MDT">
                                     <label class="form-check-label" for="MDT">Mountain Daylight Time (MDT)</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="CDT">
+                                    <input type="checkbox" class="form-check-input timezone" id="CDT">
                                     <label class="form-check-label" for="CDT">Central Daylight Time (CDT)</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="EDT">
+                                    <input type="checkbox" class="form-check-input timezone" id="EDT">
                                     <label class="form-check-label" for="EDT">Eastern Daylight Time (EDT)</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="IST">
+                                    <input type="checkbox" class="form-check-input timezone" id="IST">
                                     <label class="form-check-label" for="IST">Indian Standard Time</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="PET">
+                                    <input type="checkbox" class="form-check-input timezone" id="PET">
                                     <label class="form-check-label" for="PET">Peru Time (PET)</label>
                                     <br>
 
-                                    <input type="checkbox" class="form-check-input" id="JST">
+                                    <input type="checkbox" class="form-check-input timezone" id="JST">
                                     <label class="form-check-label" for="JST">Japan Standard Time (JST)</label>
                                     <br>
                                 </div>
@@ -142,6 +136,7 @@
                         </div>
                     </div>
                 </div>
+                <button id="filterApply" class="btn btn-lg btn-primary btn-block mt-5 mx-auto" type="submit">Apply</button>
             </div>
             <div class="col">
                 <h3 class="mb-3">Find Study Groups!</h3>
