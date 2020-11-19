@@ -56,8 +56,8 @@ coursesSubmitButton.addEventListener('click', () => {
   console.log("clicked button");
   const courseNameValue = document.getElementById('inputCourseName').value;
   const professorValue = document.getElementById('inputProfessor').value;
-  // const weekDaysDiv = document.getElementById('courseDaysList').value;
-  let weekdayArray = [];
+  
+  let weekdayArray = []; // the Boolean[] added to the sql table for course days column
 
   if (courseNameValue === '' || professorValue === '') {
     alert('Required sign in information is missing.');
@@ -67,31 +67,95 @@ coursesSubmitButton.addEventListener('click', () => {
   let weekDaysCheckboxes = document.getElementsByClassName('weekday');
   for (let i = 0; i < weekDaysCheckboxes.length; i++) {
     if (weekDaysCheckboxes[i].checked === true) {
-      // console.log(weekDaysCheckboxes[i].id);
-      weekdayArray.push(weekDaysCheckboxes[i].id);
+      weekdayArray.push(true);
+    }
+    else {
+      weekdayArray.push(false);
     }
   }
-  console.log("weekdays: ", weekdayArray);  
   
-  // database: insert an object with the information {email: 'unique email of user / or name?', courseName: 'course name', professor: 'professor', courseDays: [course days]}
+  // TODO: add header
+  // POST to courseInfo table
+  const response = await fetch('/course/new', {
+    method: 'POST',
+    body: JSON.stringify({
+        course_name: courseNameValue,
+        professor:professorValue,
+        course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
+        //email: // TODO: request.user 
+    })
+  });
+
+  if (!response.ok) {
+    console.error("Could not save the turn score to the server.");
+  }
+
 });
 
 const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 coursesDeleteSelection.addEventListener('load', () => {
-  // creates an options tag for each course in the user's course list and adds the course to the selection for deletion
-  // similarly to how courses are obtained from database table and added to the HTML courses table at the bottom of courses.html, 
-  // for each course in the user's course list, add the course name to the delete drop down menu (select tag) as a new options tag
-  /*
-    Inside this for loop that traverses all user's courses, do :
-      const newOption = document.createElement('option');
-      newOption.value = "insert the course name here";
-    move on to next course name
-  */
+  // Views courses for user, fills out delete options and current courses table
+  const response = await fetch('/course/view');
+  const responseData = response.ok ? await response.json() : [];
+
+  for (const course of responseData) {
+    const newOption = document.createElement('option');
+    newOption.value = course.course_name;
+    coursesDeleteSelection.appendChild(newOption);
+
+    const tr = document.createElement('tr');
+    const name  = document.createElement('td');
+    const professor  = document.createElement('td');
+    const days  = document.createElement('td');
+    name.innerText = course.course_name;
+    professor.innerText = course.professor;
+    days.innerHTML = course.course_days;
+
+    tr.appendChild(name);
+    tr.appendChild(professor);
+    tr.appendChild(days);
+
+    document.getElementById('coursesTable').appendChild(tr);
+  }
 });
 
+const courseToDelete = document.getElementById('coursesDeleteSelection').value;
 const coursesDeleteButton = document.getElementById('coursesDelete');
 coursesDeleteButton.addEventListener('click', () => {
+
+  // remove row from HTML table
+  const response = await fetch('/course/view');
+  const responseData = response.ok ? await response.json() : [];
+
+  let index = 0;
+  for (const course of responseData){
+    if (course.course_name === courseToDelete) {
+      document.getElementById("coursesTable").deleteRow(index);
+      const deleteOption = document.getElementById("coursesDeleteSelection");
+      deleteOption.remove(deleteOption.selectedIndex);
+      break;
+    }
+    index++;
+  }
+
+  // remove option from delete selector
+
+
   // go into the database, remove this course from the user's course listings
+  const response = await fetch('/course/delete', {
+    method: 'POST',
+    body: JSON.stringify({
+        course_name: courseNameValue,
+        professor:professorValue,
+        course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
+        //email: // TODO: request.user 
+    })
+  });
+
+  if (!response.ok) {
+    console.error("Could not save the turn score to the server.");
+  }
+    
 });
 
 // event listener on load that encompasses all of these other listeners
@@ -118,3 +182,5 @@ coursesDeleteButton.addEventListener('click', () => {
 //     tr.appendChild(score);
 //     document.getElementById('word-scores-table').appendChild(tr);
 // }
+
+
