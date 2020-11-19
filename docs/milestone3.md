@@ -20,4 +20,3 @@ userInfo Table
 | phone        | String    | The phone number of the counter |
 | timezone     | String    | The timezone of the user        |
 | availability | JSON      | The availability of the user    |
-

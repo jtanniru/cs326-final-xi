@@ -238,4 +238,3 @@ app.listen(port, () => {
 //     await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
 //     res.send("OK");
 // });
-
