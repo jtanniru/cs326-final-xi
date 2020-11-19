@@ -52,6 +52,9 @@ app.use(expressSession(session));
 passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('client'));
+app.use(express.static('images'));
+
 
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
@@ -189,9 +192,6 @@ app.get('/private/:userID/',
 		res.redirect('/private/');
 	    }
 	});
-
-app.use(express.static('client'));
-app.use(express.static('images'));
 
 app.get('*', (req, res) => {
   res.send('Error');

@@ -1,14 +1,14 @@
-//create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225),  timezone varchar(225), availability json);
-//create table courseInfo (course_name varchar(225), professor varchar(225), course-days boolean[], email varchar(225));
+//create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225), phone varchar(255), timezone varchar(225), availability json);
+//create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225));
 
-// course_name | professor | course_days | email 
-// -------------+-----------+-------------+-------
-// (0 rows)
-
-// email        |     name      |  password  |    phone     | timezone | availability 
-// --------------------+---------------+------------+--------------+----------+--------------
-//  jtanniru@umass.edu | Janvi Tanniru | Study123$$ | +19084326475 | EST      | {"mon": "0"}
+// course_name |  professor   |    course_days    |       email       
+// -------------+--------------+-------------------+-------------------
+//  COMPSCI 326 | emery berger | {f,f,t,f,f,f,t,f} | eberger@umass.edu
 // (1 row)
+
+// email       |     name     |        salt         |        hash        |    phone    | timezone |   availability    
+// -------------------+--------------+---------------------+--------------------+-------------+----------+-------------------
+//  eberger@umass.edu | emery berger | 20309gffytyehherihb | higgi434g5grg43giy | +9084326475 | EST      | {"mon" : [0,1,0]}
 
 
 const pgp = require('pg-promise')({
