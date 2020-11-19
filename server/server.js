@@ -191,6 +191,7 @@ app.get('/private/:userID/',
 	});
 
 app.use(express.static('client'));
+app.use(express.static('images'));
 
 app.get('*', (req, res) => {
   res.send('Error');
