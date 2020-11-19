@@ -53,7 +53,7 @@ window.addEventListener("load", async function () {
 
   // action for submit course button
   const coursesSubmitButton = document.getElementById('coursesSubmit');
-  coursesSubmitButton.addEventListener('click', () => {
+  coursesSubmitButton.addEventListener('click', async () => {
     console.log("clicked button");
     const courseNameValue = document.getElementById('inputCourseName').value;
     const professorValue = document.getElementById('inputProfessor').value;
@@ -94,7 +94,7 @@ window.addEventListener("load", async function () {
   });
 
   const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
-  coursesDeleteSelection.addEventListener('load', () => {
+  coursesDeleteSelection.addEventListener('load', async () => {
     // Views courses for user, fills out delete options and current courses table
     const response = await fetch('/course/view');
     const responseData = response.ok ? await response.json() : [];
@@ -122,7 +122,7 @@ window.addEventListener("load", async function () {
 
   const courseToDelete = document.getElementById('coursesDeleteSelection').value;
   const coursesDeleteButton = document.getElementById('coursesDelete');
-  coursesDeleteButton.addEventListener('click', () => {
+  coursesDeleteButton.addEventListener('click', async () => {
 
     // remove row from HTML table and delete selector options
     const response = await fetch('/course/view');
