@@ -2,30 +2,38 @@
 
 window.addEventListener("load", async function () {
 
-// populate Courses list
-const response = await fetch('/course/view');
-const responseData = response.ok ? await response.json() : [];
+  const response = await fetch('/course/view');
+  const responseData = response.ok ? await response.json() : [];
 
-for (const course of responseData) {
-  // add a new checkbox for each course name
-  const newCheckbox = document.createElement('')
-}
+  const userCoursesList = document.getElementById('listOfCourses');
+  const userProfessorList = document.getElementById('listOfProfessors');
+  const userDaysList = document.getElementById('listOfDays');
+  const userTimezoneList = document.getElementById('listOfTimezones');
 
-// populate Professors list
-  
+  for (const course of responseData) {
+    // populate Courses list
+    const courseCheckboxInput = document.createElement('input');
+    const courseCheckboxLabel = document.createElement('label');
+    courseCheckboxInput.classList.add('form-check-input');
+    courseCheckboxInput.setAttribute('type', 'checkbox');
+    courseCheckboxInput.setAttribute('id', course.course_name);
+    courseCheckboxLabel.classList.add('form-check-label');
+    courseCheckboxLabel.setAttribute('for', course.course_name);
+    courseCheckboxLabel.innerHTML = course.course_name;
+    userCoursesList.appendChild(courseCheckboxInput);
+    userCoursesList.appendChild(courseCheckboxLabel);
+
+    // populate Professors list
+    const professorCheckboxInput = document.createElement('input');
+    const professorCheckboxLabel = document.createElement('label');
+    professorCheckboxInput.classList.add('form-check-input');
+    professorCheckboxInput.setAttribute('type', 'checkbox');
+    professorCheckboxInput.setAttribute('id', course.professor);
+    professorCheckboxLabel.classList.add('form-check-label');
+    professorCheckboxLabel.setAttribute('for', course.professor);
+    professorCheckboxLabel.innerHTML = course.professor;
+    userProfessorList.appendChild(professorCheckboxInput);
+    userProfessorList.appendChild(professorCheckboxLabel);
+  }
+
 });
-
-// action: access checkboxes for each of the filter categories
-
-
-// for Professors
-const userProfessorList = document.getElementById('listOfProfessors');
-
-// for Course Days
-const userDaysList = document.getElementById('listOfDays');
-
-// for Timezones
-const userTimezoneList = document.getElementById('listOfTimezones');
-
-// all GET requests, no POSTS
-// once you do GET requests for each section, you can do SQL command to SELECT from table(s)
