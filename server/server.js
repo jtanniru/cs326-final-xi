@@ -171,14 +171,14 @@ app.post("/register", async (req, res) => {
 		const pwd = data.password;
 		const [salt, hash] = mc.hash(pwd);
 		const hashed = [salt, hash];
-		const userFound = await datafunc.getUser(data.email);
-		if(!userFound){
+		//const userFound = await datafunc.getUser(data.email);
+		//if(!userFound){
 			await datafunc.addUser(data.email, data.name, hashed[0], hashed[1]);
 			res.redirect('/login');
-		}
-		else{
+		//}
+		//else{
 			res.redirect('/register');
-		}
+		//}
 		res.end();
 	});
 });
