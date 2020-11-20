@@ -50,12 +50,12 @@ async function connectAndRun(task) {
 }
 
 //Database functions
-async function addUser(email, password) {
-    return await connectAndRun(db => db.none('INSERT INTO Users (email, password) VALUES ($1, $2);', [email, password]));   
+async function addUser(email, name, salt, hash) {
+    return await connectAndRun(db => db.none('INSERT INTO userInfo (email, name, salt, hash) VALUES ($1, $2, $3, $4);', [email, name, salt, hash]));   
 }
 
 async function getUser(email) {
-    return await connectAndRun(db => db.one('SELECT * FROM Users Where email = $1;', [email]));
+    return await connectAndRun(db => db.any('SELECT * FROM userInfo WHERE email = $1;', [email]));
 }
 
 async function addCourse(cid, course_title, course_subject, professor_name, course_number, course_days, course_time) {
@@ -78,4 +78,4 @@ async function deleteClasses(email, cid) {
     return await connectAndRun(db => db.none('DELETE FROM Classes WHERE email = $1 and cid = $2;', [email,cid]));
 }
 
-module.exports =  {}
+module.exports =  {addUser, getUser, addCourse}

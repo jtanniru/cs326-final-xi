@@ -90,7 +90,6 @@ function findUser(username) {
     }
 }
 
-// TODO
 // Returns true iff the password is the one we have stored (in plaintext = bad but easy).
 function validatePassword(name, pwd) {
     if (!findUser(name)) {
@@ -102,7 +101,6 @@ function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
-// TODO
 function addUser(name, pwd) {
     if (findUser(name)) {
 	return false;
@@ -154,17 +152,37 @@ app.get('/logout', (req, res) => {
 // If we successfully add a new user, go to /login, else, back to /register.
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
-app.post('/register',
-	 (req, res) => {
-	     const username = req.body['username'];
-	     const password = req.body['password'];
-	     if (addUser(username, password)) {
-		 res.redirect('/login');
-	     } else {
-		 res.redirect('/register');
-	     }
-	 });
+// app.post('/register',
+// 	 (req, res) => {
+// 	     const username = req.body['username'];
+// 	     const password = req.body['password'];
+// 	     if (addUser(username, password)) {
+// 		 res.redirect('/login');
+// 	     } else {
+// 		 res.redirect('/register');
+// 	     }
+// 	 });
 
+app.post("/register", async (req, res) => {
+	let body = '';
+	req.on('data', data => body += data);
+	req.on('end', async () => {
+		const data = JSON.parse(body);
+		const pwd = data.password;
+		const [salt, hash] = mc.hash(pwd);
+		const hashed = [salt, hash];
+		const userFound = await datafunc.getUser(data.email);
+		if(!userFound){
+			await datafunc.addUser(data.email, data.name, hashed[0], hashed[1]);
+			res.redirect('/login');
+		}
+		else{
+			res.redirect('/register');
+		}
+		res.end();
+	});
+});
+	
 // Register URL
 app.get('/register',
 	(req, res) => res.sendFile(path.resolve('./client/register.html')));
