@@ -3492,3 +3492,38 @@ document.getElementById('clear').addEventListener('click', () => {
     }
 });
 
+//SETTINGS HTML 
+
+<!-- <div class='ml-5 mr-5'> -->
+                    <!-- <div> -->
+                            <form class="sm-col-3">
+                    <div class="form-group row">
+                        <!-- <label for="phone" class="col-form-label col-sm-3">Phone Number:</label> -->
+                        <label for="phone" class="ml-5 mr-3 col-form-label">Phone Number:</label>
+                        <!-- <div class="col-sm-3"> -->
+                        <div>
+                            <input type="text" class="form-control" id="phone" placeholder="Phone" required>
+                        </div>
+                        <!-- <div class="col-sm-5"> -->
+
+                    </div>
+                <!-- </div> -->
+                <!-- </div> -->
+                <form class="sm-col-3">
+                        <!-- <label for="phone" class="col-form-label col-sm-3">Phone Number:</label> -->
+                        <label for="phone" class="col-form-label">Phone Number:</label>
+                        <!-- <div class="col-sm-3"> -->
+                        <div>
+                            <input type="text" class="form-control sm-col-3" id="phone" placeholder="Phone" required>
+                        </div>
+                    </form>
+
+                <select id="timezone">
+                        <option value="Hawaii Standard Time (HST)">Hawaii Standard Time (HST)</option>
+                        <option value="Alaska Daylight Time (AKDT)">Alaska Daylight Time (AKDT)</option>
+                        <option value="Pacific Daylight Time (PDT)">Pacific Daylight Time (PDT)</option>
+                        <option value="Mountain Daylight Time (MDT)">Mountain Daylight Time (MDT)</option>
+                        <option value="Central Daylight Time (CDT))">Central Daylight Time (CDT)</option>
+                        <option value="Eastern Daylight Time (EDT)">Eastern Daylight Time (EDT)</option>
+                    </select>
+
