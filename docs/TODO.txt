@@ -1,0 +1,5 @@
+MILESTONE 3
+
+courses.html + courses.js
+- add a delete option
+- could add a "Delete Course" label next to a selector drop down menu
