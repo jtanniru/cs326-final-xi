@@ -17,6 +17,57 @@ const minicrypt = require('./miniCrypt.js');
 
 const mc = new minicrypt();
 
+//create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225), phone varchar(255), timezone varchar(225), availability json);
+//create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225));
+
+// course_name |  professor   |    course_days    |       email       
+// -------------+--------------+-------------------+-------------------
+//  COMPSCI 326 | emery berger | {f,f,t,f,f,f,t,f} | eberger@umass.edu
+// (1 row)
+
+// email       |     name     |        salt         |        hash        |    phone    | timezone |   availability    
+// -------------------+--------------+---------------------+--------------------+-------------+----------+-------------------
+//  eberger@umass.edu | emery berger | 20309gffytyehherihb | higgi434g5grg43giy | +9084326475 | EST      | {"mon" : [0,1,0]}
+
+
+// const pgp = require('pg-promise')({
+//     connect(client) {
+//         console.log('Connected to database:', client.connectionParameters.database);
+//     },
+
+//     disconnect(client) {
+//         console.log('Disconnected from database:', client.connectionParameters.database);
+//     }
+// });
+
+// const username = "postgres";
+// const password = "admin";
+
+// const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
+
+// const db = pgp(url);
+
+// async function connectAndRun(task) {
+//     let connection = null;
+
+//     try {
+//         connection = await db.connect();
+//         return await task(connection);
+// 	} 
+// 	// eslint-disable-next-line no-useless-catch
+// 	catch (e) {
+//         throw e;
+// 	} 
+// 	finally {
+//         try {
+//             connection.done();
+// 		} 
+// 		// eslint-disable-next-line no-empty
+// 		catch(ignored) {
+//         }
+//     }
+// }
+
 // Session configuration
 
 const session = {
@@ -155,14 +206,23 @@ app.get('/logout', (req, res) => {
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
 app.post('/register',
-	 (req, res) => {
-	     const username = req.body['username'];
-	     const password = req.body['password'];
-	     if (addUser(username, password)) {
-		 res.redirect('/login');
-	     } else {
-		 res.redirect('/register');
-	     }
+	 async (req, res) => {
+		const data = req.body;
+		const pwd = data.password;
+		console.log(data.email);
+		const [salt, hash] = mc.hash(pwd);
+		const hashed = [salt, hash];
+		await datafunc.addUser(data.email, data.name, hashed[0], hashed[1]);
+		res.redirect('/login');
+		res.end();
+        //await connectAndRun(db => db.none('INSERT INTO userInfo (email, name, salt, hash) VALUES ($1, $2, $3, $4)', [data.email, data.name, hashed[0], hashed[1]]));
+        
+	     //const username = req.body['username'];
+	     //const password = req.body['password'];
+	     //if (addUser(username, password)) {
+	     //} else {
+		 //res.redirect('/register');
+	     //}
 	 });
 
 // Register URL
@@ -171,7 +231,7 @@ app.get('/register',
 	//res.sendFile('client/register.html',
 				   //{ 'root' : __dirname }));
 
-// Private data
+//Private data
 app.get('/private',
 	checkLoggedIn, // If we are logged in (notice the comma!)...
 	(req, res) => {             // Go to the user's page.
@@ -179,19 +239,7 @@ app.get('/private',
 	});
 
 // A dummy page for the user.
-app.get('/private/:userID/',
-	checkLoggedIn, // We also protect this route: authenticated...
-	(req, res) => {
-	    // Verify this is the right user.
-	    if (req.params.userID === req.user) {
-		res.writeHead(200, {"Content-Type" : "text/html"});
-		res.write('<H1>HELLO ' + req.params.userID + "</H1>");
-		res.write('<br/><a href="/logout">click here to logout</a>');
-		res.end();
-	    } else {
-		res.redirect('/private/');
-	    }
-	});
+// s
 
 app.get('*', (req, res) => {
   res.send('Error');
@@ -201,40 +249,33 @@ app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
 
-// Three tables Users, Courses, Attend
-
-// app.post('/register', async (req, res) => {
-
-//     await datafunc.addUser(req.query.email, req.query.password);
-//     res.send("OK");
-// });
-
 // app.get('/login', async (req, res) => {
 // 	const userInfo = await datafunc.getUser(req.query.email);
 //     res.send(JSON.stringify(userInfo));
 // });
 
-// app.get('/course/id/new', async (req, res) => {
+// app.get('/course/new', async (req, res) => {
 //     await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
 //     res.send("OK");
 // });
 
-// app.get('/course/id/delete', async (req, res) => {
+// app.get('/course/delete', async (req, res) => {
 //     await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
 //     res.send("OK");
 // });
 
-// app.post('/user/id/settings/add', async function (req, res) {
+// app.post('/settings/add', async function (req, res) {
 // 	const classes = await datafunc.getClasses();
 //     res.send(JSON.stringify(classes));
 //   });
 
-// app.get("/user/id/settings/delete", async (req, res) => {
+// app.get("/settings/delete", async (req, res) => {
 //     await datafunc.deleteClasses(req.query.email, req.query.cid);
 //     res.send("OK");
 // });
 
-// app.get('/user/id/search', async (req, res) => {
+// app.get('/search', async (req, res) => {
 //     await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
 //     res.send("OK");
 // });
+

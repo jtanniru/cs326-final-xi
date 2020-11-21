@@ -50,32 +50,22 @@ async function connectAndRun(task) {
 }
 
 //Database functions
-async function addUser(email, password) {
-    return await connectAndRun(db => db.none('INSERT INTO Users (email, password) VALUES ($1, $2);', [email, password]));   
+async function addUser(email, name, salt, hash) {
+    return await connectAndRun(db => db.none('INSERT INTO userInfo (email, name, salt, hash) VALUES ($1, $2, $3, $4);', [email, name, salt, hash]));   
 }
 
 async function getUser(email) {
-    return await connectAndRun(db => db.one('SELECT * FROM Users Where email = $1;', [email]));
+    return await connectAndRun(db => db.any('SELECT * FROM userInfo WHERE email = $1;', [email]));
 }
 
-async function addCourse(cid, course_title, course_subject, professor_name, course_number, course_days, course_time) {
-    return await connectAndRun(db => db.none('INSERT INTO Courses (cid, course_title, course_subject, professor_name, course_number, course_days, course_time) VALUES ($1, $2, $3, $4, $5, $6, $7);', [ cid, course_title, course_subject, professor_name, course_number, course_days, course_time]));   
+
+async function addCourse(course_name, professor, course_days, email) {
+    return await connectAndRun(db => db.none('INSERT INTO courseInfo (course_name, professor, course_days, email) VALUES ($1, $2, $3, $4);', [course_name, professor, course_days, email]));   
 }
 
 async function getCourses() {
-    return await connectAndRun(db => db.any('SELECT * FROM Courses;'));
+    return await connectAndRun(db => db.any('SELECT * FROM courseInfo;'));
 }
 
-async function addClass(cid, email) {
-    return await connectAndRun(db => db.none('INSERT INTO Classes (cid, email) VALUES ($1, $2, $3);', [cid, email]));   
-}
 
-async function getClasses() {
-    return await connectAndRun(db => db.any('SELECT * FROM Courses;'));
-}
-
-async function deleteClasses(email, cid) {
-    return await connectAndRun(db => db.none('DELETE FROM Classes WHERE email = $1 and cid = $2;', [email,cid]));
-}
-
-module.exports =  {}
+module.exports =  {addUser, getUser, addCourse, getCourses}
