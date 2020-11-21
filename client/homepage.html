@@ -14,13 +14,13 @@
       <img class="img-responsive rounded float-left my-0 mr-md-auto shadow shadow-lg--hover" src="./RendezvousLogo.jpg" alt="Rendezvous Logo">
     </div>
     <div class="row pt-5 mt-5">
-      <form class="form-signin pt-5 mt-5 mx-auto">
+      <form class="form-signin pt-5 mt-5 mx-auto" method="POST" action="/login">
         <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
         <label for="inputEmail" class="sr-only">Email Address</label>
-        <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address" required autofocus>
+        <input name="username" type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <a href="#" class="btn btn-lg btn-primary btn-block mt-3" role="button" id="signIn">Sign In</a>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <button type="submit" class="btn btn-lg btn-primary btn-block mt-3" role="button" id="signIn">Sign In</button>
         <a href="register.html" class="btn btn-lg btn-primary btn-block mt-3" role="button" id="goToRegister">Register</a>
         <small>Don't have an account? Create one now!</small>
       </form>

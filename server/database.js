@@ -58,6 +58,7 @@ async function getUser(email) {
     return await connectAndRun(db => db.any('SELECT * FROM userInfo WHERE email = $1;', [email]));
 }
 
+
 async function addCourse(course_name, professor, course_days, email) {
     return await connectAndRun(db => db.none('INSERT INTO courseInfo (course_name, professor, course_days, email) VALUES ($1, $2, $3, $4);', [course_name, professor, course_days, email]));   
 }
