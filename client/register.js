@@ -14,6 +14,11 @@ window.addEventListener("load", async function () {
       alert('Required sign in information is missing.');
     }
     else {
+
+      //headers: {
+    //'Content-Type': 'application/json;charset=utf-8'
+  //}
+
       // TODO: add header (THANKS OLIVIA!!)
       const response = await fetch('/register', {
         method: 'POST',
@@ -36,4 +41,3 @@ window.addEventListener("load", async function () {
     }
   });
 });
-
