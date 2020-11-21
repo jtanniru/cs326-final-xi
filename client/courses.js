@@ -96,10 +96,12 @@ window.addEventListener("load", async function () {
       }
     }
     
-    // TODO: add header
     // POST to courseInfo table
     const response = await fetch('/course/new', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+        },
       body: JSON.stringify({
           course_name: courseNameValue,
           professor:professorValue,
@@ -163,6 +165,9 @@ window.addEventListener("load", async function () {
     // go into the database, remove this course from the user's course listings
     const response = await fetch('/course/delete', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+        },
       body: JSON.stringify({
           course_name: courseNameValue,
           professor:professorValue,
