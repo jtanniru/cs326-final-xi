@@ -15,13 +15,14 @@ window.addEventListener("load", async function () {
     }
     else {
 
-      //headers: {
-    //'Content-Type': 'application/json;charset=utf-8'
-  //}
+      
 
       // TODO: add header (THANKS OLIVIA!!)
       const response = await fetch('/register', {
         method: 'POST',
+        //headers: {
+        //'Content-Type': 'application/json;charset=utf-8'
+        //},
         body: JSON.stringify({
             email: emailValue ,
             password: passwordValue,

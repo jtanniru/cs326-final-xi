@@ -177,11 +177,11 @@ function checkLoggedIn(req, res, next) {
     }
 }
 
-// app.get('/',
-// 	checkLoggedIn,
-// 	(req, res) => {
-// 	    res.send("hello world");
-// 	});
+app.get('/',
+	checkLoggedIn,
+	(req, res) => {
+	    res.send("hello world");
+	});
 
 // Handle post data from the login.html form.
 app.post('/login',
@@ -209,10 +209,12 @@ app.post('/register',
 	 async (req, res) => {
 		const data = req.body;
 		const pwd = data.password;
+		console.log(data.email);
 		const [salt, hash] = mc.hash(pwd);
 		const hashed = [salt, hash];
 		await datafunc.addUser(data.email, data.name, hashed[0], hashed[1]);
 		res.redirect('/login');
+		res.end();
         //await connectAndRun(db => db.none('INSERT INTO userInfo (email, name, salt, hash) VALUES ($1, $2, $3, $4)', [data.email, data.name, hashed[0], hashed[1]]));
         
 	     //const username = req.body['username'];
@@ -229,12 +231,12 @@ app.get('/register',
 	//res.sendFile('client/register.html',
 				   //{ 'root' : __dirname }));
 
-// Private data
-// app.get('/private',
-// 	checkLoggedIn, // If we are logged in (notice the comma!)...
-// 	(req, res) => {             // Go to the user's page.
-// 	    res.redirect('/private/' + req.user);
-// 	});
+//Private data
+app.get('/private',
+	checkLoggedIn, // If we are logged in (notice the comma!)...
+	(req, res) => {             // Go to the user's page.
+	    res.redirect('/private/' + req.user);
+	});
 
 // A dummy page for the user.
 // s
