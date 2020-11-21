@@ -1,5 +1,7 @@
 'use strict';
 
+import { request } from "http";
+
 window.addEventListener("load", async function () {
   // action: gives each checkbox an attribute when checked so the status of each can be easily observed later
   const monday = document.getElementById('monday');
@@ -103,8 +105,10 @@ window.addEventListener("load", async function () {
       body: JSON.stringify({
           course_name: courseNameValue,
           professor:professorValue,
-          course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
+          course_days: weekdayArray, // TODO: make sure to include the comma , when you add email in
           //email: // TODO: request.user 
+          // email: request.users.email,
+
       })
     });
 
