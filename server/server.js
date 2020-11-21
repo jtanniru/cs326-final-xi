@@ -19,7 +19,7 @@ const minicrypt = require('./miniCrypt.js');
 const mc = new minicrypt();
 
 //create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225), phone varchar(255), timezone varchar(225), availability json);
-//create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225));
+//create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225) , PRIMARY KEY (course_name , email));
 
 // course_name |  professor   |    course_days    |       email       
 // -------------+--------------+-------------------+-------------------
@@ -82,7 +82,7 @@ passport.deserializeUser((uid, done) => {
 
 app.use(express.json()); // allow JSON inputs
 app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
-
+app.use(express.static('client'));
 
 // Returns true iff the user exists.
 async function findUser(username) {
@@ -125,7 +125,7 @@ app.get('/',
 // Handle post data from the login.html form.
 app.post('/login',
 	 passport.authenticate('local' , {     // use username/password authentication
-	     'successRedirect' : '/course/new',   // when we login, go to /private 
+	     'successRedirect' : '/course',   // when we login, go to /private 
 	     'failureRedirect' : '/login'      // otherwise, back to login
 	 }));
 
@@ -177,10 +177,10 @@ app.get('/private/:username',
 	    res.send("hello" + req.params.username);
 	});
 
-app.get('/course/new',checkLoggedIn, 
+app.get('/course',checkLoggedIn, 
 	(req, res) => res.sendFile(path.resolve('./client/courses.html')));
 
-app.post('/course/new', checkLoggedIn, async (req, res) => {
+app.post('/course', checkLoggedIn, async (req, res) => {
 	const data = req.body;
 	console.log(data.course_name);
 	console.log(data.course_days);
@@ -193,8 +193,8 @@ app.get('/course/view', async (req, res) => {
 		await datafunc.getCourses(req.user)));
 });
 
-app.get('/course/delete', async (req, res) => {
-    await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+app.delete('/course/:course_name', async (req, res) => {
+    await datafunc.delCourses(req.params.course_name);
     res.send("OK");
 });
 
@@ -214,7 +214,6 @@ app.post('/settings/update', async (req, res) => {
 //     res.send("OK");
 // });
 
-app.use(express.static('client'));
 
 app.get('*', (req, res) => {
   res.send('Error');

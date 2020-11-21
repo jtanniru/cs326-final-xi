@@ -97,7 +97,7 @@ window.addEventListener("load", async function () {
     }
     
     // POST to courseInfo table
-    const courseResponse = await fetch('/course/new', {
+    const courseResponse = await fetch('/course', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -117,15 +117,12 @@ window.addEventListener("load", async function () {
       console.log("course added");
     }
 
-  });
-
-  const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
-  coursesDeleteSelection.addEventListener('load', async () => {
-    // Views courses for user, fills out delete options and current courses table
     const responseView = await fetch('/course/view');
     const responseData = responseView.ok ? await response.json() : [];
+    const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 
     for (const course of responseData) {
+      
       const newOption = document.createElement('option');
       newOption.value = course.course_name;
       coursesDeleteSelection.appendChild(newOption);
@@ -144,7 +141,10 @@ window.addEventListener("load", async function () {
 
       document.getElementById('coursesTable').appendChild(tr);
     }
+
   });
+
+  //render function for course table onload
 
   const courseToDelete = document.getElementById('coursesDeleteSelection').value;
   const coursesDeleteButton = document.getElementById('coursesDelete');
@@ -165,21 +165,39 @@ window.addEventListener("load", async function () {
       index++;
     }
 
+
+
     // go into the database, remove this course from the user's course listings
-    const responseDelCourse = await fetch('/course/delete', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-        },
-      body: JSON.stringify({
-          course_name: courseNameValue,
-          professor:professorValue,
-          course_days: weekdayArray 
-      })
+    const responseDelCourse = await fetch('/course'+courseNameValue, {
+      method: 'DELETE'
     });
 
     if (!responseDelCourse.ok) {
       console.error("Error");
     }
+
+    const responseView = await fetch('/course/view');
+    const responseData = responseView.ok ? await response.json() : [];
+
+    for (const course of responseData) {
+      // const newOption = document.createElement('option');
+      // newOption.value = course.course_name;
+      // coursesDeleteSelection.appendChild(newOption);
+
+      const tr = document.createElement('tr');
+      const name  = document.createElement('td');
+      const professor  = document.createElement('td');
+      const days  = document.createElement('td');
+      name.innerText = course.course_name;
+      professor.innerText = course.professor;
+      days.innerHTML = course.course_days;
+
+      tr.appendChild(name);
+      tr.appendChild(professor);
+      tr.appendChild(days);
+
+      document.getElementById('coursesTable').appendChild(tr);
+    }
+
   });
 });
