@@ -916,7 +916,7 @@ window.addEventListener("load", async function () {
             body: JSON.stringify({
                 user_timezone = zone,
                 user_avail = availability,
-                user_phone: userPhone
+                user_phone = userPhone
             })
         });
         if (!response.ok) {
