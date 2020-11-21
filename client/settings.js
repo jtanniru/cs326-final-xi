@@ -4,7 +4,188 @@ window.addEventListener("load", async function () {
     let table = document.getElementById("tableID");
     let availability = {};
 
-    // availability = 1; //set availability equal to the saved data
+    const response = await fetch('/availability/view');
+    const responseData = response.ok ? await response.json() : {};
+
+    document.getElementById('timezone').value = responseData['user_timezone'];
+    if (responseData['user_avail'] !== {}) {
+        availability = user_avail;
+    } else {
+        availability["Mon12am"] = 0;
+        availability["Mon1am"] = 0;
+        availability["Mon2am"] = 0;
+        availability["Mon3am"] = 0;
+        availability["Mon4am"] = 0;
+        availability["Mon5am"] = 0;
+        availability["Mon6am"] = 0;
+        availability["Mon7am"] = 0;
+        availability["Mon8am"] = 0;
+        availability["Mon9am"] = 0;
+        availability["Mon10am"] = 0;
+        availability["Mon11am"] = 0;
+        availability["Mon12pm"] = 0;
+        availability["Mon1pm"] = 0;
+        availability["Mon2pm"] = 0;
+        availability["Mon3pm"] = 0;
+        availability["Mon4pm"] = 0;
+        availability["Mon5pm"] = 0;
+        availability["Mon6pm"] = 0;
+        availability["Mon7pm"] = 0;
+        availability["Mon8pm"] = 0;
+        availability["Mon9pm"] = 0;
+        availability["Mon10pm"] = 0;
+        availability["Mon11pm"] = 0;
+
+        availability["Tues12am"] = 0;
+        availability["Tues1am"] = 0;
+        availability["Tues2am"] = 0;
+        availability["Tues3am"] = 0;
+        availability["Tues4am"] = 0;
+        availability["Tues5am"] = 0;
+        availability["Tues6am"] = 0;
+        availability["Tues7am"] = 0;
+        availability["Tues8am"] = 0;
+        availability["Tues9am"] = 0;
+        availability["Tues10am"] = 0;
+        availability["Tues11am"] = 0;
+        availability["Tues12pm"] = 0;
+        availability["Tues1pm"] = 0;
+        availability["Tues2pm"] = 0;
+        availability["Tues3pm"] = 0;
+        availability["Tues4pm"] = 0;
+        availability["Tues5pm"] = 0;
+        availability["Tues6pm"] = 0;
+        availability["Tues7pm"] = 0;
+        availability["Tues8pm"] = 0;
+        availability["Tues9pm"] = 0;
+        availability["Tues10pm"] = 0;
+        availability["Tues11pm"] = 0;
+
+        availability["Wed12am"] = 0;
+        availability["Wed1am"] = 0;
+        availability["Wed2am"] = 0;
+        availability["Wed3am"] = 0;
+        availability["Wed4am"] = 0;
+        availability["Wed5am"] = 0;
+        availability["Wed6am"] = 0;
+        availability["Wed7am"] = 0;
+        availability["Wed8am"] = 0;
+        availability["Wed9am"] = 0;
+        availability["Wed10am"] = 0;
+        availability["Wed11am"] = 0;
+        availability["Wed12pm"] = 0;
+        availability["Wed1pm"] = 0;
+        availability["Wed2pm"] = 0;
+        availability["Wed3pm"] = 0;
+        availability["Wed4pm"] = 0;
+        availability["Wed5pm"] = 0;
+        availability["Wed6pm"] = 0;
+        availability["Wed7pm"] = 0;
+        availability["Wed8pm"] = 0;
+        availability["Wed9pm"] = 0;
+        availability["Wed10pm"] = 0;
+        availability["Wed11pm"] = 0;
+
+        availability["Thurs12am"] = 0;
+        availability["Thurs1am"] = 0;
+        availability["Thurs2am"] = 0;
+        availability["Thurs3am"] = 0;
+        availability["Thurs4am"] = 0;
+        availability["Thurs5am"] = 0;
+        availability["Thurs6am"] = 0;
+        availability["Thurs7am"] = 0;
+        availability["Thurs8am"] = 0;
+        availability["Thurs9am"] = 0;
+        availability["Thurs10am"] = 0;
+        availability["Thurs11am"] = 0;
+        availability["Thurs12pm"] = 0;
+        availability["Thurs1pm"] = 0;
+        availability["Thurs2pm"] = 0;
+        availability["Thurs3pm"] = 0;
+        availability["Thurs4pm"] = 0;
+        availability["Thurs5pm"] = 0;
+        availability["Thurs6pm"] = 0;
+        availability["Thurs7pm"] = 0;
+        availability["Thurs8pm"] = 0;
+        availability["Thurs9pm"] = 0;
+        availability["Thurs10pm"] = 0;
+        availability["Thurs11pm"] = 0;
+
+        availability["Fri12am"] = 0;
+        availability["Fri1am"] = 0;
+        availability["Fri2am"] = 0;
+        availability["Fri3am"] = 0;
+        availability["Fri4am"] = 0;
+        availability["Fri5am"] = 0;
+        availability["Fri6am"] = 0;
+        availability["Fri7am"] = 0;
+        availability["Fri8am"] = 0;
+        availability["Fri9am"] = 0;
+        availability["Fri10am"] = 0;
+        availability["Fri11am"] = 0;
+        availability["Fri12pm"] = 0;
+        availability["Fri1pm"] = 0;
+        availability["Fri2pm"] = 0;
+        availability["Fri3pm"] = 0;
+        availability["Fri4pm"] = 0;
+        availability["Fri5pm"] = 0;
+        availability["Fri6pm"] = 0;
+        availability["Fri7pm"] = 0;
+        availability["Fri8pm"] = 0;
+        availability["Fri9pm"] = 0;
+        availability["Fri10pm"] = 0;
+        availability["Fri11pm"] = 0;
+
+        availability["Sat12am"] = 0;
+        availability["Sat1am"] = 0;
+        availability["Sat2am"] = 0;
+        availability["Sat3am"] = 0;
+        availability["Sat4am"] = 0;
+        availability["Sat5am"] = 0;
+        availability["Sat6am"] = 0;
+        availability["Sat7am"] = 0;
+        availability["Sat8am"] = 0;
+        availability["Sat9am"] = 0;
+        availability["Sat10am"] = 0;
+        availability["Sat11am"] = 0;
+        availability["Sat12pm"] = 0;
+        availability["Sat1pm"] = 0;
+        availability["Sat2pm"] = 0;
+        availability["Sat3pm"] = 0;
+        availability["Sat4pm"] = 0;
+        availability["Sat5pm"] = 0;
+        availability["Sat6pm"] = 0;
+        availability["Sat7pm"] = 0;
+        availability["Sat8pm"] = 0;
+        availability["Sat9pm"] = 0;
+        availability["Sat10pm"] = 0;
+        availability["Sat11pm"] = 0;
+
+        availability["Sun12am"] = 0;
+        availability["Sun1am"] = 0;
+        availability["Sun2am"] = 0;
+        availability["Sun3am"] = 0;
+        availability["Sun4am"] = 0;
+        availability["Sun5am"] = 0;
+        availability["Sun6am"] = 0;
+        availability["Sun7am"] = 0;
+        availability["Sun8am"] = 0;
+        availability["Sun9am"] = 0;
+        availability["Sun10am"] = 0;
+        availability["Sun11am"] = 0;
+        availability["Sun12pm"] = 0;
+        availability["Sun1pm"] = 0;
+        availability["Sun2pm"] = 0;
+        availability["Sun3pm"] = 0;
+        availability["Sun4pm"] = 0;
+        availability["Sun5pm"] = 0;
+        availability["Sun6pm"] = 0;
+        availability["Sun7pm"] = 0;
+        availability["Sun8pm"] = 0;
+        availability["Sun9pm"] = 0;
+        availability["Sun10pm"] = 0;
+        availability["Sun11pm"] = 0;
+    }
 
     if (table !== null) {
         for (let i = 1; i < table.rows.length; i++) {
@@ -754,7 +935,7 @@ window.addEventListener("load", async function () {
     document.getElementById('submit').addEventListener('click', async () => {
         const zone = document.getElementById('timezone').value;
 
-        const response = await fetch('/avail/update', {
+        const response = await fetch('/availability/update', {
             method: 'POST',
             body: JSON.stringify({
                 user_timezone = zone,
@@ -768,211 +949,191 @@ window.addEventListener("load", async function () {
         }
     }); //end of submit
 
+    document.getElementById('clear').addEventListener('click', () => {
+        document.getElementById('timezone').value = '';
+
+        let availability = {};
+        availability["Mon12am"] = 0;
+        availability["Mon1am"] = 0;
+        availability["Mon2am"] = 0;
+        availability["Mon3am"] = 0;
+        availability["Mon4am"] = 0;
+        availability["Mon5am"] = 0;
+        availability["Mon6am"] = 0;
+        availability["Mon7am"] = 0;
+        availability["Mon8am"] = 0;
+        availability["Mon9am"] = 0;
+        availability["Mon10am"] = 0;
+        availability["Mon11am"] = 0;
+        availability["Mon12pm"] = 0;
+        availability["Mon1pm"] = 0;
+        availability["Mon2pm"] = 0;
+        availability["Mon3pm"] = 0;
+        availability["Mon4pm"] = 0;
+        availability["Mon5pm"] = 0;
+        availability["Mon6pm"] = 0;
+        availability["Mon7pm"] = 0;
+        availability["Mon8pm"] = 0;
+        availability["Mon9pm"] = 0;
+        availability["Mon10pm"] = 0;
+        availability["Mon11pm"] = 0;
+
+        availability["Tues12am"] = 0;
+        availability["Tues1am"] = 0;
+        availability["Tues2am"] = 0;
+        availability["Tues3am"] = 0;
+        availability["Tues4am"] = 0;
+        availability["Tues5am"] = 0;
+        availability["Tues6am"] = 0;
+        availability["Tues7am"] = 0;
+        availability["Tues8am"] = 0;
+        availability["Tues9am"] = 0;
+        availability["Tues10am"] = 0;
+        availability["Tues11am"] = 0;
+        availability["Tues12pm"] = 0;
+        availability["Tues1pm"] = 0;
+        availability["Tues2pm"] = 0;
+        availability["Tues3pm"] = 0;
+        availability["Tues4pm"] = 0;
+        availability["Tues5pm"] = 0;
+        availability["Tues6pm"] = 0;
+        availability["Tues7pm"] = 0;
+        availability["Tues8pm"] = 0;
+        availability["Tues9pm"] = 0;
+        availability["Tues10pm"] = 0;
+        availability["Tues11pm"] = 0;
+
+        availability["Wed12am"] = 0;
+        availability["Wed1am"] = 0;
+        availability["Wed2am"] = 0;
+        availability["Wed3am"] = 0;
+        availability["Wed4am"] = 0;
+        availability["Wed5am"] = 0;
+        availability["Wed6am"] = 0;
+        availability["Wed7am"] = 0;
+        availability["Wed8am"] = 0;
+        availability["Wed9am"] = 0;
+        availability["Wed10am"] = 0;
+        availability["Wed11am"] = 0;
+        availability["Wed12pm"] = 0;
+        availability["Wed1pm"] = 0;
+        availability["Wed2pm"] = 0;
+        availability["Wed3pm"] = 0;
+        availability["Wed4pm"] = 0;
+        availability["Wed5pm"] = 0;
+        availability["Wed6pm"] = 0;
+        availability["Wed7pm"] = 0;
+        availability["Wed8pm"] = 0;
+        availability["Wed9pm"] = 0;
+        availability["Wed10pm"] = 0;
+        availability["Wed11pm"] = 0;
+
+        availability["Thurs12am"] = 0;
+        availability["Thurs1am"] = 0;
+        availability["Thurs2am"] = 0;
+        availability["Thurs3am"] = 0;
+        availability["Thurs4am"] = 0;
+        availability["Thurs5am"] = 0;
+        availability["Thurs6am"] = 0;
+        availability["Thurs7am"] = 0;
+        availability["Thurs8am"] = 0;
+        availability["Thurs9am"] = 0;
+        availability["Thurs10am"] = 0;
+        availability["Thurs11am"] = 0;
+        availability["Thurs12pm"] = 0;
+        availability["Thurs1pm"] = 0;
+        availability["Thurs2pm"] = 0;
+        availability["Thurs3pm"] = 0;
+        availability["Thurs4pm"] = 0;
+        availability["Thurs5pm"] = 0;
+        availability["Thurs6pm"] = 0;
+        availability["Thurs7pm"] = 0;
+        availability["Thurs8pm"] = 0;
+        availability["Thurs9pm"] = 0;
+        availability["Thurs10pm"] = 0;
+        availability["Thurs11pm"] = 0;
+
+        availability["Fri12am"] = 0;
+        availability["Fri1am"] = 0;
+        availability["Fri2am"] = 0;
+        availability["Fri3am"] = 0;
+        availability["Fri4am"] = 0;
+        availability["Fri5am"] = 0;
+        availability["Fri6am"] = 0;
+        availability["Fri7am"] = 0;
+        availability["Fri8am"] = 0;
+        availability["Fri9am"] = 0;
+        availability["Fri10am"] = 0;
+        availability["Fri11am"] = 0;
+        availability["Fri12pm"] = 0;
+        availability["Fri1pm"] = 0;
+        availability["Fri2pm"] = 0;
+        availability["Fri3pm"] = 0;
+        availability["Fri4pm"] = 0;
+        availability["Fri5pm"] = 0;
+        availability["Fri6pm"] = 0;
+        availability["Fri7pm"] = 0;
+        availability["Fri8pm"] = 0;
+        availability["Fri9pm"] = 0;
+        availability["Fri10pm"] = 0;
+        availability["Fri11pm"] = 0;
+
+        availability["Sat12am"] = 0;
+        availability["Sat1am"] = 0;
+        availability["Sat2am"] = 0;
+        availability["Sat3am"] = 0;
+        availability["Sat4am"] = 0;
+        availability["Sat5am"] = 0;
+        availability["Sat6am"] = 0;
+        availability["Sat7am"] = 0;
+        availability["Sat8am"] = 0;
+        availability["Sat9am"] = 0;
+        availability["Sat10am"] = 0;
+        availability["Sat11am"] = 0;
+        availability["Sat12pm"] = 0;
+        availability["Sat1pm"] = 0;
+        availability["Sat2pm"] = 0;
+        availability["Sat3pm"] = 0;
+        availability["Sat4pm"] = 0;
+        availability["Sat5pm"] = 0;
+        availability["Sat6pm"] = 0;
+        availability["Sat7pm"] = 0;
+        availability["Sat8pm"] = 0;
+        availability["Sat9pm"] = 0;
+        availability["Sat10pm"] = 0;
+        availability["Sat11pm"] = 0;
+
+        availability["Sun12am"] = 0;
+        availability["Sun1am"] = 0;
+        availability["Sun2am"] = 0;
+        availability["Sun3am"] = 0;
+        availability["Sun4am"] = 0;
+        availability["Sun5am"] = 0;
+        availability["Sun6am"] = 0;
+        availability["Sun7am"] = 0;
+        availability["Sun8am"] = 0;
+        availability["Sun9am"] = 0;
+        availability["Sun10am"] = 0;
+        availability["Sun11am"] = 0;
+        availability["Sun12pm"] = 0;
+        availability["Sun1pm"] = 0;
+        availability["Sun2pm"] = 0;
+        availability["Sun3pm"] = 0;
+        availability["Sun4pm"] = 0;
+        availability["Sun5pm"] = 0;
+        availability["Sun6pm"] = 0;
+        availability["Sun7pm"] = 0;
+        availability["Sun8pm"] = 0;
+        availability["Sun9pm"] = 0;
+        availability["Sun10pm"] = 0;
+        availability["Sun11pm"] = 0;
+
+        for (let i = 1; i < table.rows.length - 1; i++) {
+            for (let j = 1; j < table.rows[i].cells.length; j++) {
+                table.rows[i].cells[j].classList.add("cell-selected");
+                table.rows[i].cells[j].classList.remove("cell");
+            }
+        }
+    });
+
 } //end of load
-
-
-
-
-
-
-
-
-
-
-
-
-    // action for submit course button
-    const coursesSubmitButton = document.getElementById('coursesSubmit');
-coursesSubmitButton.addEventListener('click', async () => {
-    console.log("clicked button");
-    const courseNameValue = document.getElementById('inputCourseName').value;
-    const professorValue = document.getElementById('inputProfessor').value;
-
-    let weekdayArray = []; // the Boolean[] added to the sql table for course days column
-
-    if (courseNameValue === '' || professorValue === '') {
-        alert('Required sign in information is missing.');
-    }
-
-    // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
-    let weekDaysCheckboxes = document.getElementsByClassName('weekday');
-    for (let i = 0; i < weekDaysCheckboxes.length; i++) {
-        if (weekDaysCheckboxes[i].checked === true) {
-            weekdayArray.push(true);
-        }
-        else {
-            weekdayArray.push(false);
-        }
-    }
-
-    // TODO: add header
-    // POST to courseInfo table
-    const response = await fetch('/avail/update', {
-        method: 'POST',
-        body: JSON.stringify({
-            course_name: courseNameValue,
-            professor: professorValue,
-            course_days: weekdayArray, // TODO: make sure to include the comma , when you add email in
-            //email: // TODO: request.user 
-            // email: request.users.email,
-
-        })
-    });
-
-    if (!response.ok) {
-        console.error("Could not save the turn score to the server.");
-    }
-
-});
-
-const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
-coursesDeleteSelection.addEventListener('load', async () => {
-    // Views courses for user, fills out delete options and current courses table
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
-
-    for (const course of responseData) {
-        const newOption = document.createElement('option');
-        newOption.value = course.course_name;
-        coursesDeleteSelection.appendChild(newOption);
-
-        const tr = document.createElement('tr');
-        const name = document.createElement('td');
-        const professor = document.createElement('td');
-        const days = document.createElement('td');
-        name.innerText = course.course_name;
-        professor.innerText = course.professor;
-        days.innerHTML = course.course_days;
-
-        tr.appendChild(name);
-        tr.appendChild(professor);
-        tr.appendChild(days);
-
-        document.getElementById('coursesTable').appendChild(tr);
-    }
-});
-
-const courseToDelete = document.getElementById('coursesDeleteSelection').value;
-const coursesDeleteButton = document.getElementById('coursesDelete');
-coursesDeleteButton.addEventListener('click', async () => {
-
-    // remove row from HTML table and delete selector options
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
-
-    let index = 0;
-    for (const course of responseData) {
-        if (course.course_name === courseToDelete) {
-            document.getElementById("coursesTable").deleteRow(index);
-            const deleteOption = document.getElementById("coursesDeleteSelection");
-            deleteOption.remove(deleteOption.selectedIndex);
-            break;
-        }
-        index++;
-    }
-
-    // go into the database, remove this course from the user's course listings
-    const response = await fetch('/course/delete', {
-        method: 'POST',
-        body: JSON.stringify({
-            course_name: courseNameValue,
-            professor: professorValue,
-            course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
-            //email: // TODO: request.user 
-        })
-    });
-
-    if (!response.ok) {
-        console.error("Could not save the turn score to the server.");
-    }
-});
-});
-
-
-
-
-
-// //database: insert an object with the user availability to save
-// document.getElementById('submit').addEventListener('click', () => {
-//     utils.saveAvailability(availability);
-// });
-
-// //database: insert an object with the user account information ({name: name, emailAddress: email, phoneNum: phone, savePassword: password})
-// document.getElementById('updateAcc').addEventListener('click', () => {
-//     if (document.getElementById('name').value === '' || document.getElementById('email').value === '' || document.getElementById('password').value === '') {
-//         alert('Required sign in information is missing.');
-//     } else {
-//         utils.saveAccountInfo();
-//     }
-// });
-
-// //database: remove saved availability information
-// document.getElementById('clear').addEventListener('click', () => {
-//     availability = utils.clearState();
-//     for (let i = 1; i < table.rows.length - 1; i++) {
-//         for (let j = 1; j < table.rows[i].cells.length; j++) {
-//             table.rows[i].cells[j].classList.add("cell-selected");
-//             table.rows[i].cells[j].classList.remove("cell");
-//         }
-//     }
-// });
-
-document.getElementById('submit').addEventListener('click', async () => {
-    //     utils.saveAvailability(availability);
-
-    //     let saveData = {
-    //         name: document.getElementById('name').value,
-    //         emailAddress: document.getElementById('email').value,
-    //         phoneNum: document.getElementById('phone').value,
-    //         savePassword: document.getElementById('password').value
-    //     };
-    //     window.localStorage.setItem('accountState', JSON.stringify(saveData));
-    //     console.log(JSON.stringify(saveData));
-    // }
-
-    const userName = document.getElementById('name').value;
-    const userEmail = document.getElementById('email').value;
-    const userPhone = document.getElementById('phone').value;
-    const userPassword = document.getElementById('password').value;
-
-    if (userName === '' || userEmail === '' || userPassword === '') {
-        alert('Required sign in information is missing.');
-    }
-
-    const response = await fetch('/course/new', {
-        method: 'POST',
-        body: JSON.stringify({
-            course_name: courseNameValue,
-            professor: professorValue,
-            course_days: weekdayArray, // TODO: make sure to include the comma , when you add email in
-            //email: // TODO: request.user 
-            // email: request.users.email,
-
-        })
-    });
-
-});
-
-
-document.getElementById('submit').addEventListener('click', async () => {
-    const courseNameValue = document.getElementById('inputCourseName').value;
-    const professorValue = document.getElementById('inputProfessor').value;
-
-    let weekdayArray = []; // the Boolean[] added to the sql table for course days column
-
-    if (courseNameValue === '' || professorValue === '') {
-        alert('Required sign in information is missing.');
-    }
-
-    // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
-    let weekDaysCheckboxes = document.getElementsByClassName('weekday');
-    for (let i = 0; i < weekDaysCheckboxes.length; i++) {
-        if (weekDaysCheckboxes[i].checked === true) {
-            weekdayArray.push(true);
-        }
-        else {
-            weekdayArray.push(false);
-        }
-    }
-
-});
