@@ -4,7 +4,7 @@ window.addEventListener("load", async function () {
     let table = document.getElementById("tableID");
     let availability = {};
 
-    const response = await fetch('/availability/view');
+    const response = await fetch('/settings');
     const responseData = response.ok ? await response.json() : {};
 
     document.getElementById('timezone').value = responseData['user_timezone'];
@@ -911,8 +911,11 @@ window.addEventListener("load", async function () {
         const zone = document.getElementById('timezone').value;
         const userPhone = document.getElementById('phone').value;
 
-        const response = await fetch('/availability/update', {
-            method: 'POST',
+        const response = await fetch('/settings', {
+            method: 'PUT', //update
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+                },
             body: JSON.stringify({
                 user_timezone = zone,
                 user_avail = availability,
