@@ -13,6 +13,7 @@ const LocalStrategy = require('passport-local').Strategy; // username/password s
 const app = express();
 const port = process.env.PORT || 3000;
 const minicrypt = require('./miniCrypt.js');
+//const { exists } = require('fs');
 
 
 const mc = new minicrypt();
@@ -30,46 +31,7 @@ const mc = new minicrypt();
 //  eberger@umass.edu | emery berger | 20309gffytyehherihb | higgi434g5grg43giy | +9084326475 | EST      | {"mon" : [0,1,0]}
 
 
-// const pgp = require('pg-promise')({
-//     connect(client) {
-//         console.log('Connected to database:', client.connectionParameters.database);
-//     },
-
-//     disconnect(client) {
-//         console.log('Disconnected from database:', client.connectionParameters.database);
-//     }
-// });
-
-// const username = "postgres";
-// const password = "admin";
-
-// const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
-
-// const db = pgp(url);
-
-// async function connectAndRun(task) {
-//     let connection = null;
-
-//     try {
-//         connection = await db.connect();
-//         return await task(connection);
-// 	} 
-// 	// eslint-disable-next-line no-useless-catch
-// 	catch (e) {
-//         throw e;
-// 	} 
-// 	finally {
-//         try {
-//             connection.done();
-// 		} 
-// 		// eslint-disable-next-line no-empty
-// 		catch(ignored) {
-//         }
-//     }
-// }
-
 // Session configuration
-
 const session = {
     secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
     resave : false,
@@ -80,14 +42,17 @@ const session = {
 
 const strategy = new LocalStrategy(
     async (username, password, done) => {
-	if (!findUser(username)) {
-	    // no such user
+		console.log(username, password);
+	if (! await findUser(username)) {
+		// no such user
+		//console.log(username, password);
 	    return done(null, false, { 'message' : 'Wrong username' });
 	}
-	if (!validatePassword(username, password)) {
+	if (!await validatePassword(username, password)) {
 	    // invalid password
 	    // should disable logins after N messages
-	    // delay return to rate-limit brute-force attacks
+		// delay return to rate-limit brute-force attacks
+		
 	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
 	    return done(null, false, { 'message' : 'Wrong password' });
 	}
@@ -104,8 +69,6 @@ passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('client'));
-app.use(express.static('images'));
-
 
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
@@ -119,54 +82,28 @@ passport.deserializeUser((uid, done) => {
 app.use(express.json()); // allow JSON inputs
 app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
 
-/////
-
-// we use an in-memory "database"; this isn't persistent but is easy
-
-console.log(mc.hash('compsci326'));
-
-// let users = { 'emery' : 'compsci326' } // default user
-let users = { 'eberger@umass.edu' : [
-  '2401f90940e037305f71ffa15275fb0d',
-  '61236629f33285cbc73dc563cfc49e96a00396dc9e3a220d7cd5aad0fa2f3827d03d41d55cb2834042119e5f495fc3dc8ba3073429dd5a5a1430888e0d115250'
-] };
-
-
 // Returns true iff the user exists.
-function findUser(username) {
-    if (!users[username]) {
-	return false;
+async function findUser(username) {
+	const exists = await datafunc.getUser(username);
+    if (exists.length === 0) {
+	return null;
     } else {
-	return true;
+	return exists[0];
     }
 }
 
-// TODO
 // Returns true iff the password is the one we have stored (in plaintext = bad but easy).
-function validatePassword(name, pwd) {
-    if (!findUser(name)) {
+async function validatePassword(name, pwd) {
+	const exists = await findUser(name);
+	if (!exists) {
 	return false;
 	}
-	const key = users[name];
-	const res = mc.check(pwd, key[0], key[1]);
+	console.log(exists);
+	const res = mc.check(pwd, exists.salt, exists.hash);
     return res;
 }
 
-// Add a user to the "database".
-// TODO
-function addUser(name, pwd) {
-    if (findUser(name)) {
-	return false;
-	}
-	else{
-		const [salt, hash] = mc.hash(pwd);
-		users[name] = [salt, hash];
-		return true;
-	}
-}
-
 // Routes
-
 function checkLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
 	// If we are authenticated, run the next route.
@@ -190,6 +127,19 @@ app.post('/login',
 	     'failureRedirect' : '/login'      // otherwise, back to login
 	 }));
 
+// app.post('/login', (req, res, next) => {
+// 	console.log(req.body);
+// 	passport.authenticate('local', (error, user , Info) => {
+// 		console.log(error , user , Info);
+// 		if(err){return next(err);}
+// 		if(!user){return res.redirect('/private')}
+// 		else{
+// 			//res.redirect
+// 		}
+// 	})(req, res, next) 
+// }
+// );
+
 // Handle the URL /login (just output the login.html file).
 app.get('/login',
 	(req, res) => res.sendFile(path.resolve('./client/homepage.html')));
@@ -200,7 +150,6 @@ app.get('/logout', (req, res) => {
     res.redirect('/login'); // back to login
 });
 
-
 // Like login, but add a new user and password IFF one doesn't exist already.
 // If we successfully add a new user, go to /login, else, back to /register.
 // Use req.body to access data (as in, req.body['username']).
@@ -208,29 +157,24 @@ app.get('/logout', (req, res) => {
 app.post('/register',
 	 async (req, res) => {
 		const data = req.body;
-		const pwd = data.password;
-		console.log(data.email);
-		const [salt, hash] = mc.hash(pwd);
-		const hashed = [salt, hash];
-		await datafunc.addUser(data.email, data.name, hashed[0], hashed[1]);
-		res.redirect('/login');
-		res.end();
-        //await connectAndRun(db => db.none('INSERT INTO userInfo (email, name, salt, hash) VALUES ($1, $2, $3, $4)', [data.email, data.name, hashed[0], hashed[1]]));
-        
-	     //const username = req.body['username'];
-	     //const password = req.body['password'];
-	     //if (addUser(username, password)) {
-	     //} else {
-		 //res.redirect('/register');
-	     //}
+		const exists = await datafunc.getUser(data.email);
+		if(exists.length === 0){
+			const pwd = data.password;
+			console.log(data.email);
+			const [salt, hash] = mc.hash(pwd);
+			const hashed = [salt, hash];
+			await datafunc.addUser(data.email, data.name, hashed[0], hashed[1]);
+			res.redirect('/login');
+		}
+		else{
+			res.redirect('/register');
+		}
 	 });
 
 // Register URL
 app.get('/register',
 	(req, res) => res.sendFile(path.resolve('./client/register.html')));
-	//res.sendFile('client/register.html',
-				   //{ 'root' : __dirname }));
-
+	
 //Private data
 app.get('/private',
 	checkLoggedIn, // If we are logged in (notice the comma!)...
@@ -238,8 +182,17 @@ app.get('/private',
 	    res.redirect('/private/' + req.user);
 	});
 
-// A dummy page for the user.
-// s
+app.get('/private/:username',
+	checkLoggedIn, // If we are logged in (notice the comma!)...
+	(req, res) => {             // Go to the user's page.
+	    res.send("hello" + req.params.username);
+	});
+
+app.post('/course/new', async (req, res) => {
+	const data = req.body;
+    await datafunc.addCourse(data.course_name, data.professor, data.course_days, req.user);
+    res.send("OK");
+});
 
 app.get('*', (req, res) => {
   res.send('Error');
