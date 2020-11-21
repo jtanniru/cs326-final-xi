@@ -68,7 +68,7 @@ app.use(expressSession(session));
 passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('client'));
+
 
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
@@ -79,8 +79,10 @@ passport.deserializeUser((uid, done) => {
     done(null, uid);
 });
 
+
 app.use(express.json()); // allow JSON inputs
 app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
+
 
 // Returns true iff the user exists.
 async function findUser(username) {
@@ -123,22 +125,9 @@ app.get('/',
 // Handle post data from the login.html form.
 app.post('/login',
 	 passport.authenticate('local' , {     // use username/password authentication
-	     'successRedirect' : '/private',   // when we login, go to /private 
+	     'successRedirect' : '/course/new',   // when we login, go to /private 
 	     'failureRedirect' : '/login'      // otherwise, back to login
 	 }));
-
-// app.post('/login', (req, res, next) => {
-// 	console.log(req.body);
-// 	passport.authenticate('local', (error, user , Info) => {
-// 		console.log(error , user , Info);
-// 		if(err){return next(err);}
-// 		if(!user){return res.redirect('/private')}
-// 		else{
-// 			//res.redirect
-// 		}
-// 	})(req, res, next) 
-// }
-// );
 
 // Handle the URL /login (just output the login.html file).
 app.get('/login',
@@ -188,39 +177,32 @@ app.get('/private/:username',
 	    res.send("hello" + req.params.username);
 	});
 
-app.post('/course/new', async (req, res) => {
+app.get('/course/new',checkLoggedIn, 
+	(req, res) => res.sendFile(path.resolve('./client/courses.html')));
+
+app.post('/course/new', checkLoggedIn, async (req, res) => {
 	const data = req.body;
-    await datafunc.addCourse(data.course_name, data.professor, data.course_days, req.user);
+	console.log(data.course_name);
+	console.log(data.course_days);
+	await datafunc.addCourse(data.course_name, data.professor, data.course_days, req.user);
     res.send("OK");
 });
 
-app.get('*', (req, res) => {
-  res.send('Error');
+app.get('/course/view', async (req, res) => {
+	res.end(JSON.stringify(
+		await datafunc.getCourses(req.user)));
 });
 
-app.listen(port, () => {
-    console.log(`App now listening at http://localhost:${port}`);
+app.get('/course/delete', async (req, res) => {
+    await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
+    res.send("OK");
 });
 
-// app.get('/login', async (req, res) => {
-// 	const userInfo = await datafunc.getUser(req.query.email);
-//     res.send(JSON.stringify(userInfo));
-// });
-
-// app.get('/course/new', async (req, res) => {
-//     await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
-//     res.send("OK");
-// });
-
-// app.get('/course/delete', async (req, res) => {
-//     await datafunc.addCourse(req.query.cid, req.query.course_title, req.query.course_subject, req.query.professor_name, req.query.course_number, req.query.course_days, req.query.course_time );
-//     res.send("OK");
-// });
-
-// app.post('/settings/add', async function (req, res) {
-// 	const classes = await datafunc.getClasses();
-//     res.send(JSON.stringify(classes));
-//   });
+app.post('/settings/update', async (req, res) => {
+	const data = req.body;
+	await datafunc.updateUsers(data.phone, data.timezone, data.availability, req.user);
+	res.send("OK");
+});
 
 // app.get("/settings/delete", async (req, res) => {
 //     await datafunc.deleteClasses(req.query.email, req.query.cid);
@@ -231,4 +213,15 @@ app.listen(port, () => {
 //     await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
 //     res.send("OK");
 // });
+
+app.use(express.static('client'));
+
+app.get('*', (req, res) => {
+  res.send('Error');
+});
+
+app.listen(port, () => {
+    console.log(`App now listening at http://localhost:${port}`);
+});
+
 

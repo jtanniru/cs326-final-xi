@@ -97,21 +97,24 @@ window.addEventListener("load", async function () {
     }
     
     // POST to courseInfo table
-    const response = await fetch('/course/new', {
+    const courseResponse = await fetch('/course/new', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
         },
       body: JSON.stringify({
           course_name: courseNameValue,
-          professor:professorValue,
-          course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
-          //email: // TODO: request.user 
+          professor: professorValue,
+          course_days: weekdayArray 
       })
     });
 
-    if (!response.ok) {
-      console.error("Could not save the turn score to the server.");
+    if (!courseResponse.ok) {
+      console.error("response failed.");
+      console.log("course not added.")
+    }
+    else{
+      console.log("course added");
     }
 
   });
@@ -119,8 +122,8 @@ window.addEventListener("load", async function () {
   const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
   coursesDeleteSelection.addEventListener('load', async () => {
     // Views courses for user, fills out delete options and current courses table
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
+    const responseView = await fetch('/course/view');
+    const responseData = responseView.ok ? await response.json() : [];
 
     for (const course of responseData) {
       const newOption = document.createElement('option');
@@ -148,8 +151,8 @@ window.addEventListener("load", async function () {
   coursesDeleteButton.addEventListener('click', async () => {
 
     // remove row from HTML table and delete selector options
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
+    const responseDelete = await fetch('/course/view');
+    const responseData = responseDelete.ok ? await response.json() : [];
 
     let index = 0;
     for (const course of responseData){
@@ -163,7 +166,7 @@ window.addEventListener("load", async function () {
     }
 
     // go into the database, remove this course from the user's course listings
-    const response = await fetch('/course/delete', {
+    const responseDelCourse = await fetch('/course/delete', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -171,13 +174,12 @@ window.addEventListener("load", async function () {
       body: JSON.stringify({
           course_name: courseNameValue,
           professor:professorValue,
-          course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
-          //email: // TODO: request.user 
+          course_days: weekdayArray 
       })
     });
 
-    if (!response.ok) {
-      console.error("Could not save the turn score to the server.");
+    if (!responseDelCourse.ok) {
+      console.error("Error");
     }
   });
 });

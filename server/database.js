@@ -1,9 +1,9 @@
 //create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225), phone varchar(255), timezone varchar(225), availability json);
-//create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225));
+//create table courseInfo (course_name varchar(225), professor varchar(225), course_days json, email varchar(225));
 
-// course_name |  professor   |    course_days    |       email       
-// -------------+--------------+-------------------+-------------------
-//  COMPSCI 326 | emery berger | {f,f,t,f,f,f,t,f} | eberger@umass.edu
+// course_name |  professor   |    course_days                                        |       email       
+// -------------+--------------+-------------------------------------------------------+-------------------
+//  COMPSCI 326 | emery berger | {"Mon": False, "Tue": True, "Thu": True, "Fri": False } | eberger@umass.edu
 // (1 row)
 
 // email       |     name     |        salt         |        hash        |    phone    | timezone |   availability    
@@ -63,9 +63,23 @@ async function addCourse(course_name, professor, course_days, email) {
     return await connectAndRun(db => db.none('INSERT INTO courseInfo (course_name, professor, course_days, email) VALUES ($1, $2, $3, $4);', [course_name, professor, course_days, email]));   
 }
 
-async function getCourses() {
-    return await connectAndRun(db => db.any('SELECT * FROM courseInfo;'));
+async function getCourses(email) {
+    return await connectAndRun(db => db.any('SELECT * FROM courseInfo where email = $1;', [email]));
 }
 
+async function delCourses(course_name, professor, course_days, email) {
+    return await connectAndRun(db => db.none('DELETE FROM courseInfo where course_name = $1 and professor = $2 and course_days = $3 and email = $4;', [course_name, professor, course_days, email]));
+}
 
-module.exports =  {addUser, getUser, addCourse, getCourses}
+async function updateUsers(phone, timezone, availability, email) {
+    return await connectAndRun(db => db.none('UPDATE userInfo SET phone = $1, timezone = $2, availbility = $3 where email = $4;', [phone, timezone, availability, email]));
+}
+
+// async function Courses(course_name, professor, course_days, email) {
+//     return await connectAndRun(db => db.any('DELETE FROM courseInfo where course_name = $1 and professor = $2 and course_days = $3 and email = $4;', [course_name, professor, course_days, email]));
+// }
+
+
+
+
+module.exports =  {addUser, getUser, addCourse, getCourses, delCourses, updateUsers}
