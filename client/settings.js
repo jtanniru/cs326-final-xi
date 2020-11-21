@@ -8,6 +8,7 @@ window.addEventListener("load", async function () {
     const responseData = response.ok ? await response.json() : {};
 
     document.getElementById('timezone').value = responseData['user_timezone'];
+    document.getElementById('phone').value = responseData['user_phone'];
     if (responseData['user_avail'] !== {}) {
         availability = user_avail;
     } else {
@@ -906,40 +907,16 @@ window.addEventListener("load", async function () {
         }
     }
 
-    document.getElementById('updateAcc').addEventListener('click', async () => {
-        const userName = document.getElementById('name').value;
-        const userEmail = document.getElementById('email').value;
-        const userPhone = document.getElementById('phone').value;
-        const userPassword = document.getElementById('password').value;
-
-        if (userName === '' || userEmail === '' || userPassword === '') {
-            alert('Required sign in information is missing.');
-        } else {
-            const response = await fetch('/user/update', {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: userEmail,
-                    password: userPassword,
-                    name: userName,
-                    user_phone: userPhone,
-                })
-            });
-            if (!response.ok) {
-                console.error("Could not save the user to the server.");
-            } else {
-                console.log("User information updated.");
-            }
-        }
-    }); //end of updateAcc
-
     document.getElementById('submit').addEventListener('click', async () => {
         const zone = document.getElementById('timezone').value;
+        const userPhone = document.getElementById('phone').value;
 
         const response = await fetch('/availability/update', {
             method: 'POST',
             body: JSON.stringify({
                 user_timezone = zone,
-                user_avail = availability
+                user_avail = availability,
+                user_phone = userPhone
             })
         });
         if (!response.ok) {
@@ -951,6 +928,7 @@ window.addEventListener("load", async function () {
 
     document.getElementById('clear').addEventListener('click', () => {
         document.getElementById('timezone').value = '';
+        document.getElementById('phone').value = '';
 
         let availability = {};
         availability["Mon12am"] = 0;
