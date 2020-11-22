@@ -148,6 +148,30 @@ window.addEventListener("load", async function () {
       console.error("Could not save the turn score to the server.");  // TODO: go through and redo the console.error strings
     }
 
+    const searchResonse = await fetch('/search');
+    const searchData = searchResponse.ok ? await searchResponse.json() : [];
+
+    // populate the table of matching users
+    const tableBody = document.getElementById('matches');
+    // for object (containing name, email, phone) in the response
+    for (const thing in searchData) {
+      const tableRow = document.createElement('tr');
+      const emailCell = document.createElement('td');
+      const nameCell = document.createElement('td');
+      const phoneCell = document.createElement('td');
+      const searchEmail = thing.email;
+      const searchName = thing.name;
+      const searchPhone = thing.phone;
+      emailCell.innerHTML = searchEmail;
+      nameCell.innerHTML = searchName;
+      phoneCell.innerHTML = searchPhone;
+      tableRow.appendChild(emailCell);
+      tableRow.appendChild(nameCell);
+      tableRow.appendChild(phoneCell);
+
+      tableBody.appendChild(tableRow);
+    }
+
   });
 
 });
