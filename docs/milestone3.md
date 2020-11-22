@@ -6,7 +6,7 @@ courseInfo Table
 |--------------|-----------|-----------------------------------------|
 | course_name  | String    | The name of the course                  |
 | professor    | String    | The name of the professor               |
-| course_days  | JSON      | The days the course takes place         |
+| course_days  | Boolean[] | The days the course takes place         |
 | email        | String    | The email of the user taking the course |
 
 userInfo Table
