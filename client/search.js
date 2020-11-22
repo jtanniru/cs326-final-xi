@@ -22,6 +22,7 @@ window.addEventListener("load", async function () {
     courseCheckboxLabel.innerHTML = course.course_name;
     userCoursesList.appendChild(courseCheckboxInput);
     userCoursesList.appendChild(courseCheckboxLabel);
+    userCoursesList.appendChild(document.createElement('br'));
 
     // populate Professors list
     const professorCheckboxInput = document.createElement('input');
@@ -34,6 +35,7 @@ window.addEventListener("load", async function () {
     professorCheckboxLabel.innerHTML = course.professor;
     userProfessorList.appendChild(professorCheckboxInput);
     userProfessorList.appendChild(professorCheckboxLabel);
+    userProfessorList.appendChild(document.createElement('br'));
   }
 
   // apply event listener for adding "checked" attribute to all the filter checkboxes
@@ -129,8 +131,11 @@ window.addEventListener("load", async function () {
 
     // TODO: add header
     // POST to courseInfo table
-    const response = await fetch('/course/view', {
+    const response = await fetch('/search', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
       body: JSON.stringify({
           course_name_list: courseData, // courseData is courseData[] of sql table courseInfo course_name values
           professor_list: professorData,  // professorData is professorData[] of sql table courseInfo professor values
