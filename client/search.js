@@ -148,7 +148,7 @@ window.addEventListener("load", async function () {
       console.error("Could not save the turn score to the server.");  // TODO: go through and redo the console.error strings
     }
 
-    const searchResonse = await fetch('/search');
+    const searchResponse = await fetch('/search');
     const searchData = searchResponse.ok ? await searchResponse.json() : [];
 
     // populate the table of matching users
