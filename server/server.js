@@ -200,17 +200,16 @@ app.delete('/course/:course_name',checkLoggedIn, async (req, res) => {
 
 app.post('/settings',checkLoggedIn, async (req, res) => {
 	const data = req.body;
+	console.log(data.phone);
+	console.log(data.availability);
 	await datafunc.updateUsers(data.phone, data.timezone, data.availability, req.user);
 	res.send("OK");
 });
 
 app.get('/settings/view',checkLoggedIn, async (req, res) => {
 	res.end(JSON.stringify(
-		await datafunc.getCourses(req.user)));
+		await datafunc.getUserSettings(req.user)));
 });
-
-
-
 
 // app.get("/settings/delete", async (req, res) => {
 //     await datafunc.deleteClasses(req.query.email, req.query.cid);

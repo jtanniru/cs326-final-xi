@@ -69,7 +69,7 @@ async function getCourses(email) {
 
 async function delCourses(course_name, email) {
     console.log("delete query accessed.");
-    return await connectAndRun(db => db.result('DELETE FROM courseInfo where course_name = $1 and email = $2;', [course_name, email]));
+    return await connectAndRun(db => db.none('DELETE FROM courseInfo where course_name = $1 and email = $2;', [course_name, email]));
 }
 
 async function updateUsers(phone, timezone, availability, email) {
@@ -77,11 +77,8 @@ async function updateUsers(phone, timezone, availability, email) {
 }
 
 async function getUserSettings(email) {
-    return await connectAndRun(db => db.none('SELECT * FROM userInfo where email = $4;', [email]));
+    return await connectAndRun(db => db.any('SELECT * FROM userInfo where email = $1;', [email]));
 }
 
-// async function Courses(course_name, professor, course_days, email) {
-//     return await connectAndRun(db => db.any('DELETE FROM courseInfo where course_name = $1 and professor = $2 and course_days = $3 and email = $4;', [course_name, professor, course_days, email]));
-// }
 
 module.exports =  {addUser, getUser, addCourse, getCourses, delCourses, updateUsers, getUserSettings};

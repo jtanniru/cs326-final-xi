@@ -3,12 +3,11 @@
 
 function deleteTable() {
   const temp = document.getElementById("coursesTable").getElementsByTagName("tr");
-  for(const i in temp) {
-    document.getElementById("coursesTable").deleteRow(0);
+  for(let i = 0; i < temp.length-1; i++){
+  //for(const i in temp) {
+    document.getElementById("coursesTable").deleteRow(1);
   }
 }
-
-
 
 
 window.addEventListener("load", async function () {
@@ -103,7 +102,14 @@ window.addEventListener("load", async function () {
         const days  = document.createElement('td');
         name.innerText = course.course_name;
         professor.innerText = course.professor;
-        days.innerHTML = course.course_days;
+        const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        let str = '';
+        for(let i = 0; i < course.course_days.length; i++){
+          if(course.course_days[i]){
+             str += '  ' + weekdays[i];
+          }
+        }
+        days.innerHTML = str;
 
         tr.appendChild(name);
         tr.appendChild(professor);
@@ -174,7 +180,15 @@ window.addEventListener("load", async function () {
         const days  = document.createElement('td');
         name.innerText = course.course_name;
         professor.innerText = course.professor;
-        days.innerHTML = course.course_days;
+        let str1 = '';
+        const weekdays1 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for(let i = 0; i < course.course_days.length; i++){
+          if(course.course_days[i]){
+           
+            str1 += '  ' + weekdays1[i];
+          }
+        }
+        days.innerHTML = str1;
 
         tr.appendChild(name);
         tr.appendChild(professor);
@@ -236,7 +250,15 @@ window.addEventListener("load", async function () {
       const days  = document.createElement('td');
       name.innerText = course.course_name;
       professor.innerText = course.professor;
-      days.innerHTML = course.course_days;
+      let str1 = '';
+      const weekdays2 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for(let i = 0; i < course.course_days.length; i++){
+          if(course.course_days[i]){
+           
+            str1 += '  ' + weekdays2[i];
+          }
+        }
+        days.innerHTML = str1;
 
       tr.appendChild(name);
       tr.appendChild(professor);
