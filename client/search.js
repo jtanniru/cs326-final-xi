@@ -129,7 +129,6 @@ window.addEventListener("load", async function () {
       }
     }
 
-    // TODO: add header
     // POST to courseInfo table
     const response = await fetch('/search', {
       method: 'POST',
@@ -148,6 +147,24 @@ window.addEventListener("load", async function () {
       console.error("Could not save the turn score to the server.");  // TODO: go through and redo the console.error strings
     }
 
+    const searchResponse = await fetch('/search');
+    const searchData = searchResponse.ok ? await searchResponse.json() : [];
+
+    for (const filtered of responseData) {
+    
+      const tr = document.createElement('tr');
+      const name  = document.createElement('td');
+      const professor  = document.createElement('td');
+      const days  = document.createElement('td');
+      name.innerText = course.course_name;
+      days.innerHTML = courseData.phone;
+
+      tr.appendChild(name);
+      tr.appendChild(professor);
+      tr.appendChild(days);
+
+      document.getElementById('coursesTable').appendChild(tr);
+    }
   });
 
 });

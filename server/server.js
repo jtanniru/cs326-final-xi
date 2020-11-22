@@ -214,7 +214,7 @@ app.post('/search', checkLoggedIn, async (req, res) => {
 	await datafunc.searchUsers(data.course_name, data.professor, data.course_days, data.timezone)));
 });
 
-app.post('/availibility',  checkLoggedIn, async(req, res) => {
+app.post('/availability',  checkLoggedIn, async(req, res) => {
 	const data = req.body;
 	res.end(JSON.stringify(await datafunc.userAvailability(data.email)));
 });
