@@ -1,5 +1,14 @@
 'use strict';
 
+
+function deleteTable() {
+  const temp = document.getElementById("coursesTable").getElementsByTagName("tr");
+  for(const i in temp) {
+    document.getElementById("coursesTable").deleteRow(0);
+  }
+}
+
+
 window.addEventListener("load", async function () {
   // action: gives each checkbox an attribute when checked so the status of each can be easily observed later
   const monday = document.getElementById('monday');
@@ -97,34 +106,35 @@ window.addEventListener("load", async function () {
     }
     
     // POST to courseInfo table
-    const response = await fetch('/course/new', {
+    const courseResponse = await fetch('/course', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
         },
       body: JSON.stringify({
           course_name: courseNameValue,
-          professor:professorValue,
-          course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
-          //email: // TODO: request.user 
+          professor: professorValue,
+          course_days: weekdayArray 
       })
     });
 
-    if (!response.ok) {
-      console.error("Could not save the turn score to the server.");
+    if (!courseResponse.ok) {
+      console.error("response failed.");
+      console.log("course not added.")
+    }
+    else{
+      console.log("course added");
     }
 
-  });
-
-  const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
-  coursesDeleteSelection.addEventListener('load', async () => {
-    // Views courses for user, fills out delete options and current courses table
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
+    const responseView = await fetch('/course/view');
+    const responseData = responseView.ok ? await responseView.json() : [];
+    const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 
     for (const course of responseData) {
+      
       const newOption = document.createElement('option');
-      newOption.value = course.course_name;
+      newOption.innerHTML = course.course_name; // updated from newOption.value
+      newOption.classList.add("text-dark", "bg-light");
       coursesDeleteSelection.appendChild(newOption);
 
       const tr = document.createElement('tr');
@@ -141,18 +151,21 @@ window.addEventListener("load", async function () {
 
       document.getElementById('coursesTable').appendChild(tr);
     }
+
   });
+
+  //render function for course table onload
 
   const courseToDelete = document.getElementById('coursesDeleteSelection').value;
   const coursesDeleteButton = document.getElementById('coursesDelete');
   coursesDeleteButton.addEventListener('click', async () => {
 
     // remove row from HTML table and delete selector options
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
+    const responseDelete = await fetch('/course/view');
+    const response = responseDelete.ok ? await responseDelete.json() : [];
 
     let index = 0;
-    for (const course of responseData){
+    for (const course of response){
       if (course.course_name === courseToDelete) {
         document.getElementById("coursesTable").deleteRow(index);
         const deleteOption = document.getElementById("coursesDeleteSelection");
@@ -162,22 +175,47 @@ window.addEventListener("load", async function () {
       index++;
     }
 
+    const courseNameValue = document.getElementById('inputCourseName').value;
     // go into the database, remove this course from the user's course listings
-    const response = await fetch('/course/delete', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-        },
-      body: JSON.stringify({
-          course_name: courseNameValue,
-          professor:professorValue,
-          course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
-          //email: // TODO: request.user 
-      })
+    const responseDelCourse = await fetch('/course/'+ courseNameValue, {
+      method: 'DELETE'
     });
 
-    if (!response.ok) {
-      console.error("Could not save the turn score to the server.");
+    if (!responseDelCourse.ok) {
+      console.error("Error");
     }
+    else{
+      console.log("course delete");
+    }
+
+    deleteTable();
+
+    const responseRender = await fetch('/course/view');
+    const responseDataRender = responseRender.ok ? await responseRender.json() : [];
+
+    for (const course of responseDataRender) {
+      // const newOption = document.createElement('option');
+      // newOption.value = course.course_name;
+      // coursesDeleteSelection.appendChild(newOption);
+
+      const tr = document.createElement('tr');
+      const name  = document.createElement('td');
+      const professor  = document.createElement('td');
+      const days  = document.createElement('td');
+      name.innerText = course.course_name;
+      professor.innerText = course.professor;
+      days.innerHTML = course.course_days;
+
+      tr.appendChild(name);
+      tr.appendChild(professor);
+      tr.appendChild(days);
+
+      document.getElementById('coursesTable').appendChild(tr);
+    }
+
   });
 });
+
+//prevent things from added to the table when submit button is clicked and there is no onfo in input.
+//render table and delete drop down on load
+
