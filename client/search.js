@@ -159,9 +159,20 @@ window.addEventListener("load", async function () {
       const emailCell = document.createElement('td');
       const nameCell = document.createElement('td');
       const phoneCell = document.createElement('td');
+      const availCell = document.createElement('td');
+
       const searchEmail = thing.email;
       const searchName = thing.name;
       const searchPhone = thing.phone;
+
+      const availability = document.createElement('button');
+      availability.innerHTML = "View Availability";
+      availCell.appendChild(availability);
+      availability.addEventListener('click', () => {
+        window.searchEmail = searchEmail;
+        window.location.href = 'availability.html';
+      });
+
       emailCell.innerHTML = searchEmail;
       nameCell.innerHTML = searchName;
       phoneCell.innerHTML = searchPhone;
