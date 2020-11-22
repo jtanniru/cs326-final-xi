@@ -208,12 +208,12 @@ app.get('/settings/view',checkLoggedIn, async (req, res) => {
 		await datafunc.getUserSettings(req.user)));
 });
 
-app.post('/search', checkLoggedIn, async (req, res) => {
-	const data = req.body;
-    const result = await datafunc.addClass();
-    res.end(JSON.stringify(
-	await datafunc.getUserSettings(req.user)));
-});
+// app.post('/search', checkLoggedIn, async (req, res) => {
+// 	const data = req.body;
+//     const result = await datafunc.addClass();
+//     res.end(JSON.stringify(
+// 	await datafunc.getUserSettings(req.user)));
+// });
 
 app.get('*', (req, res) => {
   res.send('Error');

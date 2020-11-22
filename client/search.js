@@ -2,7 +2,7 @@
 
 window.addEventListener("load", async function () {
 
-  const response = await fetch('/client/view');
+  const response = await fetch('/course/view');
   const responseData = response.ok ? await response.json() : [];
 
   const userCoursesList = document.getElementById('listOfCourses');
@@ -36,7 +36,6 @@ window.addEventListener("load", async function () {
     userProfessorList.appendChild(professorCheckboxInput);
     userProfessorList.appendChild(professorCheckboxLabel);
     userProfessorList.appendChild(document.createElement('br'));
-
   }
 
   // apply event listener for adding "checked" attribute to all the filter checkboxes
@@ -147,14 +146,8 @@ window.addEventListener("load", async function () {
 
     if (!response.ok) {
       console.error("Could not save the turn score to the server.");  // TODO: go through and redo the console.error strings
-      
     }
-    //response.json()
 
   });
-
-  //const response = await fetch('/search/filter',
-
-
 
 });
