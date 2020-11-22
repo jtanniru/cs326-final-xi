@@ -154,6 +154,7 @@ window.addEventListener("load", async function () {
             course_days: weekdayArray 
         })
       });
+<<<<<<< HEAD
 
       if (!courseResponse.ok) {
         console.error("response failed.");
@@ -194,6 +195,48 @@ window.addEventListener("load", async function () {
         tr.appendChild(professor);
         tr.appendChild(days);
 
+=======
+
+      if (!courseResponse.ok) {
+        console.error("response failed.");
+        console.log("course not added.")
+      }
+      else{
+        console.log("course added");
+      }
+
+      const responseView = await fetch('/course/view');
+      const responseData = responseView.ok ? await responseView.json() : [];
+      const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
+
+      for (const course of responseData) {
+        
+        const newOption = document.createElement('option');
+        newOption.innerHTML = course.course_name; // updated from newOption.value
+        newOption.classList.add("text-dark", "bg-light");
+        coursesDeleteSelection.appendChild(newOption);
+
+        const tr = document.createElement('tr');
+        const name  = document.createElement('td');
+        const professor  = document.createElement('td');
+        const days  = document.createElement('td');
+        name.innerText = course.course_name;
+        professor.innerText = course.professor;
+        let str1 = '';
+        const weekdays1 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for(let i = 0; i < course.course_days.length; i++){
+          if(course.course_days[i]){
+           
+            str1 += '  ' + weekdays1[i];
+          }
+        }
+        days.innerHTML = str1;
+
+        tr.appendChild(name);
+        tr.appendChild(professor);
+        tr.appendChild(days);
+
+>>>>>>> b4b1ddee86369abc253cd5076ba95c4ff6ced960
         document.getElementById('coursesTable').appendChild(tr);
       }
     }
@@ -229,10 +272,17 @@ window.addEventListener("load", async function () {
 
     if (!responseDelCourse.ok) {
       console.error("Error");
+<<<<<<< HEAD
     }
     else{
       console.log("course delete");
     }
+=======
+    }
+    else{
+      console.log("course delete");
+    }
+>>>>>>> b4b1ddee86369abc253cd5076ba95c4ff6ced960
 
     deleteTable();
 
@@ -271,3 +321,7 @@ window.addEventListener("load", async function () {
 });
 
 //render table and delete drop down on load
+<<<<<<< HEAD
+=======
+
+>>>>>>> b4b1ddee86369abc253cd5076ba95c4ff6ced960

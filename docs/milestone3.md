@@ -25,6 +25,12 @@ The courseInfo table contains rows such that each row is a single course for a u
 
 # Breakdown of Labor
 Janvi: database.js, server.js (including collab on calls in the js files)
+<<<<<<< HEAD
 Olivia: settings.html, settings.js + server
 JengYu: homepage.html, register.html, courses.html, homepage.js, register.js, courses.js
 All: attended all working meetings/calls (when on call, for the most part one main person does the final commits/pushes when a change is made, not sure how this affects overall commit numbers when they are analyzed)
+=======
+Olivia: settings.html, settings.js + server, availability.html, availability.js
+JengYu: homepage.html, register.html, courses.html, search.html, homepage.js, register.js, courses.js, search.js, availability.js linking
+All: attended all working meetings/calls, majority of milestone3 was done in these working calls (when on call, for the most part one main person does the commits/pushes when a change is made, not sure how this affects overall commit numbers when they are analyzed)
+>>>>>>> b4b1ddee86369abc253cd5076ba95c4ff6ced960
