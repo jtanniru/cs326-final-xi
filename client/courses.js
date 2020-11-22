@@ -1,9 +1,20 @@
 'use strict';
 
-import { request } from "http";
+
+function deleteTable() {
+  const temp = document.getElementById("coursesTable").getElementsByTagName("tr");
+  for(let i = 0; i < temp.length-1; i++){
+  //for(const i in temp) {
+    document.getElementById("coursesTable").deleteRow(1);
+  }
+}
+
 
 window.addEventListener("load", async function () {
   // action: gives each checkbox an attribute when checked so the status of each can be easily observed later
+  
+  
+  
   const monday = document.getElementById('monday');
   monday.addEventListener('click', () => {
     if (monday.hasAttribute('checked')) {
@@ -74,6 +85,39 @@ window.addEventListener("load", async function () {
     }
   });
 
+  const responseOriginView = await fetch('/course/view');
+  const responseOriginData = responseOriginView.ok ? await responseOriginView.json() : [];
+  const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
+
+      for (const course of responseOriginData) {
+        
+        const newOption = document.createElement('option');
+        newOption.innerHTML = course.course_name; // updated from newOption.value
+        newOption.classList.add("text-dark", "bg-light");
+        coursesDeleteSelection.appendChild(newOption);
+
+        const tr = document.createElement('tr');
+        const name  = document.createElement('td');
+        const professor  = document.createElement('td');
+        const days  = document.createElement('td');
+        name.innerText = course.course_name;
+        professor.innerText = course.professor;
+        const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        let str = '';
+        for(let i = 0; i < course.course_days.length; i++){
+          if(course.course_days[i]){
+             str += '  ' + weekdays[i];
+          }
+        }
+        days.innerHTML = str;
+
+        tr.appendChild(name);
+        tr.appendChild(professor);
+        tr.appendChild(days);
+
+        document.getElementById('coursesTable').appendChild(tr);
+      }
+
   // action for submit course button
   const coursesSubmitButton = document.getElementById('coursesSubmit');
   coursesSubmitButton.addEventListener('click', async () => {
@@ -84,77 +128,90 @@ window.addEventListener("load", async function () {
     let weekdayArray = []; // the Boolean[] added to the sql table for course days column
 
     if (courseNameValue === '' || professorValue === '') {
-      alert('Required sign in information is missing.');
+      alert('Required course information is missing.');
     }
-    
-    // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
-    let weekDaysCheckboxes = document.getElementsByClassName('weekday');
-    for (let i = 0; i < weekDaysCheckboxes.length; i++) {
-      if (weekDaysCheckboxes[i].checked === true) {
-        weekdayArray.push(true);
+    else{
+      // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
+      let weekDaysCheckboxes = document.getElementsByClassName('weekday');
+      for (let i = 0; i < weekDaysCheckboxes.length; i++) {
+        if (weekDaysCheckboxes[i].checked === true) {
+          weekdayArray.push(true);
+        }
+        else {
+          weekdayArray.push(false);
+        }
       }
-      else {
-        weekdayArray.push(false);
+      
+      // POST to courseInfo table
+      const courseResponse = await fetch('/course', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+          },
+        body: JSON.stringify({
+            course_name: courseNameValue,
+            professor: professorValue,
+            course_days: weekdayArray 
+        })
+      });
+
+      if (!courseResponse.ok) {
+        console.error("response failed.");
+        console.log("course not added.")
+      }
+      else{
+        console.log("course added");
+      }
+
+      const responseView = await fetch('/course/view');
+      const responseData = responseView.ok ? await responseView.json() : [];
+      const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
+
+      for (const course of responseData) {
+        
+        const newOption = document.createElement('option');
+        newOption.innerHTML = course.course_name; // updated from newOption.value
+        newOption.classList.add("text-dark", "bg-light");
+        coursesDeleteSelection.appendChild(newOption);
+
+        const tr = document.createElement('tr');
+        const name  = document.createElement('td');
+        const professor  = document.createElement('td');
+        const days  = document.createElement('td');
+        name.innerText = course.course_name;
+        professor.innerText = course.professor;
+        let str1 = '';
+        const weekdays1 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for(let i = 0; i < course.course_days.length; i++){
+          if(course.course_days[i]){
+           
+            str1 += '  ' + weekdays1[i];
+          }
+        }
+        days.innerHTML = str1;
+
+        tr.appendChild(name);
+        tr.appendChild(professor);
+        tr.appendChild(days);
+
+        document.getElementById('coursesTable').appendChild(tr);
       }
     }
-    
-    // TODO: add header
-    // POST to courseInfo table
-    const response = await fetch('/course/new', {
-      method: 'POST',
-      body: JSON.stringify({
-          course_name: courseNameValue,
-          professor:professorValue,
-          course_days: weekdayArray, // TODO: make sure to include the comma , when you add email in
-          //email: // TODO: request.user 
-          // email: request.users.email,
-
-      })
-    });
-
-    if (!response.ok) {
-      console.error("Could not save the turn score to the server.");
-    }
-
   });
 
-  const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
-  coursesDeleteSelection.addEventListener('load', async () => {
-    // Views courses for user, fills out delete options and current courses table
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
 
-    for (const course of responseData) {
-      const newOption = document.createElement('option');
-      newOption.value = course.course_name;
-      coursesDeleteSelection.appendChild(newOption);
-
-      const tr = document.createElement('tr');
-      const name  = document.createElement('td');
-      const professor  = document.createElement('td');
-      const days  = document.createElement('td');
-      name.innerText = course.course_name;
-      professor.innerText = course.professor;
-      days.innerHTML = course.course_days;
-
-      tr.appendChild(name);
-      tr.appendChild(professor);
-      tr.appendChild(days);
-
-      document.getElementById('coursesTable').appendChild(tr);
-    }
-  });
+  //render function for course table onload
 
   const courseToDelete = document.getElementById('coursesDeleteSelection').value;
   const coursesDeleteButton = document.getElementById('coursesDelete');
   coursesDeleteButton.addEventListener('click', async () => {
 
     // remove row from HTML table and delete selector options
-    const response = await fetch('/course/view');
-    const responseData = response.ok ? await response.json() : [];
+    const responseDelete = await fetch('/course/view');
+    const response = responseDelete.ok ? await responseDelete.json() : [];
 
     let index = 0;
-    for (const course of responseData){
+    for (const course of response){
       if (course.course_name === courseToDelete) {
         document.getElementById("coursesTable").deleteRow(index);
         const deleteOption = document.getElementById("coursesDeleteSelection");
@@ -164,19 +221,53 @@ window.addEventListener("load", async function () {
       index++;
     }
 
+    console.log(courseToDelete);
     // go into the database, remove this course from the user's course listings
-    const response = await fetch('/course/delete', {
-      method: 'POST',
-      body: JSON.stringify({
-          course_name: courseNameValue,
-          professor:professorValue,
-          course_days: weekdayArray // TODO: make sure to include the comma , when you add email in
-          //email: // TODO: request.user 
-      })
+    const responseDelCourse = await fetch('/course/'+ courseToDelete, {
+      method: 'DELETE'
     });
 
-    if (!response.ok) {
-      console.error("Could not save the turn score to the server.");
+    if (!responseDelCourse.ok) {
+      console.error("Error");
     }
+    else{
+      console.log("course delete");
+    }
+
+    deleteTable();
+
+    const responseRender = await fetch('/course/view');
+    const responseDataRender = responseRender.ok ? await responseRender.json() : [];
+
+    for (const course of responseDataRender) {
+      // const newOption = document.createElement('option');
+      // newOption.value = course.course_name;
+      // coursesDeleteSelection.appendChild(newOption);
+
+      const tr = document.createElement('tr');
+      const name  = document.createElement('td');
+      const professor  = document.createElement('td');
+      const days  = document.createElement('td');
+      name.innerText = course.course_name;
+      professor.innerText = course.professor;
+      let str1 = '';
+      const weekdays2 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for(let i = 0; i < course.course_days.length; i++){
+          if(course.course_days[i]){
+           
+            str1 += '  ' + weekdays2[i];
+          }
+        }
+        days.innerHTML = str1;
+
+      tr.appendChild(name);
+      tr.appendChild(professor);
+      tr.appendChild(days);
+
+      document.getElementById('coursesTable').appendChild(tr);
+    }
+
   });
 });
+
+//render table and delete drop down on load

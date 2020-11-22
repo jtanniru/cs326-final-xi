@@ -11,12 +11,14 @@ window.addEventListener("load", async function () {
     const nameValue = document.getElementById('createName').value; 
 
     if(emailValue === '' || passwordValue === '' || nameValue === ''){
-      alert('Required sign in information is missing.');
+      alert('Required information is missing.');
     }
     else {
-      // TODO: add header (THANKS OLIVIA!!)
       const response = await fetch('/register', {
         method: 'POST',
+        headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+        },
         body: JSON.stringify({
             email: emailValue ,
             password: passwordValue,
@@ -29,6 +31,7 @@ window.addEventListener("load", async function () {
       }
       else{
         console.log("user added.");
+        window.location.href = '/login';
       }
 
       // // made email the primary key so I don't think i have to check for uniqueness when adding to the table. otherwise can be handled in server.
@@ -36,4 +39,3 @@ window.addEventListener("load", async function () {
     }
   });
 });
-
