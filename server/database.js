@@ -80,5 +80,12 @@ async function getUserSettings(email) {
     return await connectAndRun(db => db.any('SELECT * FROM userInfo where email = $1;', [email]));
 }
 
+async function searchUsers(course_names, professors, course_days, timezones) {
+    return await connectAndRun(db => db.any('SELECT * FROM userInfo where (course_name IS NOT NULL = $1) and ($2 IS NOT NULL AND timezone = $2) and ($2 IS NOT NULL professor = $2) ;', [course_names[0]]));
+}
+
+//db.any(SELECT * FROM ... WHERE ($1 IS NOT NULL AND timezone = $1) AND professor = "Berger", [data.timezone, data.professor])
+
+
 
 module.exports =  {addUser, getUser, addCourse, getCourses, delCourses, updateUsers, getUserSettings};

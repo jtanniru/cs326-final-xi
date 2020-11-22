@@ -193,15 +193,12 @@ app.get('/course/view',checkLoggedIn, async (req, res) => {
 });
 
 app.delete('/course/:course_name',checkLoggedIn, async (req, res) => {
-	console.log("deleted from server.", req.params.course_name);
-	await datafunc.delCourses(req.params.course_name);
+	await datafunc.delCourses(req.params.course_name, req.user);
     res.send("OK");
 });
 
 app.post('/settings',checkLoggedIn, async (req, res) => {
 	const data = req.body;
-	console.log(data.phone);
-	console.log(data.availability);
 	await datafunc.updateUsers(data.phone, data.timezone, data.availability, req.user);
 	res.send("OK");
 });
@@ -211,16 +208,12 @@ app.get('/settings/view',checkLoggedIn, async (req, res) => {
 		await datafunc.getUserSettings(req.user)));
 });
 
-// app.get("/settings/delete", async (req, res) => {
-//     await datafunc.deleteClasses(req.query.email, req.query.cid);
-//     res.send("OK");
-// });
-
-// app.get('/search', async (req, res) => {
-//     await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
-//     res.send("OK");
-// });
-
+app.post('/search', checkLoggedIn, async (req, res) => {
+	const data = req.body;
+    const result = await datafunc.addClass();
+    res.end(JSON.stringify(
+	await datafunc.getUserSettings(req.user)));
+});
 
 app.get('*', (req, res) => {
   res.send('Error');
