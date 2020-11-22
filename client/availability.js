@@ -1,7 +1,5 @@
 'use strict';
 
-// let match = require('./search.js');
-
 export function renderTable() {
   window.addEventListener("load", async () => {
 
