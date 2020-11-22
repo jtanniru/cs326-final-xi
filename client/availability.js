@@ -1,17 +1,18 @@
 'use strict';
 
+let match = require('./search.js');
+
 window.addEventListener("load", async () => {
-  
+
+
   let table = document.getElementById("availabilityTable");
   let availability = {};
-  const responseViewSettings = await fetch('/settings/view');
-  const responseViewData = responseViewSettings.ok ? await responseViewSettings.json() : [];
-  console.log(responseViewData[0].availability);
+
+  const curEmail = match.searchEmail;
+  const response = await fetch('/availability');
+  const responseViewData = response.ok ? await response.json() : [];
 
   if (responseViewData.length !== 0) {
-    document.getElementById('timezone').value = responseViewData[0].timezone;
-    document.getElementById('phone').value = responseViewData[0].phone;
-
     if (responseViewData[0].availability !== null) {
       availability = responseViewData[0].availability;
     } else {
@@ -874,5 +875,4 @@ window.addEventListener("load", async () => {
   if (availability["Sun11pm"] > 0) {
     table.rows[24].cells[7].className = "cell";
   }
-
 });
