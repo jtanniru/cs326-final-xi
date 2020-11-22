@@ -67,16 +67,21 @@ async function getCourses(email) {
     return await connectAndRun(db => db.any('SELECT * FROM courseInfo where email = $1;', [email]));
 }
 
-async function delCourses(course_name, professor, course_days, email) {
-    return await connectAndRun(db => db.none('DELETE FROM courseInfo where course_name = $1 and email = $2;', [course_name, email]));
+async function delCourses(course_name, email) {
+    console.log("delete query accessed.");
+    return await connectAndRun(db => db.result('DELETE FROM courseInfo where course_name = $1 and email = $2;', [course_name, email]));
 }
 
 async function updateUsers(phone, timezone, availability, email) {
-    return await connectAndRun(db => db.none('UPDATE userInfo SET phone = $1, timezone = $2, availbility = $3 where email = $4;', [phone, timezone, availability, email]));
+    return await connectAndRun(db => db.none('UPDATE userInfo SET phone = $1, timezone = $2, availability = $3 where email = $4;', [phone, timezone, availability, email]));
+}
+
+async function getUserSettings(email) {
+    return await connectAndRun(db => db.none('SELECT * FROM userInfo where email = $4;', [email]));
 }
 
 // async function Courses(course_name, professor, course_days, email) {
 //     return await connectAndRun(db => db.any('DELETE FROM courseInfo where course_name = $1 and professor = $2 and course_days = $3 and email = $4;', [course_name, professor, course_days, email]));
 // }
 
-module.exports =  {addUser, getUser, addCourse, getCourses, delCourses, updateUsers}
+module.exports =  {addUser, getUser, addCourse, getCourses, delCourses, updateUsers, getUserSettings};

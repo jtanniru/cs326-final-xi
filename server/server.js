@@ -117,9 +117,8 @@ function checkLoggedIn(req, res, next) {
 }
 
 app.get('/',
-	checkLoggedIn,
 	(req, res) => {
-	    res.send("hello world");
+		res.redirect('/login');
 	});
 
 // Handle post data from the login.html form.
@@ -188,21 +187,30 @@ app.post('/course', checkLoggedIn, async (req, res) => {
     res.send("OK");
 });
 
-app.get('/course/view', async (req, res) => {
+app.get('/course/view',checkLoggedIn, async (req, res) => {
 	res.end(JSON.stringify(
 		await datafunc.getCourses(req.user)));
 });
 
-app.delete('/course/:course_name', async (req, res) => {
-    await datafunc.delCourses(req.params.course_name);
+app.delete('/course/:course_name',checkLoggedIn, async (req, res) => {
+	await datafunc.delCourses(req.params.course_name);
+	console.log("deleted from server.")
     res.send("OK");
 });
 
-app.post('/settings', async (req, res) => {
+app.post('/settings',checkLoggedIn, async (req, res) => {
 	const data = req.body;
 	await datafunc.updateUsers(data.phone, data.timezone, data.availability, req.user);
 	res.send("OK");
 });
+
+app.get('/settings/view',checkLoggedIn, async (req, res) => {
+	res.end(JSON.stringify(
+		await datafunc.getCourses(req.user)));
+});
+
+
+
 
 // app.get("/settings/delete", async (req, res) => {
 //     await datafunc.deleteClasses(req.query.email, req.query.cid);
@@ -222,5 +230,3 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
-
-

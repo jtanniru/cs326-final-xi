@@ -4,13 +4,13 @@ window.addEventListener("load", async function () {
     let table = document.getElementById("tableID");
     let availability = {};
 
-    const response = await fetch('/availability/view');
-    const responseData = response.ok ? await response.json() : {};
+    const response = await fetch('/settings/view');
+    const responseData = response.ok ? await response.json() : [];
 
-    document.getElementById('timezone').value = responseData['user_timezone'];
-    document.getElementById('phone').value = responseData['user_phone'];
-    if (responseData['user_avail'] !== {}) {
-        availability = user_avail;
+    document.getElementById('timezone').value = responseData[0].timezone;
+    document.getElementById('phone').value = responseData[0].phone;
+    if (responseData[0].availability !== {}) {
+        availability = responseData[0].availability ;
     } else {
         availability["Mon12am"] = 0;
         availability["Mon1am"] = 0;
@@ -911,12 +911,12 @@ window.addEventListener("load", async function () {
         const zone = document.getElementById('timezone').value;
         const userPhone = document.getElementById('phone').value;
 
-        const response = await fetch('/availability/update', {
+        const response = await fetch('/settings', {
             method: 'POST',
             body: JSON.stringify({
-                user_timezone = zone,
-                user_avail = availability,
-                user_phone = userPhone
+                timezone : zone,
+                availability : availability,
+                phone : userPhone
             })
         });
         if (!response.ok) {

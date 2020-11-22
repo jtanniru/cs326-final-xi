@@ -9,8 +9,13 @@ function deleteTable() {
 }
 
 
+
+
 window.addEventListener("load", async function () {
   // action: gives each checkbox an attribute when checked so the status of each can be easily observed later
+  
+  
+  
   const monday = document.getElementById('monday');
   monday.addEventListener('click', () => {
     if (monday.hasAttribute('checked')) {
@@ -81,6 +86,32 @@ window.addEventListener("load", async function () {
     }
   });
 
+  const responseOriginView = await fetch('/course/view');
+  const responseOriginData = responseOriginView.ok ? await responseOriginView.json() : [];
+  const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
+
+      for (const course of responseOriginData) {
+        
+        const newOption = document.createElement('option');
+        newOption.innerHTML = course.course_name; // updated from newOption.value
+        newOption.classList.add("text-dark", "bg-light");
+        coursesDeleteSelection.appendChild(newOption);
+
+        const tr = document.createElement('tr');
+        const name  = document.createElement('td');
+        const professor  = document.createElement('td');
+        const days  = document.createElement('td');
+        name.innerText = course.course_name;
+        professor.innerText = course.professor;
+        days.innerHTML = course.course_days;
+
+        tr.appendChild(name);
+        tr.appendChild(professor);
+        tr.appendChild(days);
+
+        document.getElementById('coursesTable').appendChild(tr);
+      }
+
   // action for submit course button
   const coursesSubmitButton = document.getElementById('coursesSubmit');
   coursesSubmitButton.addEventListener('click', async () => {
@@ -91,68 +122,69 @@ window.addEventListener("load", async function () {
     let weekdayArray = []; // the Boolean[] added to the sql table for course days column
 
     if (courseNameValue === '' || professorValue === '') {
-      alert('Required sign in information is missing.');
-    }
-    
-    // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
-    let weekDaysCheckboxes = document.getElementsByClassName('weekday');
-    for (let i = 0; i < weekDaysCheckboxes.length; i++) {
-      if (weekDaysCheckboxes[i].checked === true) {
-        weekdayArray.push(true);
-      }
-      else {
-        weekdayArray.push(false);
-      }
-    }
-    
-    // POST to courseInfo table
-    const courseResponse = await fetch('/course', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-        },
-      body: JSON.stringify({
-          course_name: courseNameValue,
-          professor: professorValue,
-          course_days: weekdayArray 
-      })
-    });
-
-    if (!courseResponse.ok) {
-      console.error("response failed.");
-      console.log("course not added.")
+      alert('Required course information is missing.');
     }
     else{
-      console.log("course added");
-    }
-
-    const responseView = await fetch('/course/view');
-    const responseData = responseView.ok ? await responseView.json() : [];
-    const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
-
-    for (const course of responseData) {
+      // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
+      let weekDaysCheckboxes = document.getElementsByClassName('weekday');
+      for (let i = 0; i < weekDaysCheckboxes.length; i++) {
+        if (weekDaysCheckboxes[i].checked === true) {
+          weekdayArray.push(true);
+        }
+        else {
+          weekdayArray.push(false);
+        }
+      }
       
-      const newOption = document.createElement('option');
-      newOption.innerHTML = course.course_name; // updated from newOption.value
-      newOption.classList.add("text-dark", "bg-light");
-      coursesDeleteSelection.appendChild(newOption);
+      // POST to courseInfo table
+      const courseResponse = await fetch('/course', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+          },
+        body: JSON.stringify({
+            course_name: courseNameValue,
+            professor: professorValue,
+            course_days: weekdayArray 
+        })
+      });
 
-      const tr = document.createElement('tr');
-      const name  = document.createElement('td');
-      const professor  = document.createElement('td');
-      const days  = document.createElement('td');
-      name.innerText = course.course_name;
-      professor.innerText = course.professor;
-      days.innerHTML = course.course_days;
+      if (!courseResponse.ok) {
+        console.error("response failed.");
+        console.log("course not added.")
+      }
+      else{
+        console.log("course added");
+      }
 
-      tr.appendChild(name);
-      tr.appendChild(professor);
-      tr.appendChild(days);
+      const responseView = await fetch('/course/view');
+      const responseData = responseView.ok ? await responseView.json() : [];
+      const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 
-      document.getElementById('coursesTable').appendChild(tr);
+      for (const course of responseData) {
+        
+        const newOption = document.createElement('option');
+        newOption.innerHTML = course.course_name; // updated from newOption.value
+        newOption.classList.add("text-dark", "bg-light");
+        coursesDeleteSelection.appendChild(newOption);
+
+        const tr = document.createElement('tr');
+        const name  = document.createElement('td');
+        const professor  = document.createElement('td');
+        const days  = document.createElement('td');
+        name.innerText = course.course_name;
+        professor.innerText = course.professor;
+        days.innerHTML = course.course_days;
+
+        tr.appendChild(name);
+        tr.appendChild(professor);
+        tr.appendChild(days);
+
+        document.getElementById('coursesTable').appendChild(tr);
+      }
     }
-
   });
+
 
   //render function for course table onload
 
@@ -177,7 +209,7 @@ window.addEventListener("load", async function () {
 
     const courseNameValue = document.getElementById('inputCourseName').value;
     // go into the database, remove this course from the user's course listings
-    const responseDelCourse = await fetch('/course/'+ courseNameValue, {
+    const responseDelCourse = await fetch('/course/:'+ courseNameValue, {
       method: 'DELETE'
     });
 
@@ -216,6 +248,5 @@ window.addEventListener("load", async function () {
   });
 });
 
-//prevent things from added to the table when submit button is clicked and there is no onfo in input.
 //render table and delete drop down on load
 
