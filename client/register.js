@@ -11,7 +11,7 @@ window.addEventListener("load", async function () {
     const nameValue = document.getElementById('createName').value; 
 
     if(emailValue === '' || passwordValue === '' || nameValue === ''){
-      alert('Required sign in information is missing.');
+      alert('Required information is missing.');
     }
     else {
       const response = await fetch('/register', {
