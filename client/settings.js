@@ -1114,4 +1114,4 @@ window.addEventListener("load", async function () {
         }
     });
 
-} //end of load
+}); //end of load
