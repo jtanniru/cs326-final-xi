@@ -193,8 +193,8 @@ app.get('/course/view',checkLoggedIn, async (req, res) => {
 });
 
 app.delete('/course/:course_name',checkLoggedIn, async (req, res) => {
+	console.log("deleted from server.", req.params.course_name);
 	await datafunc.delCourses(req.params.course_name);
-	console.log("deleted from server.")
     res.send("OK");
 });
 
