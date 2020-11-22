@@ -2,7 +2,7 @@
 
 window.addEventListener("load", async function () {
 
-  const response = await fetch('/course/view');
+  const response = await fetch('/client/view');
   const responseData = response.ok ? await response.json() : [];
 
   const userCoursesList = document.getElementById('listOfCourses');
