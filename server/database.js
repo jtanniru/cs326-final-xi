@@ -81,16 +81,15 @@ async function getUserSettings(email) {
 }
 
 async function searchUsers(course_names, professors, course_days, timezones) {
+    const bigArray = course_names.concat(professors, course_days, timezones);
+    return await connectAndRun(db => db.any('SELECT name, email, phone from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name in ($1) and professor in ($1) and course_days in ($1) and timezone in ($1) ;', bigArray));
+    //fix query bug (complex query to be fixed :( ))
 
-    return await connectAndRun(db => db.any('SELECT name, email, phone from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name = $1 and ($1 IS NOT NULL AND timezone = $1)  ;', [course_names, professors, course_days, timezones]));
+    //maybe a fix could be to limit filter to one option drop down @jelchou search.js replace checkbox with dropdown per section
 }
 
 async function userAvailability(email) {
     return await connectAndRun(db => db.any('SELECT availability FROM userInfo where email = $1;', [email]));
 }
-
-//SELECT name, email, phone from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name = 'CS 326';
-
-//db.any(SELECT * FROM ... WHERE ($1 IS NOT NULL AND timezone = $1) AND professor = "Berger", [data.timezone, data.professor])
 
 module.exports =  {addUser, getUser, addCourse, getCourses, delCourses, updateUsers, getUserSettings, userAvailability, searchUsers};
