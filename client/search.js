@@ -131,6 +131,9 @@ window.addEventListener("load", async function () {
     // POST to courseInfo table
     const response = await fetch('/course/view', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
       body: JSON.stringify({
           course_name_list: courseData, // courseData is courseData[] of sql table courseInfo course_name values
           professor_list: professorData,  // professorData is professorData[] of sql table courseInfo professor values
