@@ -162,7 +162,8 @@ window.addEventListener("load", async function () {
       const phoneCell = document.createElement('td');
       const availCell = document.createElement('td');
 
-      export const searchEmail = thing.email;
+      //export searchEmail
+      const searchEmail = thing.email;
       const searchName = thing.name;
       const searchPhone = thing.phone;
 
