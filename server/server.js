@@ -216,10 +216,10 @@ app.get('/settings/view',checkLoggedIn, async (req, res) => {
 //     res.send("OK");
 // });
 
-// app.get('/search', async (req, res) => {
-//     await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
-//     res.send("OK");
-// });
+app.post('/search', checkLoggedIn, async (req, res) => {
+    await datafunc.addClass(req.query.sid, req.query.cid, req.query.email);
+    res.send("OK");
+});
 
 
 app.get('*', (req, res) => {

@@ -223,7 +223,7 @@ window.addEventListener("load", async function () {
 
     const courseNameValue = document.getElementById('inputCourseName').value;
     // go into the database, remove this course from the user's course listings
-    const responseDelCourse = await fetch('/course/:'+ courseNameValue, {
+    const responseDelCourse = await fetch('/course/'+ courseNameValue, {
       method: 'DELETE'
     });
 

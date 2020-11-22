@@ -80,5 +80,19 @@ async function getUserSettings(email) {
     return await connectAndRun(db => db.any('SELECT * FROM userInfo where email = $1;', [email]));
 }
 
+async function search(course_names, professors, course_days, timezones) {
+    const bigArray = course_names.concat(professors, course_days, timezones);
+    const numCourseNames = course_names.length;
+    const numProfessors = professors.length;
+    const numCourseDays = course_days.length;
+    const numTimezones = timezones.length;
+    const numTotal = bigArray.length;
+
+
+
+
+    return await connectAndRun(db => db.any(finalStr, bigArray));
+}
+
 
 module.exports =  {addUser, getUser, addCourse, getCourses, delCourses, updateUsers, getUserSettings};
