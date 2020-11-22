@@ -221,9 +221,9 @@ window.addEventListener("load", async function () {
       index++;
     }
 
-    const courseNameValue = document.getElementById('inputCourseName').value;
+    console.log(courseToDelete);
     // go into the database, remove this course from the user's course listings
-    const responseDelCourse = await fetch('/course/'+ courseNameValue, {
+    const responseDelCourse = await fetch('/course/'+ courseToDelete, {
       method: 'DELETE'
     });
 
@@ -271,4 +271,3 @@ window.addEventListener("load", async function () {
 });
 
 //render table and delete drop down on load
-
