@@ -1,5 +1,14 @@
 'use strict';
 
+
+function deleteTable() {
+  const temp = document.getElementById("coursesTable").getElementsByTagName("tr");
+  for(const i in temp) {
+    document.getElementById("coursesTable").deleteRow(0);
+  }
+}
+
+
 window.addEventListener("load", async function () {
   // action: gives each checkbox an attribute when checked so the status of each can be easily observed later
   const monday = document.getElementById('monday');
@@ -118,13 +127,14 @@ window.addEventListener("load", async function () {
     }
 
     const responseView = await fetch('/course/view');
-    const responseData = responseView.ok ? await response.json() : [];
+    const responseData = responseView.ok ? await responseView.json() : [];
     const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 
     for (const course of responseData) {
       
       const newOption = document.createElement('option');
-      newOption.value = course.course_name;
+      newOption.innerHTML = course.course_name; // updated from newOption.value
+      newOption.classList.add("text-dark", "bg-light");
       coursesDeleteSelection.appendChild(newOption);
 
       const tr = document.createElement('tr');
@@ -152,10 +162,10 @@ window.addEventListener("load", async function () {
 
     // remove row from HTML table and delete selector options
     const responseDelete = await fetch('/course/view');
-    const responseData = responseDelete.ok ? await response.json() : [];
+    const response = responseDelete.ok ? await responseDelete.json() : [];
 
     let index = 0;
-    for (const course of responseData){
+    for (const course of response){
       if (course.course_name === courseToDelete) {
         document.getElementById("coursesTable").deleteRow(index);
         const deleteOption = document.getElementById("coursesDeleteSelection");
@@ -165,21 +175,25 @@ window.addEventListener("load", async function () {
       index++;
     }
 
-
-
+    const courseNameValue = document.getElementById('inputCourseName').value;
     // go into the database, remove this course from the user's course listings
-    const responseDelCourse = await fetch('/course'+courseNameValue, {
+    const responseDelCourse = await fetch('/course/'+ courseNameValue, {
       method: 'DELETE'
     });
 
     if (!responseDelCourse.ok) {
       console.error("Error");
     }
+    else{
+      console.log("course delete");
+    }
 
-    const responseView = await fetch('/course/view');
-    const responseData = responseView.ok ? await response.json() : [];
+    deleteTable();
 
-    for (const course of responseData) {
+    const responseRender = await fetch('/course/view');
+    const responseDataRender = responseRender.ok ? await responseRender.json() : [];
+
+    for (const course of responseDataRender) {
       // const newOption = document.createElement('option');
       // newOption.value = course.course_name;
       // coursesDeleteSelection.appendChild(newOption);
@@ -201,3 +215,7 @@ window.addEventListener("load", async function () {
 
   });
 });
+
+//prevent things from added to the table when submit button is clicked and there is no onfo in input.
+//render table and delete drop down on load
+

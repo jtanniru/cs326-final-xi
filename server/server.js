@@ -198,7 +198,7 @@ app.delete('/course/:course_name', async (req, res) => {
     res.send("OK");
 });
 
-app.post('/settings/update', async (req, res) => {
+app.post('/settings', async (req, res) => {
 	const data = req.body;
 	await datafunc.updateUsers(data.phone, data.timezone, data.availability, req.user);
 	res.send("OK");
