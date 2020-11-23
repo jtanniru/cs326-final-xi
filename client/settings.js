@@ -2,7 +2,7 @@
 
 function tableText(cell, i, j, avail) {
     let availability = avail;
-    if (cell.className === "cell") {
+    if (cell.className === "cell" || (cell.className === "cell cell-selected")) {
         cell.className = "cell-selected";
         if (j === 1) {
             if (i === 1) {
