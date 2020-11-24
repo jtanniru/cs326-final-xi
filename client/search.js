@@ -1,4 +1,5 @@
 'use strict';
+// import * as utils from "./availability.js";
 
 window.addEventListener("load", async function () {
 
@@ -161,17 +162,18 @@ window.addEventListener("load", async function () {
       const phoneCell = document.createElement('td');
       const availCell = document.createElement('td');
 
-      const searchEmail = thing.email;
+      export const searchEmail = thing.email;
       const searchName = thing.name;
       const searchPhone = thing.phone;
 
       const availability = document.createElement('button');
       availability.innerHTML = "View Availability";
-      availCell.appendChild(availability);
       availability.addEventListener('click', () => {
-        window.searchEmail = searchEmail;
+        // window.searchEmail = searchEmail;
         window.location.href = 'availability.html';
+        // utils.renderTable();
       });
+      availCell.appendChild(availability);
 
       emailCell.innerHTML = searchEmail;
       nameCell.innerHTML = searchName;
