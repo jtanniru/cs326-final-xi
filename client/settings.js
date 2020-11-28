@@ -104,7 +104,7 @@ window.addEventListener("load", async function () {
         for (let i = 1; i < table.rows.length - 1; i++) {
             for (let j = 1; j < table.rows[i].cells.length; j++) {
                 table.rows[i].cells[j].classList.remove("cell");
-                table.rows[i].cells[j].className = ("cell selected");
+                table.rows[i].cells[j].className = ("cell-selected");
             }
         }
     });
