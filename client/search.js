@@ -149,7 +149,9 @@ window.addEventListener("load", async function () {
     // }
 
     for (const day in daysClass) {
-      dayData.push(day.hasAttribute('checked'));
+      if(typeof(day) === 'object'){
+        dayData.push(day.hasAttribute('checked'));
+      }
     }
 
     // for (const timezone in timezonesClass) {
