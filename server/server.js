@@ -199,6 +199,7 @@ app.delete('/course/:course_name',checkLoggedIn, async (req, res) => {
 
 app.post('/settings',checkLoggedIn, async (req, res) => {
 	const data = req.body;
+	console.log("settings added on server side.")
 	await datafunc.updateUsers(data.phone, data.timezone, data.availability, req.user);
 	res.send("OK");
 });
