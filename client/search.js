@@ -6,37 +6,52 @@ window.addEventListener("load", async function () {
   const response = await fetch('/course/view');
   const responseData = response.ok ? await response.json() : [];
 
-  const userCoursesList = document.getElementById('listOfCourses');
-  const userProfessorList = document.getElementById('listOfProfessors');
-  const userDaysList = document.getElementById('listOfDays');
-  const userTimezoneList = document.getElementById('listOfTimezones');
+  const userCourseSelector = document.getElementById('courseSelector');
+  const userProfessorSelector = document.getElementById('professorSelector');
+
+  // const userCoursesList = document.getElementById('listOfCourses');
+  // const userProfessorList = document.getElementById('listOfProfessors');
+  // const userDaysList = document.getElementById('listOfDays');
+  // const userTimezoneList = document.getElementById('listOfTimezones');
 
   for (const course of responseData) {
     // populate Courses list
-    const courseCheckboxInput = document.createElement('input');
-    const courseCheckboxLabel = document.createElement('label');
-    courseCheckboxInput.classList.add('form-check-input', 'courseCheckbox');
-    courseCheckboxInput.setAttribute('type', 'checkbox');
-    courseCheckboxInput.setAttribute('id', course.course_name);
-    courseCheckboxLabel.classList.add('form-check-label');
-    courseCheckboxLabel.setAttribute('for', course.course_name);
-    courseCheckboxLabel.innerHTML = course.course_name;
-    userCoursesList.appendChild(courseCheckboxInput);
-    userCoursesList.appendChild(courseCheckboxLabel);
-    userCoursesList.appendChild(document.createElement('br'));
+    // const courseCheckboxInput = document.createElement('input');
+    // const courseCheckboxLabel = document.createElement('label');
+    // courseCheckboxInput.classList.add('form-check-input', 'courseCheckbox');
+    // courseCheckboxInput.setAttribute('type', 'checkbox');
+    // courseCheckboxInput.setAttribute('id', course.course_name);
+    // courseCheckboxLabel.classList.add('form-check-label');
+    // courseCheckboxLabel.setAttribute('for', course.course_name);
+    // courseCheckboxLabel.innerHTML = course.course_name;
+    // userCoursesList.appendChild(courseCheckboxInput);
+    // userCoursesList.appendChild(courseCheckboxLabel);
+    // userCoursesList.appendChild(document.createElement('br'));
+
+    // populate Courses list with a drop down (selector and options tags)
+    const courseOption = document.createElement('option');
+    courseOption.innerHTML = course.course_name; // updated from newOption.value
+    courseOption.classList.add("text-dark", "bg-light");
+    userCourseSelector.appendChild(courseOption);
 
     // populate Professors list
-    const professorCheckboxInput = document.createElement('input');
-    const professorCheckboxLabel = document.createElement('label');
-    professorCheckboxInput.classList.add('form-check-input', 'professorCheckbox');
-    professorCheckboxInput.setAttribute('type', 'checkbox');
-    professorCheckboxInput.setAttribute('id', course.professor);
-    professorCheckboxLabel.classList.add('form-check-label');
-    professorCheckboxLabel.setAttribute('for', course.professor);
-    professorCheckboxLabel.innerHTML = course.professor;
-    userProfessorList.appendChild(professorCheckboxInput);
-    userProfessorList.appendChild(professorCheckboxLabel);
-    userProfessorList.appendChild(document.createElement('br'));
+    // const professorCheckboxInput = document.createElement('input');
+    // const professorCheckboxLabel = document.createElement('label');
+    // professorCheckboxInput.classList.add('form-check-input', 'professorCheckbox');
+    // professorCheckboxInput.setAttribute('type', 'checkbox');
+    // professorCheckboxInput.setAttribute('id', course.professor);
+    // professorCheckboxLabel.classList.add('form-check-label');
+    // professorCheckboxLabel.setAttribute('for', course.professor);
+    // professorCheckboxLabel.innerHTML = course.professor;
+    // userProfessorList.appendChild(professorCheckboxInput);
+    // userProfessorList.appendChild(professorCheckboxLabel);
+    // userProfessorList.appendChild(document.createElement('br'));
+
+    //populate Professors list with a drop down (selector and options tags)
+    const professorOption = document.createElement('option');
+    professorOption.innerHTML = course.professor; // updated from newOption.value
+    professorOption.classList.add("text-dark", "bg-light");
+    userProfessorSelector.appendChild(professorOption);
   }
 
   // apply event listener for adding "checked" attribute to all the filter checkboxes
