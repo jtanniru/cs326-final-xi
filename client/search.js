@@ -12,7 +12,17 @@ window.addEventListener("load", async function () {
   // const userCoursesList = document.getElementById('listOfCourses');
   // const userProfessorList = document.getElementById('listOfProfessors');
   // const userDaysList = document.getElementById('listOfDays');
-  // const userTimezoneList = document.getElementById('listOfTimezones');
+  const userTimezoneSelector = document.getElementById('timezoneSelector');
+
+  // populate the timezone drop down menu
+  const listOfTimezones = ['Honolulu Standard Time (HST)', 'Alaska Daylight Time (AKDT)', 'Pacific Daylight Time (PDT)', 
+                          'Mountain Daylight Time (MDT)', 'Central Daylight Time (CDT)', 'Eastern Daylight Time (EDT)'];
+  for (const time in listOfTimezones){
+    const timezoneOption = document.createElement('option');
+    timezoneOption.innerHTML = listOfTimezones[time]; // updated from newOption.value
+    timezoneOption.classList.add("text-dark", "bg-light");
+    userTimezoneSelector.appendChild(timezoneOption);
+  }
 
   for (const course of responseData) {
     // populate Courses list
