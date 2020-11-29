@@ -19,7 +19,7 @@ window.addEventListener("load", async function () {
                           'Mountain Daylight Time (MDT)', 'Central Daylight Time (CDT)', 'Eastern Daylight Time (EDT)'];
   for (const time in listOfTimezones){
     const timezoneOption = document.createElement('option');
-    timezoneOption.innerHTML = listOfTimezones[time]; // updated from newOption.value
+    timezoneOption.innerHTML = listOfTimezones[time]; 
     timezoneOption.classList.add("text-dark", "bg-light");
     userTimezoneSelector.appendChild(timezoneOption);
   }
@@ -65,36 +65,36 @@ window.addEventListener("load", async function () {
   }
 
   // apply event listener for adding "checked" attribute to all the filter checkboxes
-  const coursesClass = document.getElementsByClassName('courseCheckbox');
-  const professorsClass = document.getElementsByClassName('professorCheckbox');
+  // const coursesClass = document.getElementsByClassName('courseCheckbox');
+  // const professorsClass = document.getElementsByClassName('professorCheckbox');
   const daysClass = document.getElementsByClassName('weekday');
-  const timezonesClass = document.getElementsByClassName('timezone');
+  // const timezonesClass = document.getElementsByClassName('timezone');
 
-  for (const course in coursesClass) {
-    if (typeof(course) === 'object') {
-      course.addEventListener('click', () => {
-        if (course.hasAttribute('checked')) {
-          course.removeAttribute('checked');
-        }
-        else {
-          course.setAttribute('checked', '');
-        }
-      });
-    }
-  }
+  // for (const course in coursesClass) {
+  //   if (typeof(course) === 'object') {
+  //     course.addEventListener('click', () => {
+  //       if (course.hasAttribute('checked')) {
+  //         course.removeAttribute('checked');
+  //       }
+  //       else {
+  //         course.setAttribute('checked', '');
+  //       }
+  //     });
+  //   }
+  // }
 
-  for (const professor in professorsClass) {
-    if (typeof(professor) === 'object') {
-      professor.addEventListener('click', () => {
-        if (professor.hasAttribute('checked')) {
-          professor.removeAttribute('checked');
-        }
-        else {
-          professor.setAttribute('checked', '');
-        }
-      });
-    }
-  }
+  // for (const professor in professorsClass) {
+  //   if (typeof(professor) === 'object') {
+  //     professor.addEventListener('click', () => {
+  //       if (professor.hasAttribute('checked')) {
+  //         professor.removeAttribute('checked');
+  //       }
+  //       else {
+  //         professor.setAttribute('checked', '');
+  //       }
+  //     });
+  //   }
+  // }
 
   for (const day in daysClass) {
     if (typeof(day) === 'object') {
@@ -109,51 +109,54 @@ window.addEventListener("load", async function () {
     }
   }
 
-  for (const timezone in timezonesClass) {
-    if (typeof(timezone) === 'object') {
-      timezone.addEventListener('click', () => {
-        if (timezone.hasAttribute('checked')) {
-          timezone.removeAttribute('checked');
-        }
-        else {
-          timezone.setAttribute('checked', '');
-        }
-      });
-    }
-  }
+  // for (const timezone in timezonesClass) {
+  //   if (typeof(timezone) === 'object') {
+  //     timezone.addEventListener('click', () => {
+  //       if (timezone.hasAttribute('checked')) {
+  //         timezone.removeAttribute('checked');
+  //       }
+  //       else {
+  //         timezone.setAttribute('checked', '');
+  //       }
+  //     });
+  //   }
+  // }
 
   const applyFilterButton = document.getElementById('filterApply');
   applyFilterButton.addEventListener('click', async () => {
 
-    let courseData = [];
-    let professorData = [];
-    let dayData = [];
-    let timezoneData = [];
+    // get value of each drop down menu and then the course days checkboxes
+    const chosenCourse = document.getElementById('courseSelector').value;
+    const chosenProfessor = document.getElementById('professorSelector').value;
+    const chosenTimezone = document.getElementById('timezoneSelector').value;
+
+    // let courseData = [];
+    // let professorData = [];
+    let dayData = [];   // if monday True and nothing else: [true, false, false, false, false, false, false]
+    // let timezoneData = [];
 
     // we know: the courses that are checked off
-    for (const course in coursesClass) {
-      if (course.hasAttribute('checked')) {
-        courseData.push(course.id);
-      }      
-    }
+    // for (const course in coursesClass) {
+    //   if (course.hasAttribute('checked')) {
+    //     courseData.push(course.id);
+    //   }      
+    // }
 
-    for (const professor in professorsClass) {
-      if (professor.hasAttribute('checked')) {
-        professorData.push(professor.id);
-      }
-    }
+    // for (const professor in professorsClass) {
+    //   if (professor.hasAttribute('checked')) {
+    //     professorData.push(professor.id);
+    //   }
+    // }
 
     for (const day in daysClass) {
-      if (day.hasAttribute('checked')) {
-        dayData.push(day.id);
-      }
+      dayData.push(day.hasAttribute('checked'));
     }
 
-    for (const timezone in timezonesClass) {
-      if (timezone.hasAttribute('checked')) {
-        timezoneData.push(timezone.id);
-      }
-    }
+    // for (const timezone in timezonesClass) {
+    //   if (timezone.hasAttribute('checked')) {
+    //     timezoneData.push(timezone.id);
+    //   }
+    // }
 
     // TODO: add header
     // POST to courseInfo table
@@ -163,10 +166,10 @@ window.addEventListener("load", async function () {
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({
-          course_name_list: courseData, // courseData is courseData[] of sql table courseInfo course_name values
-          professor_list: professorData,  // professorData is professorData[] of sql table courseInfo professor values
+          course_name_list: chosenCourse, // courseData is courseData[] of sql table courseInfo course_name values
+          professor_list: chosenProfessor,  // professorData is professorData[] of sql table courseInfo professor values
           course_days_list: dayData,  // dayData is dayData[] of sql table courseInfo course_days values
-          timezone_list: timezoneData // timezoneData is timezoneData[] of sql table userInfo timezone values
+          timezone_list: chosenTimezone // timezoneData is timezoneData[] of sql table userInfo timezone values
       })
     });
 
