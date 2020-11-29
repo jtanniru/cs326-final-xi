@@ -17,14 +17,14 @@ function deleteTable() {
 function deleteSelector() {
   // const temp = document.getElementById("coursesDeleteSelection").getElementsByTagName("option");
   const temp = document.getElementById('coursesDeleteSelection');
-  for(let i = 0; i < temp.childNodes.length; i++){
-    temp.childNodes[i].remove();
-  }
-  // temp.remove();
-  // const newSelector = document.createElement('select');
-  // newSelector.setAttribute('id', 'coursesDeleteSelection');
-  // const currentSelector = document.getElementById('coursesDeleteSelection');
-  // currentSelector.appendChild(newSelector);
+  // for(let i = 0; i < temp.childNodes.length; i++){
+  //   temp.childNodes[i].remove();
+  // }
+  temp.remove();
+  const newSelector = document.createElement('select');
+  newSelector.setAttribute('id', 'coursesDeleteSelection');
+  const currentSelectHolderDiv = document.getElementById('selectHolder');
+  currentSelectHolderDiv.appendChild(newSelector);
 }
 
 
