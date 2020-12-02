@@ -259,32 +259,33 @@ window.addEventListener("load", async function () {
       console.error("Could not save the turn score to the server.");  // TODO: go through and redo the console.error strings
     }
 
-    const searchResponse = await fetch('/search');
-    const searchData = searchResponse.ok ? await searchResponse.json() : [];
-    console.log(searchData);
+    //const searchResponse = await fetch('/search');
+    const searchData = response.ok ? await response.json() : [];
+ 
     // populate the table of matching users
     const tableBody = document.getElementById('matches');
     // for object (containing name, email, phone) in the response
-    for (const thing in searchData) {
+    for (const thing of searchData) {
       const tableRow = document.createElement('tr');
       const emailCell = document.createElement('td');
       const nameCell = document.createElement('td');
       const phoneCell = document.createElement('td');
-      //const availCell = document.createElement('td');
+      const availCell = document.createElement('td');
 
       //export searchEmail
       const searchEmail = thing.email;
       const searchName = thing.name;
       const searchPhone = thing.phone;
 
-      // const availability = document.createElement('button');
-      // availability.innerHTML = "View Availability";
-      // availability.addEventListener('click', () => {
-      //   // window.searchEmail = searchEmail;
-      //   window.location.href = 'availability.html';
-      //   // utils.renderTable();
-      // });
-      // availCell.appendChild(availability);
+      
+      const availability = document.createElement('button');
+      availability.innerHTML = "View Availability";
+      availability.addEventListener('click', () => {
+      window.searchEmail = searchEmail;
+       window.location.href = 'availability.html';
+        utils.renderTable();
+      });
+      availCell.appendChild(availability);
 
       emailCell.innerHTML = searchEmail;
       nameCell.innerHTML = searchName;
@@ -292,6 +293,7 @@ window.addEventListener("load", async function () {
       tableRow.appendChild(emailCell);
       tableRow.appendChild(nameCell);
       tableRow.appendChild(phoneCell);
+      tableRow.appendChild(availCell);
 
       tableBody.appendChild(tableRow);
     }
