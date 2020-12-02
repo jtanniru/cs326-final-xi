@@ -1,42 +1,32 @@
 'use strict';
 
+
 export function renderTable() {
-  window.addEventListener("load", async () => {
 
-    let table = document.getElementById("availabilityTable");
-    let availability = [];
+  let restoredData = JSON.parse(window.localStorage.getItem("saveData"));
+  let curAvailability = [];
 
-    const emailResponse = await fetch('/availability', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify({
-        email: searchEmail,
-      })
-    });
-    if (!emailResponse.ok) {
-      console.error("Error.");
-    } else {
-      console.log("It worked.");
-    }
+  if (restoredData.length !== 0) {
+    if (restoredData[0].emailAddress !== null) {
+      let curEmail = restoredData[0].emailAddress;
 
-    if (responseViewData.length !== 0) {
-      if (responseViewData[0].availability !== null) {
-        availability = responseViewData[0].availability;
-      } else {
-        availability = [
-          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-        ];
+      const response = await fetch('/availability', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+          email: curEmail
+        })
+      });
+      if (!response.ok) {
+        console.error("Could not fetch availability.");
       }
+      const searchData = response.ok ? await response.json() : [];
+      curAvailability = searchData.availability;
+
     } else {
-      availability = [
+      curAvailability = [
         [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
@@ -46,11 +36,22 @@ export function renderTable() {
         [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
       ];
     }
-    for (let i = 1; i < table.rows.length - 1; i++) {
-      for (let j = 1; j < table.rows[i].cells.length; j++) {
-        table.rows[i].cells[j].classList.remove("cell");
-        table.rows[i].cells[j].className = ("cell selected");
+  } else {
+    curAvailability = [
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    ];
+  }
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 24; j++) {
+      if (curAvailability[i][j] === true) {
+        table.rows[j + 1].cells[i + 1].className = "cell";
       }
     }
-  });
+  }
 }
