@@ -4,9 +4,9 @@ https://cs326-xi.herokuapp.com/login
 
 # Title
 
-Rendezvous
+CS326 xi
 
-### Subtitle
+# Subtitle
 
 Rendezvous
 
