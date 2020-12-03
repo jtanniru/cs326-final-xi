@@ -42,7 +42,6 @@ const session = {
 
 const strategy = new LocalStrategy(
     async (username, password, done) => {
-		console.log(username, password);
 	if (! await findUser(username)) {
 		// no such user
 		//console.log(username, password);
@@ -100,7 +99,6 @@ async function validatePassword(name, pwd) {
 	if (!exists) {
 	return false;
 	}
-	console.log(exists);
 	const res = mc.check(pwd, exists.salt, exists.hash);
     return res;
 }
@@ -148,7 +146,6 @@ app.post('/register',
 		const exists = await datafunc.getUser(data.email);
 		if(exists.length === 0){
 			const pwd = data.password;
-			console.log(data.email);
 			const [salt, hash] = mc.hash(pwd);
 			const hashed = [salt, hash];
 			await datafunc.addUser(data.email, data.name, hashed[0], hashed[1]);
@@ -181,8 +178,6 @@ app.get('/course',checkLoggedIn,
 
 app.post('/course', checkLoggedIn, async (req, res) => {
 	const data = req.body;
-	console.log(data.course_name);
-	console.log(data.course_days);
 	await datafunc.addCourse(data.course_name, data.professor, data.course_days, req.user);
     res.send("OK");
 });
@@ -199,7 +194,6 @@ app.delete('/course/:course_name',checkLoggedIn, async (req, res) => {
 
 app.post('/settings',checkLoggedIn, async (req, res) => {
 	const data = req.body;
-	console.log("settings added on server side.")
 	await datafunc.updateUsers(data.phone, data.timezone, data.availability, req.user);
 	res.send("OK");
 });
@@ -211,6 +205,7 @@ app.get('/settings/view',checkLoggedIn, async (req, res) => {
 
 app.post('/search', checkLoggedIn, async (req, res) => {
 	const data = req.body;
+	console.log(data.course_days);
     res.end(JSON.stringify(
 	await datafunc.searchUsers(data.course_name, data.professor, data.course_days, data.timezone)));
 });
