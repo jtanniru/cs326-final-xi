@@ -18,10 +18,7 @@ function deleteSelector() {
   currentSelectHolderDiv.appendChild(newSelector);
 }
 
-
 window.addEventListener("load", async function () {
-  // action: gives each checkbox an attribute when checked so the status of each can be easily observed later
-
   const monday = document.getElementById('monday');
   monday.addEventListener('click', () => {
     if (monday.hasAttribute('checked')) {
@@ -94,14 +91,14 @@ window.addEventListener("load", async function () {
 
   deleteSelector();
   deleteTable();
+
   const responseOriginView = await fetch('/course/view');
   const responseOriginData = responseOriginView.ok ? await responseOriginView.json() : [];
   const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 
   for (const course of responseOriginData) {  
-    
     const newOption = document.createElement('option');
-    newOption.innerHTML = course.course_name; // updated from newOption.value
+    newOption.innerHTML = course.course_name;
     newOption.classList.add("text-dark", "bg-light");
     coursesDeleteSelection.appendChild(newOption);
 
@@ -111,6 +108,7 @@ window.addEventListener("load", async function () {
     const days  = document.createElement('td');
     name.innerText = course.course_name;
     professor.innerText = course.professor;
+    
     const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     let str = '';
     for(let i = 0; i < course.course_days.length; i++){
@@ -127,9 +125,8 @@ window.addEventListener("load", async function () {
     document.getElementById('coursesTableBody').appendChild(tr);
   }
 
-  });
+});
 
-// action for submit course button
 const coursesSubmitButton = document.getElementById('coursesSubmit');
 coursesSubmitButton.addEventListener('click', async () => {
   console.log("clicked button");
@@ -142,7 +139,6 @@ coursesSubmitButton.addEventListener('click', async () => {
     alert('Required course information is missing.');
   }
   else{
-    // for checkbox in courseDays div, if a checkbox is checked, add its ID (the weekday) to the array
     let weekDaysCheckboxes = document.getElementsByClassName('weekday');
     for (let i = 0; i < weekDaysCheckboxes.length; i++) {
       if (weekDaysCheckboxes[i].checked === true) {
@@ -153,7 +149,6 @@ coursesSubmitButton.addEventListener('click', async () => {
       }
     }
     
-    // POST to courseInfo table
     const courseResponse = await fetch('/course', {
       method: 'POST',
       headers: {
@@ -174,31 +169,28 @@ coursesSubmitButton.addEventListener('click', async () => {
       console.log("course added");
     }
 
-    // add new course to selector tag
     deleteSelector();
     deleteTable();
+
     const responseView = await fetch('/course/view');
     const responseData = responseView.ok ? await responseView.json() : [];
     const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 
-    // this will add all current existing courses, not just the new one
-    // can try deleting/clearing the whole selector tag contents (all options tags in selector)
     for (const course of responseData) {
-      
       const newOption = document.createElement('option');
-      newOption.innerHTML = course.course_name; // updated from newOption.value
+      newOption.innerHTML = course.course_name; 
       newOption.classList.add("text-dark", "bg-light");
       coursesDeleteSelection.appendChild(newOption);
 
-      // update the html table with the new course -- will add all current existing courses to what is in html table already
       const tr = document.createElement('tr');
       const name  = document.createElement('td');
       const professor  = document.createElement('td');
       const days  = document.createElement('td');
       name.innerText = course.course_name;
       professor.innerText = course.professor;
-      let str1 = '';
+      
       const weekdays1 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      let str1 = '';
       for(let i = 0; i < course.course_days.length; i++){
         if(course.course_days[i]){
           
@@ -216,29 +208,25 @@ coursesSubmitButton.addEventListener('click', async () => {
   }
 });
 
-// click for delete course
 const coursesDeleteButton = document.getElementById('coursesDelete');
 coursesDeleteButton.addEventListener('click', async () => {
   const courseToDelete = document.getElementById('coursesDeleteSelection').value;
-
-  // remove row from HTML table and delete selector options
   const responseDelete = await fetch('/course/view');
   const response = responseDelete.ok ? await responseDelete.json() : [];
 
   let index = 0;
   for (const course of response){
     if (course.course_name === courseToDelete) {
-      document.getElementById("coursesTableBody").deleteRow(index); //wrong row (?) index+1
+      document.getElementById("coursesTableBody").deleteRow(index);
       const deleteOption = document.getElementById("coursesDeleteSelection");
       console.log("selected index: ", deleteOption.selectedIndex);
       deleteOption.remove(deleteOption.selectedIndex);
+      
       break;
     }
     index++;
   }
 
-  console.log(courseToDelete);
-  // go into the database, remove this course from the user's course listings
   const responseDelCourse = await fetch('/course/'+ courseToDelete, {
     method: 'DELETE'
   });
@@ -250,7 +238,7 @@ coursesDeleteButton.addEventListener('click', async () => {
     console.log("course delete");
   }
 
-  deleteTable();  // clear html table before rerendering the whole thing
+  deleteTable();  
 
   const responseRender = await fetch('/course/view');
   const responseDataRender = responseRender.ok ? await responseRender.json() : [];
@@ -262,8 +250,9 @@ coursesDeleteButton.addEventListener('click', async () => {
     const days  = document.createElement('td');
     name.innerText = course.course_name;
     professor.innerText = course.professor;
-    let str1 = '';
+    
     const weekdays2 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    let str1 = '';
       for(let i = 0; i < course.course_days.length; i++){
         if(course.course_days[i]){
          
@@ -278,5 +267,4 @@ coursesDeleteButton.addEventListener('click', async () => {
 
     document.getElementById('coursesTableBody').appendChild(tr);
   }
-
 });
