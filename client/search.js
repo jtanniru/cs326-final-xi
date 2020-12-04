@@ -78,10 +78,6 @@ window.addEventListener("load", async function () {
 
   const userCourseSelector = document.getElementById('courseSelector');
   const userProfessorSelector = document.getElementById('professorSelector');
-
-  // const userCoursesList = document.getElementById('listOfCourses');
-  // const userProfessorList = document.getElementById('listOfProfessors');
-  // const userDaysList = document.getElementById('listOfDays');
   const userTimezoneSelector = document.getElementById('timezoneSelector');
 
   // populate the timezone drop down menu
@@ -95,137 +91,37 @@ window.addEventListener("load", async function () {
   }
 
   for (const course of responseData) {
-    // populate Courses list
-    // const courseCheckboxInput = document.createElement('input');
-    // const courseCheckboxLabel = document.createElement('label');
-    // courseCheckboxInput.classList.add('form-check-input', 'courseCheckbox');
-    // courseCheckboxInput.setAttribute('type', 'checkbox');
-    // courseCheckboxInput.setAttribute('id', course.course_name);
-    // courseCheckboxLabel.classList.add('form-check-label');
-    // courseCheckboxLabel.setAttribute('for', course.course_name);
-    // courseCheckboxLabel.innerHTML = course.course_name;
-    // userCoursesList.appendChild(courseCheckboxInput);
-    // userCoursesList.appendChild(courseCheckboxLabel);
-    // userCoursesList.appendChild(document.createElement('br'));
-
     // populate Courses list with a drop down (selector and options tags)
     const courseOption = document.createElement('option');
     courseOption.innerHTML = course.course_name; // updated from newOption.value
     courseOption.classList.add("text-dark", "bg-light");
     userCourseSelector.appendChild(courseOption);
 
-    // populate Professors list
-    // const professorCheckboxInput = document.createElement('input');
-    // const professorCheckboxLabel = document.createElement('label');
-    // professorCheckboxInput.classList.add('form-check-input', 'professorCheckbox');
-    // professorCheckboxInput.setAttribute('type', 'checkbox');
-    // professorCheckboxInput.setAttribute('id', course.professor);
-    // professorCheckboxLabel.classList.add('form-check-label');
-    // professorCheckboxLabel.setAttribute('for', course.professor);
-    // professorCheckboxLabel.innerHTML = course.professor;
-    // userProfessorList.appendChild(professorCheckboxInput);
-    // userProfessorList.appendChild(professorCheckboxLabel);
-    // userProfessorList.appendChild(document.createElement('br'));
-
     //populate Professors list with a drop down (selector and options tags)
     const professorOption = document.createElement('option');
     professorOption.innerHTML = course.professor; // updated from newOption.value
     professorOption.classList.add("text-dark", "bg-light");
     userProfessorSelector.appendChild(professorOption);
+  } 
+
+  function deleteMatches() {
+    const temp = document.getElementById('matches')
+    temp.remove();
+    const newBody = document.createElement('tbody');
+    newBody.setAttribute('id', 'matches');
+    const currentTable = document.getElementById('tableOfMatches');
+    currentTable.appendChild(newBody);
   }
-
-  // apply event listener for adding "checked" attribute to all the filter checkboxes
-  // const coursesClass = document.getElementsByClassName('courseCheckbox');
-  // const professorsClass = document.getElementsByClassName('professorCheckbox');
-  //const daysClass = document.getElementsByClassName('weekday');
-  // const timezonesClass = document.getElementsByClassName('timezone');
-
-  // for (const course in coursesClass) {
-  //   if (typeof(course) === 'object') {
-  //     course.addEventListener('click', () => {
-  //       if (course.hasAttribute('checked')) {
-  //         course.removeAttribute('checked');
-  //       }
-  //       else {
-  //         course.setAttribute('checked', '');
-  //       }
-  //     });
-  //   }
-  // }
-
-  // for (const professor in professorsClass) {
-  //   if (typeof(professor) === 'object') {
-  //     professor.addEventListener('click', () => {
-  //       if (professor.hasAttribute('checked')) {
-  //         professor.removeAttribute('checked');
-  //       }
-  //       else {
-  //         professor.setAttribute('checked', '');
-  //       }
-  //     });
-  //   }
-  // }
-
-  // for (const day in daysClass) {
-  //   if (typeof(day) === 'object') {
-  //     day.addEventListener('click', () => {
-  //       if (day.hasAttribute('checked')) {
-  //         day.removeAttribute('checked');
-  //       }
-  //       else {
-  //         day.setAttribute('checked', '');
-  //       }
-  //     });
-  //   }
-  // }
-
-  //console.log();
-
-  // for (const timezone in timezonesClass) {
-  //   if (typeof(timezone) === 'object') {
-  //     timezone.addEventListener('click', () => {
-  //       if (timezone.hasAttribute('checked')) {
-  //         timezone.removeAttribute('checked');
-  //       }
-  //       else {
-  //         timezone.setAttribute('checked', '');
-  //       }
-  //     });
-  //   }
-  // }
 
   const applyFilterButton = document.getElementById('filterApply');
   applyFilterButton.addEventListener('click', async () => {
+    deleteMatches();
 
     // get value of each drop down menu and then the course days checkboxes
     const chosenCourse = document.getElementById('courseSelector').value;
     const chosenProfessor = document.getElementById('professorSelector').value;
     const chosenTimezone = document.getElementById('timezoneSelector').value;
-    //const alldays = document.getElementsByClassName('weekday');
-    // let courseData = [];
-    // let professorData = [];
-    //console.log(alldays);
-    //let dayData = [];   // if monday True and nothing else: [true, false, false, false, false, false, false]
-    // let timezoneData = [];
 
-    // we know: the courses that are checked off
-    // for (const course in coursesClass) {
-    //   if (course.hasAttribute('checked')) {
-    //     courseData.push(course.id);
-    //   }      
-    // }
-
-    // for (const professor in professorsClass) {
-    //   if (professor.hasAttribute('checked')) {
-    //     professorData.push(professor.id);
-    //   }
-    // }
-
-    // for (const day in alldays) {
-    //   if(typeof(day) === 'object'){
-    //     dayData.push(day.hasAttribute('checked'));
-    //   }
-    // }
     let weekdayArray = [];
     let weekDaysCheckboxes = document.getElementsByClassName('weekday');
     for (let i = 0; i < weekDaysCheckboxes.length; i++) {
@@ -236,11 +132,7 @@ window.addEventListener("load", async function () {
         weekdayArray.push(false);
       }
     }
-    // for (const timezone in timezonesClass) {
-    //   if (timezone.hasAttribute('checked')) {
-    //     timezoneData.push(timezone.id);
-    //   }
-    // }
+  
     console.log(weekdayArray);
     // POST to courseInfo table
     const response = await fetch('/search', {
@@ -279,6 +171,8 @@ window.addEventListener("load", async function () {
       const searchName = thing.name;
       const searchPhone = thing.phone;
 
+      availCell.setAttribute('id', searchEmail);  // sets each button to have ID = that user's email ? 
+
       //send email to availability.js to open availability table
       // window.localStorage.setItem(tempSting, JSON.stringify(saveData));
       const availability = document.createElement('button');
@@ -289,9 +183,12 @@ window.addEventListener("load", async function () {
         //   emailAddress: searchEmail      
         //   };
         // window.localStorage.setItem("saveData", JSON.stringify(saveData));
-        window.open('availability.html');
-        //window.location.href = 'availability.html';
+        // window.open('availability.html');
+        // call POST endpoint that takes searchEmail and the function the POST calls will window.open('availability.html')
+        // window.location.href = 'availability.html';
         renderTable(searchEmail);
+        // settingEmail(searchEmail);  // global variable will be set in here then availability.html is opened
+        console.log("rendered");
       });
 
       availCell.appendChild(availability);
