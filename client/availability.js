@@ -1,6 +1,4 @@
 'use strict';
-
-
 export function renderTable() {
 
   let restoredData = JSON.parse(window.localStorage.getItem("saveData"));
@@ -55,3 +53,4 @@ export function renderTable() {
     }
   }
 }
+

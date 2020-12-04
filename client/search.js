@@ -1,5 +1,5 @@
 'use strict';
-import * as utils from "./availability.js";
+//const utils = require('availability.js');
 
 window.addEventListener("load", async function () {
   const monday = document.getElementById('monday');
@@ -84,11 +84,11 @@ window.addEventListener("load", async function () {
   const userTimezoneSelector = document.getElementById('timezoneSelector');
 
   // populate the timezone drop down menu
-  const listOfTimezones = ['Honolulu Standard Time (HST)', 'Alaska Daylight Time (AKDT)', 'Pacific Daylight Time (PDT)',
-    'Mountain Daylight Time (MDT)', 'Central Daylight Time (CDT)', 'Eastern Daylight Time (EDT)'];
-  for (const time in listOfTimezones) {
+  const listOfTimezones = ['Honolulu Standard Time (HST)', 'Alaska Daylight Time (AKDT)', 'Pacific Daylight Time (PDT)', 
+                          'Mountain Daylight Time (MDT)', 'Central Daylight Time (CDT)', 'Eastern Daylight Time (EDT)'];
+  for (const time in listOfTimezones){
     const timezoneOption = document.createElement('option');
-    timezoneOption.innerHTML = listOfTimezones[time];
+    timezoneOption.innerHTML = listOfTimezones[time]; 
     timezoneOption.classList.add("text-dark", "bg-light");
     userTimezoneSelector.appendChild(timezoneOption);
   }
@@ -248,10 +248,10 @@ window.addEventListener("load", async function () {
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({
-        course_name: chosenCourse, // courseData is courseData[] of sql table courseInfo course_name values
-        professor: chosenProfessor,  // professorData is professorData[] of sql table courseInfo professor values
-        course_days: weekdayArray,  // dayData is dayData[] of sql table courseInfo course_days values
-        timezone: chosenTimezone // timezoneData is timezoneData[] of sql table userInfo timezone values
+          course_name: chosenCourse, // courseData is courseData[] of sql table courseInfo course_name values
+          professor: chosenProfessor,  // professorData is professorData[] of sql table courseInfo professor values
+          course_days: weekdayArray,  // dayData is dayData[] of sql table courseInfo course_days values
+          timezone: chosenTimezone // timezoneData is timezoneData[] of sql table userInfo timezone values
       })
     });
 
@@ -261,7 +261,7 @@ window.addEventListener("load", async function () {
 
     //const searchResponse = await fetch('/search');
     const searchData = response.ok ? await response.json() : [];
-
+ 
     // populate the table of matching users
     const tableBody = document.getElementById('matches');
     // for object (containing name, email, phone) in the response
@@ -277,20 +277,22 @@ window.addEventListener("load", async function () {
       const searchName = thing.name;
       const searchPhone = thing.phone;
 
-      const availability = document.createElement('button');
-      availability.innerHTML = "View Availability";
-      availability.addEventListener('click', () => {
-        window.searchEmail = searchEmail;
-        window.location.href = 'availability.html';
-        utils.renderTable();
-      });
-      availCell.appendChild(availability);
-
       //send email to availability.js to open availability table
       let saveData = {
-        emailAddress: searchEmail
-      };
+                 emailAddress: searchEmail      
+                 };
+
       window.localStorage.setItem('curUser', JSON.stringify(saveData));
+
+      const availability = document.createElement('button');
+      
+      availability.innerHTML = "View Availability";
+      availability.addEventListener('click', () => {
+      window.searchEmail = searchEmail;
+      window.location.href = 'availability.html';
+      renderTable();
+      });
+      availCell.appendChild(availability);
 
       emailCell.innerHTML = searchEmail;
       nameCell.innerHTML = searchName;
@@ -303,6 +305,8 @@ window.addEventListener("load", async function () {
       tableBody.appendChild(tableRow);
     }
 
-  });
+   });
 
 });
+
+
