@@ -1,16 +1,20 @@
-//create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225), phone varchar(255), timezone varchar(225), availability boolean[][]);
-//create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225) , PRIMARY KEY (course_name ,  email));
+/*
+    Commands to create userInfo and courseInfo tables:
 
-// course_name |  professor   |   course_days   | email 
-// -------------+--------------+-----------------+-------
-//  cs 326      | emery berger | {f,t,f,t,f,f,f} | a@b.c
-// (1 row)
+        create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225), phone varchar(255), timezone varchar(225), availability boolean[][]);
+        create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225) , PRIMARY KEY (course_name ,  email));
+
+    Example tables:
+
+        course_name  |  professor   |   course_days   | email 
+        -------------+--------------+-----------------+-------
+        cs 326       | emery berger | {f,t,f,t,f,f,f} | a@b.c
 
 
-// email       |     name     |        salt         |        hash        |    phone    | timezone |   availability    
-// -------------------+--------------+---------------------+--------------------+-------------+----------+-------------------
-//  eberger@umass.edu | emery berger | 20309gffytyehherihb | higgi434g5grg43giy | +9084326475 | EST      | {"mon" : [0,1,0]}
-
+        email              |     name     |        salt         |        hash        |    phone    | timezone |   availability    
+        -------------------+--------------+---------------------+--------------------+-------------+----------+-------------------
+        eberger@umass.edu  | emery berger | 20309gffytyehherihb | higgi434g5grg43giy | +9084326475 | EST      | {"mon" : [0,1,0]}
+*/
 
 const pgp = require('pg-promise')({
     connect(client) {
@@ -26,7 +30,6 @@ const username = "postgres";
 const password = "admin";
 
 const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
-
 const db = pgp(url);
 
 async function connectAndRun(task) {
