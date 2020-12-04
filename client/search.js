@@ -278,7 +278,7 @@ window.addEventListener("load", async function () {
       const searchEmail = thing.email;
       const searchName = thing.name;
       const searchPhone = thing.phone;
-
+      
       //send email to availability.js to open availability table
       // window.localStorage.setItem(tempSting, JSON.stringify(saveData));
       const availability = document.createElement('button');
