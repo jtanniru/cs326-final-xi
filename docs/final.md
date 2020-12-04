@@ -26,17 +26,25 @@ Olivia Brennan (oliviarb), JengYu Chou (jelchou), Janvi Tanniru (jtanniru)
 
 Login Page
 
+The login page (homepage.html) requires the user to enter a valid username and password before the "Sign In" button can redirect them to courses.html. If there is no valid email and password entered, the user remains on the login page. There is a second button, "Register", that redirects the user to register.html where the user can enter an email, password, and a name to create a new account. If the email already exists in database, then the user must enter a different email for them to be able to create a new account. If no valid inputs are entered, the user remains on register.html. Otherwise, the user is able to create a new account with their email, password, and name and clicking the "Create Account" button will save the user to the database and redirect the user to the login page (homepage.html) for the user to log into their account.
+
 ![login](../images/final_login.jpg)
 
 Register Page
 
+The register page contains input fields for an email, password, and a name. If the user tries to create a new account with an email that already exists in the database, then it is considered an invalid input and the user will remain on register.html even if they click on the "Create Account" button. If the user enters an email that does not current exist in the database and includes a password and name, then clicking the "Create Account" button will redirect the user to the login page (homepage.html).
+
 ![register](../images/final_register.jpg)
 
-Courses Page (user can add new courses, delete current courses, and view current courses)
+Courses Page
+
+The courses page (courses.html) allows the user to view their current courses in a table. Above the table is a section with two tabs. The first tab is for the user to add a new course, which will be added to the table below when the "Create Course" button is clicked. The second tab gives the user a drop down menu of all the user's courses. The user can select one at a time to delete by selecting the course then clicking the "Delete Course" button, which will also remove the course from the table below. There is a navigation bar on the top right that allows the user to move from courses.html to either stay on courses.html, move to search.html or settings.html, or log out. The log out option will redirect the user to the login page (homepage.html).
 
 ![courses](../images/final_courses.jpg)
 
 Search Page (for filtering other users of the platform to find classmates to communicate with)
+
+The search page (search.html) provides fields to filter the users of the application by. These filters include course name (which contains a drop down menu that lists the user's current courses), professor (which contains a drop down menu that lists the user's current professors), course days (which contains a series of seven checkboxes for each day of the week), and timezone (which contains a drop down menu of the six U.S. timezones). The filters are on the left hand side of the page and the right hand side of the page contains a responsive table that will list all the users that match the specifications in the filters when the "Apply" button is clicked. The users that match the filters will be displayed in the table such that each user is in their own row that lists the user's name, phone number (optionally added by the user), and a button labeled "View Availability" that will open a new tab that displays that user's availability table when clicked.
 
 ![search](../images/final_search.jpg)
 
