@@ -7,28 +7,30 @@ The groups.html and groups.js files were removed from the project and register.h
 # Source Files
 
 **Client:**
-Logo.png
+
+Logo.png, 
 RendezvousLogo.jpg
 
-homepage.html
-register.html
-courses.html
-search.html
-settings.html
+homepage.html,
+register.html,
+courses.html,
+search.html,
+settings.html,
 availability.html
 
 main.css
 
-register.js
-courses.js
-search.js
-settings.js
-availability.js
+register.js,
+courses.js,
+search.js,
+settings.js,
+availability.js,
 tempAvailability.js
 
 **Server:**
-database.js
-miniCrypt.js
+
+database.js,
+miniCrypt.js,
 server.js
 
 # Steps to Build the Project
