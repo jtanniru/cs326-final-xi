@@ -85,7 +85,7 @@ window.addEventListener("load", async function () {
             console.log("User availability updated.");
         }
 
-    }); //end of submit
+    });
 
     document.getElementById('clear').addEventListener('click', () => {
         document.getElementById('timezone').value = '';
@@ -108,6 +108,4 @@ window.addEventListener("load", async function () {
             }
         }
     });
-
 });
-

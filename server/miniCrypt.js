@@ -1,19 +1,9 @@
 'use strict';
-/*
-  DISCLAIMER
-  Implementing cryptographically sound behavior in software is both very important and very hard.
-  As such, in practice you should take great caution and be extra certain of what you're doing.
-  Given this, it's best to rely on existing code that has been battle-tested and vetted by those knowledgeable.
 
-  Node.js provides a native cryptography module, by the name 'crypto'.
-  This is essentially a JS wrapper around OpenSSL, a widely used and longstanding library written primarily in C that provides a vast array of cryptographic functions.
-
-  If you'd like to learn more about the theory and maths behind cryptography, then take 466 next semester. Great professor.
- */
 const c = require('crypto');
 /**
   @module miniCrypt
-  @desc A tiny crypto lib for the 326 kids.
+  @desc
  */
 module.exports = (function() {
   /**
