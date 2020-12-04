@@ -52,6 +52,20 @@ Availability (displays a given user's weekly availability table)
 
 RESTful APIs
 
+| Route                |                      Description                                                                                              |
+|----------------------|----------------------------------------------------------------------------------------------------------|
+| /login               | performs authentication; if user not registered, redirects to login page, else takes user to course page |
+| /logout              | logs out the signed in user, redirects to login page                                                     |
+| /register            | add a new user and password IFF one doesn't exist in the userInfo table already                          |
+| /course              | adds the logged in user's new course to the courseInfo table                                             |
+| /course/view         | used to access user's saved courses to fill the courses table for the user to view                       |
+| /course/:course_name | deletes specified course from the courseInfo table                                                       |
+| /settings            | updates user's timezone and availability in the userInfo table                                           |
+| /settings/view       | used to view the user's saved information in userInfo to render availability, timezone, and phone number |
+| /search              | used to filter all users on the platform from the userInfo table                                         |
+| /availability        | used to view the selected user's availability from the search page                                       |
+| *                    | indicates error                                                                                          |
+
 # Database
 
 courseInfo Table
@@ -79,19 +93,7 @@ The courseInfo table contains rows such that each row is a single course for a u
 
 # URL Routes/Mapping
 
-| Route                |                      Description                                                                                              |
-|----------------------|----------------------------------------------------------------------------------------------------------|
-| /login               | performs authentication; if user not registered, redirects to login page, else takes user to course page |
-| /logout              | logs out the signed in user, redirects to login page                                                     |
-| /register            | add a new user and password IFF one doesn't exist in the userInfo table already                          |
-| /course              | adds the logged in user's new course to the courseInfo table                                             |
-| /course/view         | used to access user's saved courses to fill the courses table for the user to view                       |
-| /course/:course_name | deletes specified course from the courseInfo table                                                       |
-| /settings            | updates user's timezone and availability in the userInfo table                                           |
-| /settings/view       | used to view the user's saved information in userInfo to render availability, timezone, and phone number |
-| /search              | used to filter all users on the platform from the userInfo table                                         |
-| /availability        | used to view the selected user's availability from the search page                                       |
-| *                    | indicates error                                                                                          |
+When the application is started, it starts on the login page (homepage.html). The homepage.html page has a "Register" button that redirects to the register page (register.html). The register.html page has a "Create Account" button that redirects to homepage.html when the inputs to create a new account are valid. If a valid username and password are used on homepage.html, the "Sign In" button redirects to courses.html, otherwise the application stays on homepage.html. There is a navigation bar on courses.html, search.html, and settings.html that contains links to redirect to courses.html, search.html, settings.html, or to log out of the application which will redirect to homepage.html.
 
 # Authentication/Authorization
 
