@@ -3,7 +3,6 @@
 const datafunc = require('./database.js');
 const path = require('path');
 
-// For loading environment variables.
 require('dotenv').config();
 
 const express = require('express');                 // express routing
@@ -13,83 +12,55 @@ const LocalStrategy = require('passport-local').Strategy; // username/password s
 const app = express();
 const port = process.env.PORT || 3000;
 const minicrypt = require('./miniCrypt.js');
-//const { exists } = require('fs');
-
-
 const mc = new minicrypt();
-
-//create table userInfo (email varchar(225) primary key, name varchar(225), salt varchar(225), hash varchar(225), phone varchar(255), timezone varchar(225), availability boolean[][]);
-//create table courseInfo (course_name varchar(225), professor varchar(225), course_days boolean[], email varchar(225) , PRIMARY KEY (course_name , email));
-
-// course_name |  professor   |    course_days    |       email       
-// -------------+--------------+-------------------+-------------------
-//  COMPSCI 326 | emery berger | {f,f,t,f,f,f,t,f} | eberger@umass.edu
-// (1 row)
-
-// email       |     name     |        salt         |        hash        |    phone    | timezone |   availability    
-// -------------------+--------------+---------------------+--------------------+-------------+----------+-------------------
-//  eberger@umass.edu | emery berger | 20309gffytyehherihb | higgi434g5grg43giy | +9084326475 | EST      | {"mon" : [0,1,0]}
-
 
 // Session configuration
 const session = {
-    secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
+    secret : process.env.SECRET || 'SECRET',
     resave : false,
     saveUninitialized: false
 };
 
 // Passport configuration
-
 const strategy = new LocalStrategy(
-    async (username, password, done) => {
-	if (! await findUser(username)) {
-		// no such user
-		//console.log(username, password);
-	    return done(null, false, { 'message' : 'Wrong username' });
-	}
-	if (!await validatePassword(username, password)) {
-	    // invalid password
-	    // should disable logins after N messages
-		// delay return to rate-limit brute-force attacks
-		
-	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
-	    return done(null, false, { 'message' : 'Wrong password' });
-	}
-	// success!
-	// should create a user object here, associated with a unique identifier
-	return done(null, username);
-    });
-
+	async (username, password, done) => {
+		if (! await findUser(username)) {
+			return done(null, false, { 'message' : 'Wrong username' });
+		}
+		if (!await validatePassword(username, password)) {	
+			await new Promise((r) => setTimeout(r, 2000));
+			return done(null, false, { 'message' : 'Wrong password' });
+		}
+		return done(null, username);
+});
 
 // App configuration
-
 app.use(expressSession(session));
 passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
     done(null, user);
 });
+
 // Convert a unique identifier to a user object.
 passport.deserializeUser((uid, done) => {
     done(null, uid);
 });
 
-
-app.use(express.json()); // allow JSON inputs
-app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
+app.use(express.json()); 
+app.use(express.urlencoded({'extended' : true})); 
 app.use(express.static('client'));
 
 // Returns true iff the user exists.
 async function findUser(username) {
 	const exists = await datafunc.getUser(username);
     if (exists.length === 0) {
-	return null;
+			return null;
     } else {
-	return exists[0];
+			return exists[0];
     }
 }
 
@@ -97,49 +68,41 @@ async function findUser(username) {
 async function validatePassword(name, pwd) {
 	const exists = await findUser(name);
 	if (!exists) {
-	return false;
+		return false;
 	}
 	const res = mc.check(pwd, exists.salt, exists.hash);
-    return res;
+  return res;
 }
 
 // Routes
 function checkLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
-	// If we are authenticated, run the next route.
-	next();
+			next();
     } else {
-	// Otherwise, redirect to the login page.
-	res.redirect('/login');
+			res.redirect('/login');
     }
 }
 
 app.get('/',
 	(req, res) => {
 		res.redirect('/login');
-	});
+});
 
 // Handle post data from the login.html form.
 app.post('/login',
-	 passport.authenticate('local' , {     // use username/password authentication
-	     'successRedirect' : '/course',   // when we login, go to /private 
-	     'failureRedirect' : '/login'      // otherwise, back to login
-	 }));
+	passport.authenticate('local' , {   
+			'successRedirect' : '/course',  
+			'failureRedirect' : '/login'      
+}));
 
-// Handle the URL /login (just output the login.html file).
 app.get('/login',
 	(req, res) => res.sendFile(path.resolve('./client/homepage.html')));
 
-// Handle logging out (takes us back to the login page).
 app.get('/logout', (req, res) => {
-    req.logout(); // Logs us out!
-    res.redirect('/login'); // back to login
+    req.logout(); 
+    res.redirect('/login');
 });
 
-// Like login, but add a new user and password IFF one doesn't exist already.
-// If we successfully add a new user, go to /login, else, back to /register.
-// Use req.body to access data (as in, req.body['username']).
-// Use res.redirect to change URLs.
 app.post('/register',
 	 async (req, res) => {
 		const data = req.body;
@@ -154,24 +117,22 @@ app.post('/register',
 		else{
 			res.redirect('/register');
 		}
-	 });
+});
 
-// Register URL
 app.get('/register',
 	(req, res) => res.sendFile(path.resolve('./client/register.html')));
 	
-//Private data
 app.get('/private',
-	checkLoggedIn, // If we are logged in (notice the comma!)...
-	(req, res) => {             // Go to the user's page.
+	checkLoggedIn,
+	(req, res) => {            
 	    res.redirect('/private/' + req.user);
-	});
+});
 
 app.get('/private/:username',
-	checkLoggedIn, // If we are logged in (notice the comma!)...
-	(req, res) => {             // Go to the user's page.
+	checkLoggedIn, 
+	(req, res) => {             
 	    res.send("hello" + req.params.username);
-	});
+});
 
 app.get('/course',checkLoggedIn, 
 	(req, res) => res.sendFile(path.resolve('./client/courses.html')));
