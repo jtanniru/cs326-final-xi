@@ -44,11 +44,11 @@ The courses page (courses.html) allows the user to view their current courses in
 
 **Search Page**
 
-The search page (search.html) provides fields to filter the users of the application by. These filters include course name (which contains a drop down menu that lists the user's current courses), professor (which contains a drop down menu that lists the user's current professors), course days (which contains a series of seven checkboxes for each day of the week), and timezone (which contains a drop down menu of major timezones). The filters are on the left hand side of the page and the right hand side of the page contains a responsive table that will list all the users that match the specifications in the filters when the "Apply" button below the filters is clicked. The users that match the filters will be displayed in the table such that each user is in their own row that lists that user's name, phone number (optionally added by the user and thus can be blank), and a button labeled "View Availability" that will open a new tab that displays that user's availability table when clicked. The search page also contains a navigation bar in the top right of the page that allows the user to redirect to courses.html, stay on search.html, redirect to settings.html, or log out. Logging out will redirect to the login page (homepage.html). 
+The search page (search.html) provides fields to filter the users of the application by. These filters include course name (which contains a drop down menu that lists the user's current courses), professor (which contains a drop down menu that lists the user's current professors), course days (which contains a series of seven checkboxes for each day of the week), and timezone (which contains a drop down menu of major timezones). One course, professor, one or more days, and one timezone must be selected to form a valid search. The filters are on the left hand side of the page and the right hand side of the page contains a responsive table that will list all the users that match the specifications in the filters when the "Apply" button below the filters is clicked. The users that match the filters will be displayed in the table such that each user is in their own row that lists that user's name, phone number (optionally added by the user and thus can be blank), and a button labeled "View Availability" that will open a new tab that displays that user's availability table when clicked. The search page also contains a navigation bar in the top right of the page that allows the user to redirect to courses.html, stay on search.html, redirect to settings.html, or log out. Logging out will redirect to the login page (homepage.html). 
 
 ![search](../images/finalSearch.png)
 
-**Settings Page** (user can add a timezone and update their weekly availability)
+**Settings Page** 
 
 The settings page (settings.html) contains an availability table for the user to save, clear, and modify their weekly availability times. It contains columns for all seven days of the week and hourly blocks from 12am to 11pm. When a block is clicked, the block will be colored in to indicate the user is available for study sessions or general communication with others during that time. Below the availability table is an input field for the user to enter a phone number. This is optional and can be left blank. To the right of the phone number input field is a drop down menu that lists major timezones in the world. At the very bottom of the page is a "Save" button that will save the availability table, phone number, and timezone set by the user. The "Clear" button next to the "Save" button will clear the table, phone number, and timezone. The settings page has a navigation bar in the top right of the page that allows the user to redirect to either courses.html, search.html, stay in settings.html, or log out which will redirect the user to the login page (homepage.html).
 
@@ -57,13 +57,15 @@ The settings page (settings.html) contains an availability table for the user to
 
 **Availability** (displays a given user's weekly availability table)
 
+The availability page (availability.html) is a blank availability table. It is used when a user clicks on the "View Availability" button for a given user returned in the search page (search.html) after filters are applied. The selected user's availability that is saved in the database is used to render the availability table in availability.html. For instance, when a user applies their filters and has a list of other users returned in the responsive table in search.html, if the user clicks the "View Availability" button for another user, userA, and also clicks the "View Availability" button for a second user, userB, two new tabs will be open. The first tab will display the availability table rendered according the userA's availability and the second tab will display the availability table rendered according to userB's availability. The availability page does not have a navigation bar and cannot redirect to another page. 
+
 ![availability template](../images/finalAvailability.png)
 
 # APIs
 
 RESTful APIs
 
-| Route                |                      Description                                                                                              |
+| Route                |                      Description                                                                         |
 |----------------------|----------------------------------------------------------------------------------------------------------|
 | /login               | performs authentication; if user not registered, redirects to login page, else takes user to course page |
 | /logout              | logs out the signed in user, redirects to login page                                                     |
@@ -90,15 +92,15 @@ courseInfo Table
 
 userInfo Table
 
-| Column       | Data Type  | Description                     |
-|--------------|------------|---------------------------------|
+| Column       | Data Type  | Description                        |
+|--------------|------------|------------------------------------|
 | email        | String     | The email of user taking the course|
-| name         | String     | The name of the user            |
-| salt         | String     | The salt of the user password   |
-| hash         | String     | The hash of the user password   |
-| phone        | String     | The phone number of the counter |
-| timezone     | String     | The timezone of the user        |
-| availability | Boolean[][]| The availability of the user    |
+| name         | String     | The name of the user               |
+| salt         | String     | The salt of the user password      |
+| hash         | String     | The hash of the user password      |
+| phone        | String     | The phone number of the counter    |
+| timezone     | String     | The timezone of the user           |
+| availability | Boolean[][]| The availability of the user       |
 
 The courseInfo table contains rows such that each row is a single course for a user and contains the course's name, professor, days, and the user's email. The courseInfo table can be used to view all of the courses a user is taking, filter all users by one or more of the columns (for instance, it can be used to return all users that are taking a given course X). The userInfo table contains rows such that each row is a single user and contains the user's email, name, salt, hash (salt and hash for authentication), phone number, timezone, and availability. The userInfo table can be used to see if a user is already registered and for correct login information. 
 
