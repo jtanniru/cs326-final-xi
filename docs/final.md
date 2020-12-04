@@ -24,38 +24,38 @@ Olivia Brennan (oliviarb), JengYu Chou (jelchou), Janvi Tanniru (jtanniru)
 
 # User Interface
 
-Login Page
+**Login Page**
 
 The login page (homepage.html) requires the user to enter a valid username and password before the "Sign In" button can redirect them to courses.html. If there is no valid email and password entered, the user remains on the login page. There is a second button, "Register", that redirects the user to register.html where the user can enter an email, password, and a name to create a new account. If the email already exists in database, then the user must enter a different email for them to be able to create a new account. If no valid inputs are entered, the user remains on register.html. Otherwise, the user is able to create a new account with their email, password, and name and clicking the "Create Account" button will save the user to the database and redirect the user to the login page (homepage.html) for the user to log into their account.
 
 ![login](../images/finalHomepage.png)
 
-Register Page
+**Register Page**
 
 The register page contains input fields for an email, password, and a name. If the user tries to create a new account with an email that already exists in the database, then it is considered an invalid input and the user will remain on register.html even if they click on the "Create Account" button. If the user enters an email that does not current exist in the database and includes a password and name, then clicking the "Create Account" button will redirect the user to the login page (homepage.html).
 
 ![register](../images/finalregister.png)
 
-Courses Page
+**Courses Page**
 
 The courses page (courses.html) allows the user to view their current courses in a table. Above the table is a section with two tabs. The first tab is for the user to add a new course, which will be added to the table below when the "Create Course" button is clicked. The second tab gives the user a drop down menu of all the user's courses. The user can select one at a time to delete by selecting the course then clicking the "Delete Course" button, which will also remove the course from the table below. There is a navigation bar on the top right that allows the user to move from courses.html to either stay on courses.html, move to search.html or settings.html, or log out. The log out option will redirect the user to the login page (homepage.html).
 
 ![courses](../images/finalCourses.png)
 
-Search Page
+**Search Page**
 
 The search page (search.html) provides fields to filter the users of the application by. These filters include course name (which contains a drop down menu that lists the user's current courses), professor (which contains a drop down menu that lists the user's current professors), course days (which contains a series of seven checkboxes for each day of the week), and timezone (which contains a drop down menu of major timezones). The filters are on the left hand side of the page and the right hand side of the page contains a responsive table that will list all the users that match the specifications in the filters when the "Apply" button below the filters is clicked. The users that match the filters will be displayed in the table such that each user is in their own row that lists that user's name, phone number (optionally added by the user and thus can be blank), and a button labeled "View Availability" that will open a new tab that displays that user's availability table when clicked. The search page also contains a navigation bar in the top right of the page that allows the user to redirect to courses.html, stay on search.html, redirect to settings.html, or log out. Logging out will redirect to the login page (homepage.html). 
 
 ![search](../images/finalSearch.png)
 
-Settings Page (user can add a timezone and update their weekly availability)
+**Settings Page** (user can add a timezone and update their weekly availability)
 
 The settings page (settings.html) contains an availability table for the user to save, clear, and modify their weekly availability times. It contains columns for all seven days of the week and hourly blocks from 12am to 11pm. When a block is clicked, the block will be colored in to indicate the user is available for study sessions or general communication with others during that time. Below the availability table is an input field for the user to enter a phone number. This is optional and can be left blank. To the right of the phone number input field is a drop down menu that lists major timezones in the world. At the very bottom of the page is a "Save" button that will save the availability table, phone number, and timezone set by the user. The "Clear" button next to the "Save" button will clear the table, phone number, and timezone. The settings page has a navigation bar in the top right of the page that allows the user to redirect to either courses.html, search.html, stay in settings.html, or log out which will redirect the user to the login page (homepage.html).
 
-![settings](../images/finalSettings1.png)
+![settings](../images/finalsettings1.png)
 ![settings](../images/finalSettings2.png)
 
-Availability (displays a given user's weekly availability table)
+**Availability** (displays a given user's weekly availability table)
 
 ![availability template](../images/finalAvailability.png)
 
