@@ -6,7 +6,14 @@
 |  User Interface HTML/CSS                | We designed an attractive interface and we used Bootstrap to implement our designs. Additionally, we designed a unqiue logo and application name.                                     |
 |  JavaScript server                      |                                                 | 
 |  NodeJS backend                         |                                                 |
-|  CRUD operations                        |                                             |  
+|  CRUD operations                        | Create: Users can create an account with a username and password. Users can also add additional information like phone number, availability free time and the timezone they currently reside in. All the user information is stored in the UserInfo table. Users can also add information about courses they are taking like course name, name of the professor who teaches the course and days of the week the course is held. The course information into the courseInfo table. 
+
+Read: Users can read the information of the courses they added from a table displayed on the course page. The login pages checks to see if the user already exists and logs them in. The register page checks to see if the user already exists and prevents duplicate registory. On the settings page users can view their stored user info like their availbility, timezone and phone number. On the search page user can view other user taking similar courses based on some applied filters like course name, name of the professor teaching the course, timezone of users and days the course is taught. Once the search returns users info based on filters applied users can also view the filtered users availability tables.
+
+Update: users can update thier user information like their availability, phone number and timezone on the settings page.
+
+Delete: On the courses page users can delete the coureses that they are no longer taking or enrolled in.                                   | 
+
 |  User interactivity                     | Users can update their account information by adding their availability, timezone, and phone number to their settings. They can also create and add courses to their course list. Users can then search for students by filtering by course name, professor, class days, and timezone. Through this search functionality, the user can view other users' contact information for forming study groups and their availability in order to plan study sessions.                                               |  
 |  Authentification & authorization       | Users should be able to register an account with Rendevous, and then login with their credentials. If a user is not registered and tries to login, they are redirected to login page. User passwords are stored securely.                                                 |  
 | General requirements                    | Our application is user friendly- it is simple, yet effective. The application runs smoothly and is attractive in its design and interactivity. Our Javascript, HTML, and CSS are all separated into their respective files, and we do not have extraneous/unnecessary code.  
