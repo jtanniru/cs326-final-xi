@@ -103,8 +103,8 @@ Passport JS is used for authentication. A session is configured, along with a Lo
 
 - Initial layout of groups.html (deleted file)
 - Review of all initial layout files
-- HTML work: search.html settings.html,, availability.js
-- JS work (front end): search.js, settings.js
+- HTML work: search.html settings.html, availability.html
+- JS work (front end): search.js, settings.js, availability.js
 - Server integration with settings.js and availability.js
 
 ### JengYu Chou
