@@ -289,8 +289,8 @@ window.addEventListener("load", async function () {
         //   emailAddress: searchEmail      
         //   };
         // window.localStorage.setItem("saveData", JSON.stringify(saveData));
-        window.open('availability.html');
-        //window.location.href = 'availability.html';
+        //window.open('availability.html');
+        window.location.href = 'availability.html';
         renderTable(searchEmail);
       });
 
