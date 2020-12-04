@@ -8,19 +8,19 @@ The groups.html and groups.js files were removed from the project and register.h
 
 **Client:**
 
-Logo.png, 
+- Logo.png, 
 RendezvousLogo.jpg
 
-homepage.html,
+- homepage.html,
 register.html,
 courses.html,
 search.html,
 settings.html,
 availability.html
 
-main.css
+- main.css
 
-register.js,
+- register.js,
 courses.js,
 search.js,
 settings.js,
@@ -29,7 +29,7 @@ tempAvailability.js
 
 **Server:**
 
-database.js,
+- database.js,
 miniCrypt.js,
 server.js
 
