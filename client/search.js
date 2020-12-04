@@ -1,5 +1,6 @@
 'use strict';
-//const utils = require('availability.js');
+
+//import utils from 'availability.js';
 
 window.addEventListener("load", async function () {
   const monday = document.getElementById('monday');
@@ -261,7 +262,8 @@ window.addEventListener("load", async function () {
 
     //const searchResponse = await fetch('/search');
     const searchData = response.ok ? await response.json() : [];
- 
+    
+    console.log(searchData);
     // populate the table of matching users
     const tableBody = document.getElementById('matches');
     // for object (containing name, email, phone) in the response
@@ -278,20 +280,20 @@ window.addEventListener("load", async function () {
       const searchPhone = thing.phone;
 
       //send email to availability.js to open availability table
-      let saveData = {
-                 emailAddress: searchEmail      
-                 };
-
-      window.localStorage.setItem('curUser', JSON.stringify(saveData));
-
+      // window.localStorage.setItem(tempSting, JSON.stringify(saveData));
       const availability = document.createElement('button');
       
       availability.innerHTML = "View Availability";
       availability.addEventListener('click', () => {
-      window.searchEmail = searchEmail;
-      window.location.href = 'availability.html';
-      renderTable();
+        // let saveData = {
+        //   emailAddress: searchEmail      
+        //   };
+        // window.localStorage.setItem("saveData", JSON.stringify(saveData));
+        window.open('availability.html');
+        //window.location.href = 'availability.html';
+        renderTable(searchEmail);
       });
+
       availCell.appendChild(availability);
 
       emailCell.innerHTML = searchEmail;
