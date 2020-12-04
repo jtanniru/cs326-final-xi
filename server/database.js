@@ -80,7 +80,7 @@ async function getUserSettings(email) {
 }
 
 async function searchUsers(course_names, professors, course_days, timezones) {
-    return await connectAndRun(db => db.any('SELECT name, courseInfo.email , phone, availability from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name = $1 and professor = $2 and course_days = $3 and timezone = $4 ;', [course_names, professors, course_days, timezones])); 
+    return await connectAndRun(db => db.any('SELECT name, courseInfo.email , phone from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name = $1 and professor = $2 and course_days = $3 and timezone = $4 ;', [course_names, professors, course_days, timezones])); 
 }
 
 async function userAvailability(email) {

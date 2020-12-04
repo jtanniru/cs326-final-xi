@@ -171,6 +171,7 @@ window.addEventListener("load", async function () {
       const searchName = thing.name;
       const searchPhone = thing.phone;
 
+
       availCell.setAttribute('id', searchEmail);  // sets each button to have ID = that user's email ? 
 
       //send email to availability.js to open availability table
@@ -183,13 +184,13 @@ window.addEventListener("load", async function () {
         //   emailAddress: searchEmail      
         //   };
         // window.localStorage.setItem("saveData", JSON.stringify(saveData));
-        // window.open('availability.html');
-        // call POST endpoint that takes searchEmail and the function the POST calls will window.open('availability.html')
-        // window.location.href = 'availability.html';
+        //window.open('availability.html');
+        window.location.href = 'availability.html';
         renderTable(searchEmail);
         // settingEmail(searchEmail);  // global variable will be set in here then availability.html is opened
         console.log("rendered");
       });
+
 
       availCell.appendChild(availability);
 
