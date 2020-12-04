@@ -78,8 +78,14 @@ window.addEventListener("load", async function () {
   const userProfessorSelector = document.getElementById('professorSelector');
   const userTimezoneSelector = document.getElementById('timezoneSelector');
 
-  const listOfTimezones = ['Honolulu Standard Time (HST)', 'Alaska Daylight Time (AKDT)', 'Pacific Daylight Time (PDT)', 
-                          'Mountain Daylight Time (MDT)', 'Central Daylight Time (CDT)', 'Eastern Daylight Time (EDT)'];
+  const listOfTimezones = ['Greenwich Mean Time (GMT)', 'Universal Coordinated Time (UTC)', 'European Central Time (UTC)',
+    'Eastern European Time (EET)', '(Arabic) Egypt Standard Time (ART)', 'Middle East Time (MET)', 'Near East Time (NET)',
+    'Pakistan Lahore Time (PLT)', 'India Standard Time (IST)', 'Bangladesh Standard Time (BST)', 'Vietnam Standard Time (VST)',
+    'China Taiwan Time (CTT)', 'Japan Standard Time (JST)', 'Australia Central Time (ACT)', 'Solomon Standard Time (SST)',
+    'New Zealand Standard Time (NST)', 'Midway Islands Time (MIT)', 'Hawaii Standard Time (HST)', 'Alaska Standard Time (AST)',
+    'Pacific Standard Time (PST)', 'Mountain Standard Time (MST)', 'Central Standard Time (CST)', 'Eastern Standard Time (EST)',
+    'Phoenix Standard Time (PNT)', 'Indiana Eastern Standard Time (IET)', 'Puerto Rico and US Virgin Islands Time (PRT)',
+    'Canada Newfoundland Time (CNT)', 'Argentina Standard Time (AGT)', 'Brazil Eastern Time (BET)', 'Central African Time (CAT)'];
   for (const time in listOfTimezones){
     const timezoneOption = document.createElement('option');
     timezoneOption.innerHTML = listOfTimezones[time]; 
