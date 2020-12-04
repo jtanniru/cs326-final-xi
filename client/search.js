@@ -170,13 +170,9 @@ window.addEventListener("load", async function () {
       const searchEmail = thing.email;
       const searchName = thing.name;
       const searchPhone = thing.phone;
-<<<<<<< HEAD
-      
-=======
 
       availCell.setAttribute('id', searchEmail);  // sets each button to have ID = that user's email ? 
 
->>>>>>> dbc82e84ff629a5aa059118a074e72e27594bc37
       //send email to availability.js to open availability table
       // window.localStorage.setItem(tempSting, JSON.stringify(saveData));
       const availability = document.createElement('button');
