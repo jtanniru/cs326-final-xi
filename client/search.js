@@ -183,9 +183,14 @@ window.addEventListener("load", async function () {
         //   emailAddress: searchEmail      
         //   };
         // window.localStorage.setItem("saveData", JSON.stringify(saveData));
+<<<<<<< HEAD
         // window.open('availability.html');
         // call POST endpoint that takes searchEmail and the function the POST calls will window.open('availability.html')
         // window.location.href = 'availability.html';
+=======
+        //window.open('availability.html');
+        window.location.href = 'availability.html';
+>>>>>>> 83b9bf0d1fcda5faeee01acea3614eb8cf00e60d
         renderTable(searchEmail);
         // settingEmail(searchEmail);  // global variable will be set in here then availability.html is opened
         console.log("rendered");

@@ -2,11 +2,6 @@
 
 function deleteTable() {
   const temp = document.getElementById("coursesTableBody");
-  // for(let i = 0; i < temp.childNodes.length; i++){ 
-  // //for(const i in temp) {
-  //   // document.getElementById("coursesTable").deleteRow(1);
-  //   temp.childNodes[i].remove();
-  // }
   temp.remove();
   const newBody = document.createElement('tbody');
   newBody.setAttribute('id', 'coursesTableBody');
@@ -15,11 +10,7 @@ function deleteTable() {
 }
 
 function deleteSelector() {
-  // const temp = document.getElementById("coursesDeleteSelection").getElementsByTagName("option");
   const temp = document.getElementById('coursesDeleteSelection');
-  // for(let i = 0; i < temp.childNodes.length; i++){
-  //   temp.childNodes[i].remove();
-  // }
   temp.remove();
   const newSelector = document.createElement('select');
   newSelector.setAttribute('id', 'coursesDeleteSelection');
@@ -107,7 +98,7 @@ window.addEventListener("load", async function () {
   const responseOriginData = responseOriginView.ok ? await responseOriginView.json() : [];
   const coursesDeleteSelection = document.getElementById('coursesDeleteSelection');
 
-  for (const course of responseOriginData) {  // this does not delete first before repopulating the select menu and html table
+  for (const course of responseOriginData) {  
     
     const newOption = document.createElement('option');
     newOption.innerHTML = course.course_name; // updated from newOption.value
@@ -138,10 +129,6 @@ window.addEventListener("load", async function () {
 
   });
 
-// html table and delete selector menu, render on load of page
-
-
-// click for course submission
 // action for submit course button
 const coursesSubmitButton = document.getElementById('coursesSubmit');
 coursesSubmitButton.addEventListener('click', async () => {
@@ -232,9 +219,7 @@ coursesSubmitButton.addEventListener('click', async () => {
 // click for delete course
 const coursesDeleteButton = document.getElementById('coursesDelete');
 coursesDeleteButton.addEventListener('click', async () => {
-  // const deleteOption = document.getElementById("coursesDeleteSelection");
   const courseToDelete = document.getElementById('coursesDeleteSelection').value;
-  
 
   // remove row from HTML table and delete selector options
   const responseDelete = await fetch('/course/view');
@@ -247,7 +232,6 @@ coursesDeleteButton.addEventListener('click', async () => {
       const deleteOption = document.getElementById("coursesDeleteSelection");
       console.log("selected index: ", deleteOption.selectedIndex);
       deleteOption.remove(deleteOption.selectedIndex);
-      // coursesToDelete.remove(coursesToDelete.selectedIndex);
       break;
     }
     index++;
@@ -272,10 +256,6 @@ coursesDeleteButton.addEventListener('click', async () => {
   const responseDataRender = responseRender.ok ? await responseRender.json() : [];
 
   for (const course of responseDataRender) {
-    // const newOption = document.createElement('option');
-    // newOption.value = course.course_name;
-    // coursesDeleteSelection.appendChild(newOption);
-
     const tr = document.createElement('tr');
     const name  = document.createElement('td');
     const professor  = document.createElement('td');

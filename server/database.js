@@ -80,13 +80,7 @@ async function getUserSettings(email) {
 }
 
 async function searchUsers(course_names, professors, course_days, timezones) {
-    //const bigArray = course_names.concat(professors, course_days, timezones);
-
-    //return await connectAndRun(db => db.any('SELECT name, email, phone from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name in $1 and professor in $2 and course_days in $3 and timezone in $4 ;', [course_names, professors, course_days, timezones]));
-   
-    //maybe a fix could be to limit filter to one option drop down @jelchou search.js replace checkbox with dropdown per section
-    return await connectAndRun(db => db.any('SELECT name, courseInfo.email , phone from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name = $1 and professor = $2 and course_days = $3 and timezone = $4 ;', [course_names, professors, course_days, timezones]));
-    //return await connectAndRun(db => db.any('SELECT name, courseInfo.email , phone from userInfo join courseInfo on courseInfo.email = userInfo.email where ($1 IS NOT NULL AND course_name = $1) and ($2 IS NOT NULL AND professor = $2) and ($3 IS NOT NULL AND course_days = $3) and ($4 IS NOT NULL AND timezone = $4 ;', [course_names, professors, course_days, timezones])); 
+    return await connectAndRun(db => db.any('SELECT name, courseInfo.email , phone from userInfo join courseInfo on courseInfo.email = userInfo.email where course_name = $1 and professor = $2 and course_days = $3 and timezone = $4 ;', [course_names, professors, course_days, timezones])); 
 }
 
 async function userAvailability(email) {
