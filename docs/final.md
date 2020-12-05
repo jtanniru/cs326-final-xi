@@ -110,7 +110,7 @@ When the application is started, it starts on the login page (homepage.html). Th
 
 # Authentication/Authorization
 
-Passport JS is used for authentication. A session is configured, along with a LocalStrategy object to validate a user and their password. A function findUser() takes the user's username and returns true if and only if the user exists. A function validatePassword() takes a user name and password and returns true if and only if the password is the one we have stored. Only logged in users can see pages that are not the login and register pages. 
+Passport JS is used for authentication. A session is configured, along with a LocalStrategy object to validate a user and their password. A function findUser() takes the user's username and returns true if and only if the user exists. A function validatePassword() takes a username and password and returns true if and only if the password is the one we have stored. Only logged in users can see pages that are not the login and register pages. 
 
 # Division of Labor
 
