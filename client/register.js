@@ -27,7 +27,6 @@ window.addEventListener("load", async function () {
         console.error("Could not save the user to the server.");
       }
       else{
-        console.log("user added.");
         window.location.href = '/login';
       }
     }
