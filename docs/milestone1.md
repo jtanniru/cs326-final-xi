@@ -8,11 +8,11 @@
 - The data taken in about a user's course(s) will be used to do this filtering. 
   - For instance, a user can narrow down the pool of other users by specifying that they only want to see other users that are taking the same course with the same professor as they are. 
   - And if this professor happens to teach more than one session for this course, the pool of users can be narrowed down even more if the user specifies which session of the course they are enrolled in. 
-- Similary, users will be able to use timezones as a filter. 
+- Similarly, users will be able to use timezones as a filter. 
   - This is useful when users only want to form groups with those who are in the same timezone for convenience. 
 - Once the user has identified another user that they would like to get in touch with, they can establish a connection through creating a chat with this other user. 
-- The application will use the time availabilities set by each user to compile a list of meeting dates/times where every group member has overlapping time availability.
-  - If there is no one time that every group member's availabilities overlap, the application will return a list of dates/times for a meeting that a majority of the group are available to attend.
+- The application will use the time availability set by each user to compile a list of meeting dates/times where every group member has overlapping time availability.
+  - If there is no one time that every group member's availabilities overlap, the application will return a list of dates/times for a meeting that a majority of the group is available to attend.
 
 
 # Wireframes
