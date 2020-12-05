@@ -21,7 +21,7 @@ courseDays, courseTimes
 
 /user/id/classes/new which relates a given course to users courses.
 
-/user/id/courses/delete?cid='temp course'which deletes a given course(i.e. when the user drops the class or moves on to a new semester)
+/user/id/courses/delete?cid='temp course' which deletes a given course(i.e. when the user drops the class or moves on to a new semester)
 
 /user/id/courses/update?cid='temp course'&professor='temp prof'&(other info to be updated) which updates a given course(i.e. when the user changes class timings)
 
