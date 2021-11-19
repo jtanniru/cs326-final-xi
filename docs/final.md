@@ -1,6 +1,6 @@
 # Link to Heroku App
 
-https://cs326-xi.herokuapp.com/login
+https://cs-326rendezvous.herokuapp.com/login
 
 # Link to Youtube Video
 
